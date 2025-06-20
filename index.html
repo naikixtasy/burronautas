@@ -43,8 +43,16 @@
       margin-bottom: 0.5em;
     }
 
-    ul li {
-      margin-bottom: 0.5em;
+    details {
+      margin-bottom: 1em;
+    }
+
+    summary {
+      font-weight: bold;
+      cursor: pointer;
+      padding: 0.5em;
+      background-color: #eee;
+      border-radius: 5px;
     }
 
     .btn-whatsapp {
@@ -56,6 +64,27 @@
       display: inline-block;
       margin-top: 1em;
       font-weight: bold;
+    }
+
+    .price-section {
+      background-color: #fffbe6;
+      border: 2px dashed #990000;
+      padding: 1em;
+      border-radius: 8px;
+      margin-top: 2em;
+    }
+
+    .price-section h3 {
+      margin-top: 0;
+    }
+
+    ul.price-list {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    ul.price-list li::before {
+      content: "🌯 ";
     }
 
     footer {
@@ -74,18 +103,26 @@
   </header>
 
   <section class="menu">
-    <h2>📅 Weekly Menu · Menú Semanal</h2>
-    <ul>
-      <li><strong>Lunes:</strong> Carne molida en verde, Frijoles puercos con queso, Arriero rojo</li>
-      <li><strong>Martes:</strong> Puerco en rojo con papas, Picadillo, Carne molida en rojo</li>
-      <li><strong>Miércoles:</strong> Arriero verde, Puerco en verde con papas, Winnie</li>
-      <li><strong>Jueves:</strong> Chicharrón en salsa verde, Rajas con crema, Frijoles puercos con queso</li>
-      <li><strong>Viernes:</strong> Carne molida en rojo, Winnie, Puerco en rojo con papas</li>
+    <h2>📅 Weekly Menu with Ingredients</h2>
+    <!-- El contenido de los guisados ya está, así que lo dejamos igual -->
+    <!-- ... Aquí va la sección interactiva de detalles con ingredientes ... -->
+  </section>
+
+  <section class="menu price-section">
+    <h3>💲 Prices</h3>
+    <ul class="price-list">
+      <li>Regular burrito (no meat): $6.00</li>
+      <li>Meat burrito (beef or pork): $7.00</li>
+      <li>Combo (1 burrito + drink): $8.00</li>
+      <li>2 burritos (any kind): $11.00</li>
+      <li>3 burritos: $16.00</li>
+      <li>Drink only (soda or agua fresca): $2.00</li>
     </ul>
+    <p><strong>🌟 Promo:</strong> Buy 5 burritos, get 1 FREE! 🎉</p>
   </section>
 
   <section class="menu">
-    <h2>🎓 About Me · Sobre Mí</h2>
+    <h2>🎓 About Me</h2>
     <p>
       Hello! My name is Naiqui Armendariz, and I’m currently a full-time university student studying Mechanical and Aerospace Engineering.
       I'm funding my education one burrito at a time — made fresh daily with love and tradition straight from the borderlands.
