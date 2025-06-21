@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Mission: Burrito 3.0</title>
+  <title>Burronautas 🚀</title>
   <link rel="stylesheet" href="styles.css" />
   <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
@@ -11,7 +11,7 @@
 
 <header>
   <img src="logomb.png" alt="Mission Burrito Logo">
-  <h1>🚀 Mission: Burrito 3.0</h1>
+  <h1>🚀 Burronautas</h1>
   <p>Fuel your day with Space-Ready Burritos! / ¡Combustible espacial para tu día!</p>
 </header>
 
@@ -97,7 +97,8 @@
     const idOrden = Math.floor(Math.random() * 90000 + 10000);
 
     const items = document.querySelectorAll('.menu-grid .item');
-    let pedido = `🛸 *Mission: Burrito 3.0*\n🧾 *Orden No. ${idOrden}*\n\n`;
+    let pedido = `🛸 *Burronautas 🚀*\n🧾 *Orden No. ${idOrden}*\n\n`;
+
 
     items.forEach(item => {
       const nombre = item.querySelector('h3').innerText.split('<br>')[0];
