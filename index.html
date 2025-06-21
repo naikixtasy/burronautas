@@ -32,60 +32,6 @@
       margin: auto;
     }
 
-    .menu-grid {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 1.5em;
-    }
-
-    .item {
-      background: #fff;
-      border-radius: 12px;
-      padding: 1em;
-      text-align: center;
-      width: 160px;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-    }
-
-    .item img {
-      width: 100%;
-      border-radius: 50%;
-      margin-bottom: 0.5em;
-    }
-
-    .item h3 {
-      margin: 0.3em 0;
-    }
-
-    .item p {
-      font-size: 0.9em;
-      color: #666;
-    }
-
-    .counter-row {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 1em;
-      margin: 1em 0;
-    }
-
-    .counter-item {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      font-weight: bold;
-    }
-
-    .counter-item input {
-      width: 60px;
-      text-align: center;
-      font-size: 1.2em;
-      padding: 0.2em;
-      margin-top: 0.3em;
-    }
-
     .order-section {
       text-align: center;
       padding: 2em;
@@ -102,7 +48,7 @@
       font-weight: bold;
     }
 
-    .order-section textarea, .order-section button, .order-section select {
+    .order-section textarea, .order-section button, .order-section select, .order-section input {
       padding: 0.7em;
       margin: 0.5em;
       font-size: 1em;
@@ -132,40 +78,6 @@
       font-weight: bold;
     }
 
-    .btn-whatsapp {
-      background-color: #25D366;
-      color: white;
-      padding: 1.2em 2em;
-      text-decoration: none;
-      border-radius: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: bold;
-      font-size: 1.4em;
-      box-shadow: 0 0 20px rgba(37,211,102,0.5);
-      animation: pulse 1.5s infinite;
-      position: fixed;
-      bottom: 20px;
-      right: 20px;
-      z-index: 999;
-      transition: transform 0.3s ease-in-out;
-    }
-
-    .btn-whatsapp:hover {
-      transform: scale(1.05);
-    }
-
-    .btn-whatsapp i {
-      margin-right: 10px;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.05); }
-      100% { transform: scale(1); }
-    }
-
     .prices, .payment {
       text-align: center;
       margin: 2em 0;
@@ -193,56 +105,81 @@
   </style>
 </head>
 <body>
-<!-- ... unchanged HTML structure above ... -->
+<header>
+  <h1>Mission: Burrito 3.0</h1>
+</header>
 
-    <div class="summary-box" id="summary"></div>
+<section class="order-section">
+  <label for="order">Choose your Burritos:</label>
+  <textarea id="order" placeholder="Ejemplo: 2 Frijoles con queso, 1 Rajas, 3 Winnie..."></textarea>
 
-    <label>Extras / Instrucciones:</label>
-    <textarea id="extras" placeholder="📝 Add extras, instructions, drinks, etc. / Agrega extras, instrucciones, bebidas..."></textarea>
-    <button onclick="sendOrder()">📲 Send Order via WhatsApp</button>
-  </div>
+  <label for="drink">Select Drink:</label>
+  <select id="drink">
+    <option value="">None</option>
+    <option value="Coca Cola">Coca Cola</option>
+    <option value="Coca Cola Zero">Coca Cola Zero</option>
+    <option value="Sprite">Sprite</option>
+    <option value="Dr Pepper">Dr Pepper</option>
+  </select>
 
-<!-- ... unchanged payment section ... -->
+  <label for="promo">Choose a Promotion:</label>
+  <select id="promo">
+    <option value="">None</option>
+    <option value="$7 Special Combo">$7 Special Combo (Burrito + Drink)</option>
+    <option value="$12 Promo">$12 Promo (2 Burritos + 2 Drinks)</option>
+  </select>
+
+  <label>Extras / Instrucciones:</label>
+  <textarea id="extras" placeholder="📝 Add extras, instructions, drinks, etc. / Agrega extras, instrucciones, bebidas..."></textarea>
+
+  <div class="summary-box" id="summary"></div>
+
+  <button onclick="sendOrder()">📲 Send Order via WhatsApp</button>
+</section>
+
+<section class="payment">
+  <h3>Payment Options / Opciones de Pago</h3>
+  <p>
+    Cash App: <strong>$Naikia86</strong><br>
+    PayPal: <strong>@Naiqui</strong><br>
+    Aceptamos pagos en efectivo ✅
+  </p>
+</section>
 
 <script>
   function sendOrder() {
-    let order = '';
-    let total = 0;
-    const items = [
-      ['Frijoles con Queso', 'f_q', 4], ['Rajas con Queso', 'r_q', 5], ['Picadillo', 'pic', 6],
-      ['Puerco en Rojo', 'por', 6], ['Chicharrón Verde', 'chi', 6], ['Mole', 'mol', 6],
-      ['Chile Relleno', 'rel', 6], ['Winnie', 'win', 6]
-    ];
-    items.forEach(([label, id, price]) => {
-      const qty = parseInt(document.getElementById(id).value);
-      if (qty > 0) {
-        order += `${qty} ${label}, `;
-        total += qty * price;
-      }
-    });
-
+    const order = document.getElementById('order').value.trim();
     const extras = document.getElementById('extras').value.trim();
     const drink = document.getElementById('drink').value;
     const promo = document.getElementById('promo').value;
 
-    if (drink) total += 1.5;
+    let total = 0;
     if (promo.includes("$7")) total = 7;
-    if (promo.includes("$12")) total = 12;
+    else if (promo.includes("$12")) total = 12;
+    else {
+      const lines = order.split(',');
+      for (let line of lines) {
+        if (line.toLowerCase().includes("frijol")) total += 4;
+        else if (line.toLowerCase().includes("rajas")) total += 5;
+        else total += 6;
+      }
+      if (drink) total += 1.5;
+    }
 
     const summary = document.getElementById('summary');
-    summary.innerHTML = `🧾 <strong>Resumen:</strong> ${order}<br/>💲 Total: $${total.toFixed(2)}`;
+    summary.innerHTML = `🧾 <strong>Resumen:</strong> ${order}<br/>🥤 Bebida: ${drink}<br/>🎁 Promoción: ${promo}<br/>💲 Total: $${total.toFixed(2)}`;
 
-    let fullText = `Hi! I'd like to order:%0A${encodeURIComponent(order)}`;
-    if (drink) fullText += `%0ADrink: ${encodeURIComponent(drink)}`;
-    if (promo) fullText += `%0APromotion: ${encodeURIComponent(promo)}`;
-    if (extras) fullText += `%0AExtras/Notes: ${encodeURIComponent(extras)}`;
+    let fullText = `Hola! Quiero ordenar:%0A${encodeURIComponent(order)}`;
+    if (drink) fullText += `%0ABebida: ${encodeURIComponent(drink)}`;
+    if (promo) fullText += `%0APromoción: ${encodeURIComponent(promo)}`;
+    if (extras) fullText += `%0AExtras/Instrucciones: ${encodeURIComponent(extras)}`;
     fullText += `%0ATotal: $${total.toFixed(2)}`;
 
     if (order.length > 0) {
       const url = `https://wa.me/15756370077?text=${fullText}`;
       window.open(url, '_blank');
     } else {
-      alert("Please select at least one burrito / Por favor selecciona al menos un burrito.");
+      alert("Por favor escribe tu pedido de burritos.");
     }
   }
 </script>
