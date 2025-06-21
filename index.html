@@ -39,12 +39,12 @@
       box-shadow: 0 0 10px rgba(0,0,0,0.1);
     }
 
-    h1, h2 {
+    h1, h2, h3 {
       margin-bottom: 0.5em;
     }
 
     details {
-      margin-bottom: 1em;
+      margin-bottom: 1.5em;
     }
 
     summary {
@@ -53,6 +53,13 @@
       padding: 0.5em;
       background-color: #eee;
       border-radius: 5px;
+    }
+
+    .menu-img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 10px;
+      margin-top: 1em;
     }
 
     .btn-whatsapp {
@@ -93,19 +100,63 @@
       background-color: #990000;
       color: white;
     }
+
+    .lang-toggle {
+      text-align: center;
+      margin-bottom: 1.5em;
+    }
+
+    .lang-toggle button {
+      background-color: #990000;
+      color: white;
+      border: none;
+      padding: 0.5em 1em;
+      font-size: 1em;
+      cursor: pointer;
+      border-radius: 5px;
+      margin: 0 0.5em;
+    }
   </style>
 </head>
 <body>
-
   <header>
     <img src="logomb.png" alt="Mission: Burrito 3.0 logo">
     <p>Handmade tortillas · Juárez-style flavors · Orders via WhatsApp</p>
   </header>
 
-  <section class="menu">
-    <h2>📅 Weekly Menu with Ingredients</h2>
-    <!-- El contenido de los guisados ya está, así que lo dejamos igual -->
-    <!-- ... Aquí va la sección interactiva de detalles con ingredientes ... -->
+  <section class="lang-toggle">
+    <button onclick="switchLang('en')">🇺🇸 English</button>
+    <button onclick="switchLang('es')">🇲🇽 Español</button>
+  </section>
+
+  <section class="menu" id="menu-en">
+    <h2>📅 Weekly Menu with Ingredients (English)</h2>
+    <details><summary>Red Pork with Potatoes</summary><p>Ingredients: pork chunks in red chile sauce, potatoes, garlic, handmade tortilla.</p><p>💲 $7.00</p><img class="menu-img" src="asado%20de%20puerco.png" alt="Red Pork"></details>
+    <details><summary>Green Pork with Potatoes</summary><p>Ingredients: pork chunks in green tomatillo sauce, potatoes, garlic, handmade tortilla.</p><p>💲 $7.00</p></details>
+    <details><summary>Chicharrón in Green Sauce</summary><p>Ingredients: pork cracklings, green chile sauce, garlic, handmade tortilla.</p><p>💲 $7.00</p><img class="menu-img" src="chicharron.png" alt="Chicharron"></details>
+    <details><summary>Red Ground Beef</summary><p>Ingredients: ground beef, red chile, tomato, garlic, handmade tortilla.</p><p>💲 $7.00</p></details>
+    <details><summary>Green Ground Beef</summary><p>Ingredients: ground beef, green chile, onion, spices, handmade tortilla.</p><p>💲 $7.00</p></details>
+    <details><summary>Red Arriero (Eggs & Chile)</summary><p>Ingredients: scrambled eggs, red chile sauce, cheese, handmade tortilla.</p><p>💲 $6.00</p></details>
+    <details><summary>Green Arriero (Eggs & Chile)</summary><p>Ingredients: scrambled eggs, green chile sauce, cheese, handmade tortilla.</p><p>💲 $6.00</p></details>
+    <details><summary>Winnie Burrito</summary><p>Ingredients: sliced sausage, refried beans, handmade tortilla.</p><p>💲 $7.00</p><img class="menu-img" src="winnie.png" alt="Winnie"></details>
+    <details><summary>Beans & Cheese</summary><p>Ingredients: refried beans, yellow cheese, handmade tortilla.</p><p>💲 $6.00</p><img class="menu-img" src="frijolesconqueso.png" alt="Beans"></details>
+    <details><summary>Rajas with Cream</summary><p>Ingredients: roasted chile strips, sour cream, corn, onion, handmade tortilla.</p><p>💲 $6.00</p><img class="menu-img" src="rajasconqueso.png" alt="Rajas"></details>
+    <details><summary>Picadillo</summary><p>Ingredients: ground beef, potatoes, tomato, onion, handmade tortilla.</p><p>💲 $7.00</p><img class="menu-img" src="picadillo.png" alt="Picadillo"></details>
+  </section>
+
+  <section class="menu" id="menu-es" style="display:none">
+    <h2>📅 Menú semanal con ingredientes (Español)</h2>
+    <details><summary>Asado de puerco con papas</summary><p>Ingredientes: carne de puerco en salsa roja con papas, ajo y tortilla hecha a mano.</p><p>💲 $7.00</p><img class="menu-img" src="asado%20de%20puerco.png" alt="Asado"></details>
+    <details><summary>Puerco en verde con papas</summary><p>Ingredientes: carne de puerco en salsa verde de tomatillo, papas, ajo y tortilla hecha a mano.</p><p>💲 $7.00</p></details>
+    <details><summary>Chicharrón en salsa verde</summary><p>Ingredientes: chicharrón prensado, salsa verde, ajo y tortilla hecha a mano.</p><p>💲 $7.00</p><img class="menu-img" src="chicharron.png" alt="Chicharron"></details>
+    <details><summary>Carne molida en rojo</summary><p>Ingredientes: carne molida, chile rojo, jitomate, ajo y tortilla hecha a mano.</p><p>💲 $7.00</p></details>
+    <details><summary>Carne molida en verde</summary><p>Ingredientes: carne molida, chile verde, cebolla, especias y tortilla hecha a mano.</p><p>💲 $7.00</p></details>
+    <details><summary>Arriero rojo (huevo y chile)</summary><p>Ingredientes: huevo revuelto, chile rojo, queso y tortilla hecha a mano.</p><p>💲 $6.00</p></details>
+    <details><summary>Arriero verde (huevo y chile)</summary><p>Ingredientes: huevo revuelto, chile verde, queso y tortilla hecha a mano.</p><p>💲 $6.00</p></details>
+    <details><summary>Winnie</summary><p>Ingredientes: salchicha en rodajas, frijoles refritos y tortilla hecha a mano.</p><p>💲 $7.00</p><img class="menu-img" src="winnie.png" alt="Winnie"></details>
+    <details><summary>Frijoles con queso</summary><p>Ingredientes: frijoles refritos, queso amarillo, tortilla hecha a mano.</p><p>💲 $6.00</p><img class="menu-img" src="frijolesconqueso.png" alt="Frijoles"></details>
+    <details><summary>Rajas con crema</summary><p>Ingredientes: tiras de chile asado, crema, elote, cebolla, tortilla hecha a mano.</p><p>💲 $6.00</p><img class="menu-img" src="rajasconqueso.png" alt="Rajas"></details>
+    <details><summary>Picadillo</summary><p>Ingredientes: carne molida, papas, jitomate, cebolla, tortilla hecha a mano.</p><p>💲 $7.00</p><img class="menu-img" src="picadillo.png" alt="Picadillo"></details>
   </section>
 
   <section class="menu price-section">
@@ -142,5 +193,11 @@
     <p>© 2025 Mission: Burrito 3.0 · Las Cruces, NM · Handmade with 💖 and science</p>
   </footer>
 
+  <script>
+    function switchLang(lang) {
+      document.getElementById('menu-en').style.display = (lang === 'en') ? 'block' : 'none';
+      document.getElementById('menu-es').style.display = (lang === 'es') ? 'block' : 'none';
+    }
+  </script>
 </body>
 </html>
