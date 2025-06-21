@@ -8,14 +8,14 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #fdf6f0, #ffebd2);
+      background: linear-gradient(to bottom right, #fff3e0, #ffe0b2);
       color: #333;
       margin: 0;
       padding: 0;
     }
 
     header {
-      background-color: #7a0019;
+      background-color: #ff6f00;
       color: white;
       padding: 2em 1em;
       text-align: center;
@@ -28,185 +28,183 @@
 
     section {
       padding: 2em;
-      max-width: 900px;
+      max-width: 1000px;
       margin: auto;
     }
 
-    .menu {
-      background-color: #fff;
-      border-radius: 12px;
-      padding: 1.5em;
-      margin-bottom: 2em;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    .menu-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.5em;
     }
 
-    h1, h2, h3 {
+    .item {
+      background: #fff;
+      border-radius: 12px;
+      padding: 1em;
+      text-align: center;
+      width: 160px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .item img {
+      width: 100%;
+      border-radius: 50%;
       margin-bottom: 0.5em;
     }
 
-    details {
-      margin-bottom: 1.5em;
-      border: 1px solid #ddd;
+    .item h3 {
+      margin: 0.3em 0;
+    }
+
+    .item p {
+      font-size: 0.9em;
+      color: #666;
+    }
+
+    .order-section {
+      text-align: center;
+      padding: 2em;
+      background: #fff;
+      border-radius: 20px;
+      margin: 2em auto;
+      max-width: 700px;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    }
+
+    .order-section select, .order-section textarea, .order-section button {
+      padding: 0.7em;
+      margin: 0.5em;
+      font-size: 1em;
       border-radius: 8px;
-      overflow: hidden;
+      width: 90%;
+      max-width: 500px;
     }
 
-    summary {
+    .order-section textarea {
+      min-height: 80px;
+    }
+
+    .order-section button {
+      background-color: #25D366;
+      color: white;
       font-weight: bold;
+      border: none;
       cursor: pointer;
-      padding: 0.8em 1em;
-      background-color: #fcefe6;
-      display: flex;
-      align-items: center;
-      gap: 0.6em;
-      font-size: 1.1em;
-    }
-
-    summary:hover {
-      background-color: #ffdcc2;
-    }
-
-    summary::before {
-      content: "🌯";
-    }
-
-    .menu-img {
-      max-width: 100%;
-      height: auto;
-      border-radius: 10px;
-      margin: 1em 0;
-      box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
     }
 
     .btn-whatsapp {
       background-color: #25D366;
       color: white;
-      padding: 1em 1.8em;
+      padding: 1.2em 2em;
       text-decoration: none;
       border-radius: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
       font-weight: bold;
-      font-size: 1.3em;
-      box-shadow: 0 0 20px rgba(37,211,102,0.4);
-      animation: moveUpDown 2s infinite;
+      font-size: 1.4em;
+      box-shadow: 0 0 20px rgba(37,211,102,0.5);
+      animation: pulse 1.5s infinite;
       position: fixed;
-      bottom: 15px;
-      right: 15px;
+      bottom: 20px;
+      right: 20px;
       z-index: 999;
-      transition: all 0.3s ease-in-out;
+      transition: transform 0.3s ease-in-out;
     }
 
     .btn-whatsapp:hover {
-      background-color: #1ebe5d;
+      transform: scale(1.05);
     }
 
     .btn-whatsapp i {
       margin-right: 10px;
     }
 
-    @keyframes moveUpDown {
-      0% { transform: translateY(0); }
-      50% { transform: translateY(-5px); }
-      100% { transform: translateY(0); }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
     }
 
-    .price-section {
-      background-color: #fffbe6;
-      border: 2px dashed #7a0019;
-      padding: 1em;
-      border-radius: 8px;
-      margin-top: 2em;
+    .prices {
+      text-align: center;
+      margin: 2em 0;
+      font-size: 1.1em;
     }
 
-    .price-section h3 {
-      margin-top: 0;
-    }
-
-    ul.price-list {
+    .prices ul {
       list-style: none;
-      padding-left: 0;
+      padding: 0;
     }
 
-    ul.price-list li::before {
-      content: "🍽️ ";
-    }
-
-    footer {
-      text-align: center;
-      padding: 1em;
-      background-color: #7a0019;
-      color: white;
-    }
-
-    .lang-toggle {
-      text-align: center;
-      margin-bottom: 1.5em;
-    }
-
-    .lang-toggle button {
-      background-color: #7a0019;
-      color: white;
-      border: none;
-      padding: 0.5em 1em;
-      font-size: 1em;
-      cursor: pointer;
-      border-radius: 5px;
-      margin: 0 0.5em;
-    }
-
-    .order-section {
-      text-align: center;
-      margin-top: 3em;
-    }
-
-    .order-section h2 {
-      font-size: 1.5em;
-    }
-
-    .order-section select, .order-section button {
-      font-size: 1em;
-      padding: 0.5em;
-      margin: 0.5em;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
-
-    .order-section button {
-      background-color: #25D366;
-      color: white;
-      border: none;
-      cursor: pointer;
+    .prices li {
+      margin: 0.5em 0;
     }
   </style>
 </head>
 <body>
-  <div class="order-section">
-    <h2>Quick Order</h2>
-    <select id="burrito">
-      <option value="">Select a burrito...</option>
-      <option value="Picadillo">Picadillo</option>
-      <option value="Frijoles con queso">Frijoles con queso</option>
-      <option value="Winnie">Winnie</option>
-      <option value="Chicharrón verde">Chicharrón verde</option>
-      <option value="Puerco en rojo">Puerco en rojo</option>
-    </select>
-    <button onclick="sendOrder()">Send Order via WhatsApp</button>
+  <header>
+    <h1>🚀 Mission: Burrito 3.0</h1>
+    <p>Fuel your day with Space-Ready Burritos! / ¡Combustible espacial para tu día!</p>
+  </header>
+
+  <section>
+    <div class="menu-grid">
+      <div class="item"><img src="frijolesconqueso.png"><h3>Frijoles con queso</h3><p>Beans & Cheese</p></div>
+      <div class="item"><img src="picadillo.png"><h3>Picadillo</h3><p>Beef & Potatoes</p></div>
+      <div class="item"><img src="winnie.png"><h3>Winnie</h3><p>Sliced Hot Dog</p></div>
+      <div class="item"><img src="chicharron.png"><h3>Chicharrón Verde</h3><p>Pork Rinds</p></div>
+      <div class="item"><img src="asado de puerco.png"><h3>Puerco en Rojo</h3><p>Pork in Red Sauce</p></div>
+      <div class="item"><img src="mole.png"><h3>Mole</h3><p>Chicken in Mole Sauce</p></div>
+      <div class="item"><img src="rajasconqueso.png"><h3>Rajas con Queso</h3><p>Anaheim Pepper & Cheese</p></div>
+      <div class="item"><img src="chilerelleno.png"><h3>Chile Relleno</h3><p>Stuffed Anaheim Chile</p></div>
+    </div>
+  </section>
+
+  <div class="prices">
+    <h2>💲 Prices / Precios</h2>
+    <ul>
+      <li>Basic Burrito (Frijoles con Queso, Rajas): $3.50</li>
+      <li>Meat Burritos (Picadillo, Puerco, Chicharrón, Mole, Chile Relleno, Winnie): $4.50</li>
+      <li>Add Cheese 🧀: +$0.50</li>
+      <li>Add Drink 🥤: +$1.50</li>
+      <li>Special Combo (Burrito + Drink + Sweet): $6.50</li>
+    </ul>
   </div>
 
-  <a class="btn-whatsapp" href="https://wa.me/15756370077?text=Hello!%20I'd%20like%20to%20order%20some%20burritos%20from%20Mission%3A%20Burrito%203.0!" target="_blank">
+  <div class="order-section">
+    <h2>Quick Order / Pedido Rápido</h2>
+    <select id="burrito">
+      <option value="">🌯 Choose your burrito / Elige tu burrito</option>
+      <option value="Frijoles con queso">Frijoles con queso</option>
+      <option value="Picadillo">Picadillo</option>
+      <option value="Winnie">Winnie</option>
+      <option value="Chicharrón Verde">Chicharrón Verde</option>
+      <option value="Puerco en Rojo">Puerco en Rojo</option>
+      <option value="Mole">Mole</option>
+      <option value="Rajas con queso">Rajas con queso</option>
+      <option value="Chile Relleno">Chile Relleno</option>
+    </select>
+    <textarea id="extras" placeholder="📝 Add extras, instructions, drinks, etc. / Agrega extras, instrucciones, bebidas..."></textarea>
+    <button onclick="sendOrder()">📲 Send Order via WhatsApp</button>
+  </div>
+
+  <a class="btn-whatsapp" href="https://wa.me/15756370077" target="_blank">
     <i class="fab fa-whatsapp"></i> Order Now
   </a>
 
   <script>
     function sendOrder() {
       const burrito = document.getElementById('burrito').value;
+      const extras = document.getElementById('extras').value;
       if (burrito) {
-        const url = `https://wa.me/15756370077?text=Hi!%20I'd%20like%20to%20order%20a%20${encodeURIComponent(burrito)}%20burrito%20from%20Mission%3A%20Burrito%203.0!`;
+        const text = `Hi! I'd like to order a ${burrito} burrito.%0AExtras/Notes: ${encodeURIComponent(extras)}`;
+        const url = `https://wa.me/15756370077?text=${text}`;
         window.open(url, '_blank');
       } else {
-        alert("Please select a burrito to order.");
+        alert("Please select a burrito to order / Por favor selecciona un burrito.");
       }
     }
   </script>
