@@ -102,7 +102,7 @@
       font-weight: bold;
     }
 
-    .order-section textarea, .order-section button {
+    .order-section textarea, .order-section button, .order-section select {
       padding: 0.7em;
       margin: 0.5em;
       font-size: 1em;
@@ -121,6 +121,15 @@
       font-weight: bold;
       border: none;
       cursor: pointer;
+    }
+
+    .summary-box {
+      margin-top: 1em;
+      padding: 1em;
+      background: #f8f8f8;
+      border-radius: 10px;
+      font-size: 1em;
+      font-weight: bold;
     }
 
     .btn-whatsapp {
@@ -184,87 +193,58 @@
   </style>
 </head>
 <body>
-  <header>
-    <h1>🚀 Mission: Burrito 3.0</h1>
-    <p>Fuel your day with Space-Ready Burritos! / ¡Combustible espacial para tu día!</p>
-  </header>
+<!-- ... unchanged HTML structure above ... -->
 
-  <section>
-    <div class="menu-grid">
-      <div class="item"><img src="frijolesconqueso.png"><h3>Frijoles con queso</h3><p>Beans & Cheese</p></div>
-      <div class="item"><img src="picadillo.png"><h3>Picadillo</h3><p>Beef & Potatoes</p></div>
-      <div class="item"><img src="winnie.png"><h3>Winnie</h3><p>Sliced Hot Dog</p></div>
-      <div class="item"><img src="chicharron.png"><h3>Chicharrón Verde</h3><p>Pork Rinds</p></div>
-      <div class="item"><img src="asado de puerco.png"><h3>Puerco en Rojo</h3><p>Pork in Red Sauce</p></div>
-      <div class="item"><img src="mole.png"><h3>Mole</h3><p>Chicken in Mole Sauce</p></div>
-      <div class="item"><img src="rajasconqueso.png"><h3>Rajas con Queso</h3><p>Anaheim Pepper & Cheese</p></div>
-      <div class="item"><img src="chilerelleno.png"><h3>Chile Relleno</h3><p>Stuffed Anaheim Chile</p></div>
-    </div>
-  </section>
+    <div class="summary-box" id="summary"></div>
 
-  <div class="prices">
-    <h2>💲 Prices / Precios</h2>
-    <ul>
-      <li>Basic Burrito (Frijoles con Queso): $4.00</li>
-      <li>Vegetarian (Rajas): $5.00</li>
-      <li>Meat Burritos (Picadillo, Puerco, Chicharrón, Mole, Chile Relleno, Winnie): $6.00</li>
-      <li>Add Cheese 🧀: +$0.50</li>
-      <li>Add Drink 🥤: +$1.50</li>
-      <li>Special Combo (Any Burrito + Drink): $7.00</li>
-      <li>Promo: 2 Burritos + 2 Drinks = $12.00</li>
-    </ul>
-  </div>
-
-  <div class="order-section">
-    <h2>Quick Order / Pedido Rápido</h2>
-    <div class="counter-row">
-      <div class="counter-item">Frijoles con Queso<input type="number" id="f_q" min="0" value="0"></div>
-      <div class="counter-item">Rajas con Queso<input type="number" id="r_q" min="0" value="0"></div>
-      <div class="counter-item">Picadillo<input type="number" id="pic" min="0" value="0"></div>
-      <div class="counter-item">Puerco en Rojo<input type="number" id="por" min="0" value="0"></div>
-      <div class="counter-item">Chicharrón Verde<input type="number" id="chi" min="0" value="0"></div>
-      <div class="counter-item">Mole<input type="number" id="mol" min="0" value="0"></div>
-      <div class="counter-item">Chile Relleno<input type="number" id="rel" min="0" value="0"></div>
-      <div class="counter-item">Winnie<input type="number" id="win" min="0" value="0"></div>
-    </div>
     <label>Extras / Instrucciones:</label>
     <textarea id="extras" placeholder="📝 Add extras, instructions, drinks, etc. / Agrega extras, instrucciones, bebidas..."></textarea>
     <button onclick="sendOrder()">📲 Send Order via WhatsApp</button>
   </div>
 
-  <div class="payment">
-    <h3>💳 Payment Options / Opciones de Pago</h3>
-    <p><strong>Cash App:</strong> <a href="https://cash.app/$Naikia86" target="_blank">$Naikia86</a></p>
-    <p><strong>PayPal:</strong> <a href="https://paypal.me/Naiqui" target="_blank">@Naiqui</a></p>
-    <p><strong>We also accept cash payments! / ¡También aceptamos pagos en efectivo!</strong></p>
-  </div>
+<!-- ... unchanged payment section ... -->
 
-  <a class="btn-whatsapp" href="https://wa.me/15756370077" target="_blank">
-    <i class="fab fa-whatsapp"></i> Order Now
-  </a>
-
-  <script>
-    function sendOrder() {
-      let order = '';
-      const items = [
-        ['Frijoles con Queso', 'f_q'], ['Rajas con Queso', 'r_q'], ['Picadillo', 'pic'],
-        ['Puerco en Rojo', 'por'], ['Chicharrón Verde', 'chi'], ['Mole', 'mol'],
-        ['Chile Relleno', 'rel'], ['Winnie', 'win']
-      ];
-      items.forEach(([label, id]) => {
-        const qty = document.getElementById(id).value;
-        if (qty > 0) order += `${qty} ${label}, `;
-      });
-      order = order.trim().replace(/,$/, '');
-      const extras = document.getElementById('extras').value.trim();
-      if (order.length > 0) {
-        const text = `Hi! I'd like to order:%0A${encodeURIComponent(order)}%0AExtras/Notes: ${encodeURIComponent(extras)}`;
-        const url = `https://wa.me/15756370077?text=${text}`;
-        window.open(url, '_blank');
-      } else {
-        alert("Please select at least one burrito / Por favor selecciona al menos un burrito.");
+<script>
+  function sendOrder() {
+    let order = '';
+    let total = 0;
+    const items = [
+      ['Frijoles con Queso', 'f_q', 4], ['Rajas con Queso', 'r_q', 5], ['Picadillo', 'pic', 6],
+      ['Puerco en Rojo', 'por', 6], ['Chicharrón Verde', 'chi', 6], ['Mole', 'mol', 6],
+      ['Chile Relleno', 'rel', 6], ['Winnie', 'win', 6]
+    ];
+    items.forEach(([label, id, price]) => {
+      const qty = parseInt(document.getElementById(id).value);
+      if (qty > 0) {
+        order += `${qty} ${label}, `;
+        total += qty * price;
       }
+    });
+
+    const extras = document.getElementById('extras').value.trim();
+    const drink = document.getElementById('drink').value;
+    const promo = document.getElementById('promo').value;
+
+    if (drink) total += 1.5;
+    if (promo.includes("$7")) total = 7;
+    if (promo.includes("$12")) total = 12;
+
+    const summary = document.getElementById('summary');
+    summary.innerHTML = `🧾 <strong>Resumen:</strong> ${order}<br/>💲 Total: $${total.toFixed(2)}`;
+
+    let fullText = `Hi! I'd like to order:%0A${encodeURIComponent(order)}`;
+    if (drink) fullText += `%0ADrink: ${encodeURIComponent(drink)}`;
+    if (promo) fullText += `%0APromotion: ${encodeURIComponent(promo)}`;
+    if (extras) fullText += `%0AExtras/Notes: ${encodeURIComponent(extras)}`;
+    fullText += `%0ATotal: $${total.toFixed(2)}`;
+
+    if (order.length > 0) {
+      const url = `https://wa.me/15756370077?text=${fullText}`;
+      window.open(url, '_blank');
+    } else {
+      alert("Please select at least one burrito / Por favor selecciona al menos un burrito.");
     }
-  </script>
+  }
+</script>
 </body>
 </html>
