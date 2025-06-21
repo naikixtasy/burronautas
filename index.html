@@ -63,6 +63,29 @@
       color: #666;
     }
 
+    .counter-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 1em;
+      margin: 1em 0;
+    }
+
+    .counter-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      font-weight: bold;
+    }
+
+    .counter-item input {
+      width: 60px;
+      text-align: center;
+      font-size: 1.2em;
+      padding: 0.2em;
+      margin-top: 0.3em;
+    }
+
     .order-section {
       text-align: center;
       padding: 2em;
@@ -79,8 +102,7 @@
       font-weight: bold;
     }
 
-    .order-section input[type="number"],
-    .order-section select, .order-section textarea, .order-section button {
+    .order-section textarea, .order-section button {
       padding: 0.7em;
       margin: 0.5em;
       font-size: 1em;
@@ -135,7 +157,7 @@
       100% { transform: scale(1); }
     }
 
-    .prices {
+    .prices, .payment {
       text-align: center;
       margin: 2em 0;
       font-size: 1.1em;
@@ -148,12 +170,6 @@
 
     .prices li {
       margin: 0.5em 0;
-    }
-
-    .payment {
-      text-align: center;
-      margin-top: 2em;
-      font-size: 1em;
     }
 
     .payment a {
@@ -201,8 +217,16 @@
 
   <div class="order-section">
     <h2>Quick Order / Pedido Rápido</h2>
-    <label>Enter Your Burrito Order (e.g., 2 Picadillo, 1 Mole):</label>
-    <textarea id="burritos" placeholder="Ejemplo: 2 Frijoles con queso, 1 Rajas con queso, 3 Winnie..."></textarea>
+    <div class="counter-row">
+      <div class="counter-item">Frijoles con Queso<input type="number" id="f_q" min="0" value="0"></div>
+      <div class="counter-item">Rajas con Queso<input type="number" id="r_q" min="0" value="0"></div>
+      <div class="counter-item">Picadillo<input type="number" id="pic" min="0" value="0"></div>
+      <div class="counter-item">Puerco en Rojo<input type="number" id="por" min="0" value="0"></div>
+      <div class="counter-item">Chicharrón Verde<input type="number" id="chi" min="0" value="0"></div>
+      <div class="counter-item">Mole<input type="number" id="mol" min="0" value="0"></div>
+      <div class="counter-item">Chile Relleno<input type="number" id="rel" min="0" value="0"></div>
+      <div class="counter-item">Winnie<input type="number" id="win" min="0" value="0"></div>
+    </div>
     <label>Extras / Instrucciones:</label>
     <textarea id="extras" placeholder="📝 Add extras, instructions, drinks, etc. / Agrega extras, instrucciones, bebidas..."></textarea>
     <button onclick="sendOrder()">📲 Send Order via WhatsApp</button>
@@ -221,14 +245,24 @@
 
   <script>
     function sendOrder() {
-      const burritos = document.getElementById('burritos').value.trim();
+      let order = '';
+      const items = [
+        ['Frijoles con Queso', 'f_q'], ['Rajas con Queso', 'r_q'], ['Picadillo', 'pic'],
+        ['Puerco en Rojo', 'por'], ['Chicharrón Verde', 'chi'], ['Mole', 'mol'],
+        ['Chile Relleno', 'rel'], ['Winnie', 'win']
+      ];
+      items.forEach(([label, id]) => {
+        const qty = document.getElementById(id).value;
+        if (qty > 0) order += `${qty} ${label}, `;
+      });
+      order = order.trim().replace(/,$/, '');
       const extras = document.getElementById('extras').value.trim();
-      if (burritos.length > 0) {
-        const text = `Hi! I'd like to order the following burritos:%0A${encodeURIComponent(burritos)}%0AExtras/Notes: ${encodeURIComponent(extras)}`;
+      if (order.length > 0) {
+        const text = `Hi! I'd like to order:%0A${encodeURIComponent(order)}%0AExtras/Notes: ${encodeURIComponent(extras)}`;
         const url = `https://wa.me/15756370077?text=${text}`;
         window.open(url, '_blank');
       } else {
-        alert("Please write at least one burrito / Por favor escribe al menos un burrito.");
+        alert("Please select at least one burrito / Por favor selecciona al menos un burrito.");
       }
     }
   </script>
