@@ -111,3 +111,14 @@ footer.payment a {
   margin: 0.2em;
   display: inline-block;
 }
+.soda {
+  width: 100px;
+  height: 140px;
+  object-fit: contain;
+  border-radius: 12px;
+  background: #fff;
+  padding: 5px;
+  display: block;
+  margin: 0 auto;
+}
+
