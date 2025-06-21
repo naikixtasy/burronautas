@@ -49,22 +49,25 @@
   </div>
 </section>
 
+<section class="order-section">
+  <label for="telefono">📱 Número de Teléfono</label>
+  <input type="tel" id="telefono" placeholder="Ej. 575-000-0000" />
 
-  <section class="order-section">
-    <label for="telefono">📱 Número de Teléfono</label>
-    <input type="tel" id="telefono" placeholder="Ej. 575-000-0000" />
+  <label for="direccion">📍 Dirección de Entrega</label>
+  <input type="text" id="direccion" placeholder="Calle, número, colonia..." />
 
-    <label for="metodo">💳 Método de Pago</label>
-    <select id="metodo">
-      <option value="Efectivo">Efectivo</option>
-      <option value="Cash App $naiquia86">Cash App $naiquia86</option>
-      <option value="PayPal @Naiqui">PayPal @Naiqui</option>
-    </select>
+  <label for="metodo">💳 Método de Pago</label>
+  <select id="metodo">
+    <option value="Efectivo">Efectivo</option>
+    <option value="Cash App $naiquia86">Cash App $naiquia86</option>
+    <option value="PayPal @Naiqui">PayPal @Naiqui</option>
+  </select>
 
-    <label for="extras">📝 Extras o notas:</label>
-    <textarea id="extras" placeholder="Agrega instrucciones, combos o comentarios aquí..."></textarea>
-    <button onclick="sendOrder()">📲 Enviar Pedido por WhatsApp</button>
-  </section>
+  <label for="extras">📝 Extras o notas:</label>
+  <textarea id="extras" placeholder="Agrega instrucciones, combos o comentarios aquí..."></textarea>
+
+  <button onclick="enviarPedido()">📦 Enviar Pedido por WhatsApp</button>
+</section>
 
   <footer class="payment">
     <h3>Opciones de Pago:</h3>
@@ -111,5 +114,40 @@
       window.open(url, '_blank');
     }
   </script>
+<script>
+  function enviarPedido() {
+    const telefono = document.getElementById('telefono').value;
+    const direccion = document.getElementById('direccion').value;
+    const metodo = document.getElementById('metodo').value;
+    const extras = document.getElementById('extras').value;
+
+    const items = document.querySelectorAll('.menu-grid .item');
+    let pedido = "*🚀 Pedido Mission Burrito 3.0:*\n\n";
+
+    items.forEach(item => {
+      const nombre = item.querySelector('h3').innerText;
+      const cantidad = item.querySelector('input').value;
+      if (cantidad > 0) {
+        pedido += `• ${cantidad} x ${nombre}\n`;
+      }
+    });
+
+    pedido += `\n📞 *Teléfono:* ${telefono}`;
+    pedido += `\n📍 *Dirección:* ${direccion}`;
+    pedido += `\n💳 *Método de Pago:* ${metodo}`;
+    pedido += `\n📝 *Notas:* ${extras}`;
+
+    const numeroCliente = "15756370077";       // ← tu número real
+    const numeroMensajero = "15751234567";     // ← número del repartidor
+
+    const urlCliente = `https://wa.me/${numeroCliente}?text=${encodeURIComponent(pedido)}`;
+    const urlMensajero = `https://wa.me/${numeroMensajero}?text=${encodeURIComponent(pedido)}`;
+
+    // Abre WhatsApp para el cliente y el mensajero
+    window.open(urlCliente, '_blank');
+    window.open(urlMensajero, '_blank');
+  }
+</script>
+
 </body>
 </html>
