@@ -212,8 +212,17 @@
       <option value="Chile Relleno">Chile Relleno</option>
       <option value="Winnie">Winnie</option>
     </select>
+
     <label>Extras / Instrucciones:</label>
     <textarea id="extras" placeholder="📝 Add extras, instructions, drinks, etc. / Agrega extras, instrucciones, bebidas..."></textarea>
+
+    <label>Payment Method / Método de Pago:</label>
+    <select id="paymentMethod">
+      <option value="Cash App ($Naikia86)">Cash App ($Naikia86)</option>
+      <option value="PayPal (@Naiqui)">PayPal (@Naiqui)</option>
+      <option value="Efectivo">Efectivo</option>
+    </select>
+
     <button onclick="sendOrder()">📲 Send Order via WhatsApp</button>
   </div>
 
@@ -232,9 +241,10 @@
     function sendOrder() {
       const selected = Array.from(document.getElementById('burritos').selectedOptions).map(opt => opt.value);
       const extras = document.getElementById('extras').value;
+      const payment = document.getElementById('paymentMethod').value;
       if (selected.length > 0) {
         const burritosList = selected.join(', ');
-        const text = `Hi! I'd like to order the following burritos: ${burritosList}.%0AExtras/Notes: ${encodeURIComponent(extras)}`;
+        const text = `Hi! I'd like to order the following burritos: ${burritosList}.%0AExtras/Notes: ${encodeURIComponent(extras)}%0APayment Method: ${payment}`;
         const url = `https://wa.me/15756370077?text=${text}`;
         window.open(url, '_blank');
       } else {
