@@ -201,28 +201,10 @@
 
   <div class="order-section">
     <h2>Quick Order / Pedido Rápido</h2>
-    <label>Select Burritos (Hold Ctrl/Command to select multiple):</label>
-    <select multiple id="burritos" size="8">
-      <option value="Frijoles con queso">Frijoles con queso</option>
-      <option value="Rajas con queso">Rajas con queso</option>
-      <option value="Picadillo">Picadillo</option>
-      <option value="Puerco en Rojo">Puerco en Rojo</option>
-      <option value="Chicharrón Verde">Chicharrón Verde</option>
-      <option value="Mole">Mole</option>
-      <option value="Chile Relleno">Chile Relleno</option>
-      <option value="Winnie">Winnie</option>
-    </select>
-
+    <label>Enter Your Burrito Order (e.g., 2 Picadillo, 1 Mole):</label>
+    <textarea id="burritos" placeholder="Ejemplo: 2 Frijoles con queso, 1 Rajas con queso, 3 Winnie..."></textarea>
     <label>Extras / Instrucciones:</label>
     <textarea id="extras" placeholder="📝 Add extras, instructions, drinks, etc. / Agrega extras, instrucciones, bebidas..."></textarea>
-
-    <label>Payment Method / Método de Pago:</label>
-    <select id="paymentMethod">
-      <option value="Cash App ($Naikia86)">Cash App ($Naikia86)</option>
-      <option value="PayPal (@Naiqui)">PayPal (@Naiqui)</option>
-      <option value="Efectivo">Efectivo</option>
-    </select>
-
     <button onclick="sendOrder()">📲 Send Order via WhatsApp</button>
   </div>
 
@@ -239,16 +221,14 @@
 
   <script>
     function sendOrder() {
-      const selected = Array.from(document.getElementById('burritos').selectedOptions).map(opt => opt.value);
-      const extras = document.getElementById('extras').value;
-      const payment = document.getElementById('paymentMethod').value;
-      if (selected.length > 0) {
-        const burritosList = selected.join(', ');
-        const text = `Hi! I'd like to order the following burritos: ${burritosList}.%0AExtras/Notes: ${encodeURIComponent(extras)}%0APayment Method: ${payment}`;
+      const burritos = document.getElementById('burritos').value.trim();
+      const extras = document.getElementById('extras').value.trim();
+      if (burritos.length > 0) {
+        const text = `Hi! I'd like to order the following burritos:%0A${encodeURIComponent(burritos)}%0AExtras/Notes: ${encodeURIComponent(extras)}`;
         const url = `https://wa.me/15756370077?text=${text}`;
         window.open(url, '_blank');
       } else {
-        alert("Please select at least one burrito / Por favor selecciona al menos un burrito.");
+        alert("Please write at least one burrito / Por favor escribe al menos un burrito.");
       }
     }
   </script>
