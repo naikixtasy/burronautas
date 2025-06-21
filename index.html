@@ -4,17 +4,18 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Mission: Burrito 3.0</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f4f4f4;
-      color: #000;
+      background: linear-gradient(to bottom right, #fdf6f0, #ffebd2);
+      color: #333;
       margin: 0;
       padding: 0;
     }
 
     header {
-      background-color: #990000;
+      background-color: #7a0019;
       color: white;
       padding: 2em 1em;
       text-align: center;
@@ -33,10 +34,10 @@
 
     .menu {
       background-color: #fff;
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 1.5em;
       margin-bottom: 2em;
-      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.12);
     }
 
     h1, h2, h3 {
@@ -45,37 +46,75 @@
 
     details {
       margin-bottom: 1.5em;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      overflow: hidden;
     }
 
     summary {
       font-weight: bold;
       cursor: pointer;
-      padding: 0.5em;
-      background-color: #eee;
-      border-radius: 5px;
+      padding: 0.8em 1em;
+      background-color: #fcefe6;
+      display: flex;
+      align-items: center;
+      gap: 0.6em;
+      font-size: 1.1em;
+    }
+
+    summary:hover {
+      background-color: #ffdcc2;
+    }
+
+    summary::before {
+      content: "🌯";
     }
 
     .menu-img {
       max-width: 100%;
       height: auto;
       border-radius: 10px;
-      margin-top: 1em;
+      margin: 1em 0;
+      box-shadow: 0 0 6px rgba(0, 0, 0, 0.2);
     }
 
     .btn-whatsapp {
       background-color: #25D366;
       color: white;
-      padding: 1em 1.5em;
+      padding: 1em 1.8em;
       text-decoration: none;
-      border-radius: 5px;
-      display: inline-block;
-      margin-top: 1em;
+      border-radius: 50px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-weight: bold;
+      font-size: 1.3em;
+      box-shadow: 0 0 20px rgba(37,211,102,0.4);
+      animation: moveUpDown 2s infinite;
+      position: fixed;
+      bottom: 15px;
+      right: 15px;
+      z-index: 999;
+      transition: all 0.3s ease-in-out;
+    }
+
+    .btn-whatsapp:hover {
+      background-color: #1ebe5d;
+    }
+
+    .btn-whatsapp i {
+      margin-right: 10px;
+    }
+
+    @keyframes moveUpDown {
+      0% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0); }
     }
 
     .price-section {
       background-color: #fffbe6;
-      border: 2px dashed #990000;
+      border: 2px dashed #7a0019;
       padding: 1em;
       border-radius: 8px;
       margin-top: 2em;
@@ -91,13 +130,13 @@
     }
 
     ul.price-list li::before {
-      content: "🌯 ";
+      content: "🍽️ ";
     }
 
     footer {
       text-align: center;
       padding: 1em;
-      background-color: #990000;
+      background-color: #7a0019;
       color: white;
     }
 
@@ -107,7 +146,7 @@
     }
 
     .lang-toggle button {
-      background-color: #990000;
+      background-color: #7a0019;
       color: white;
       border: none;
       padding: 0.5em 1em;
@@ -116,87 +155,59 @@
       border-radius: 5px;
       margin: 0 0.5em;
     }
+
+    .order-section {
+      text-align: center;
+      margin-top: 3em;
+    }
+
+    .order-section h2 {
+      font-size: 1.5em;
+    }
+
+    .order-section select, .order-section button {
+      font-size: 1em;
+      padding: 0.5em;
+      margin: 0.5em;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    .order-section button {
+      background-color: #25D366;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
-  <header>
-    <img src="logomb.png" alt="Mission: Burrito 3.0 logo">
-    <p>Handmade tortillas · Juárez-style flavors · Orders via WhatsApp</p>
-  </header>
+  <div class="order-section">
+    <h2>Quick Order</h2>
+    <select id="burrito">
+      <option value="">Select a burrito...</option>
+      <option value="Picadillo">Picadillo</option>
+      <option value="Frijoles con queso">Frijoles con queso</option>
+      <option value="Winnie">Winnie</option>
+      <option value="Chicharrón verde">Chicharrón verde</option>
+      <option value="Puerco en rojo">Puerco en rojo</option>
+    </select>
+    <button onclick="sendOrder()">Send Order via WhatsApp</button>
+  </div>
 
-  <section class="lang-toggle">
-    <button onclick="switchLang('en')">🇺🇸 English</button>
-    <button onclick="switchLang('es')">🇲🇽 Español</button>
-  </section>
-
-  <section class="menu" id="menu-en">
-    <h2>📅 Weekly Menu with Ingredients (English)</h2>
-    <details><summary>Red Pork with Potatoes</summary><p>Ingredients: pork chunks in red chile sauce, potatoes, garlic, handmade tortilla.</p><p>💲 $7.00</p><img class="menu-img" src="asado%20de%20puerco.png" alt="Red Pork"></details>
-    <details><summary>Green Pork with Potatoes</summary><p>Ingredients: pork chunks in green tomatillo sauce, potatoes, garlic, handmade tortilla.</p><p>💲 $7.00</p></details>
-    <details><summary>Chicharrón in Green Sauce</summary><p>Ingredients: pork cracklings, green chile sauce, garlic, handmade tortilla.</p><p>💲 $7.00</p><img class="menu-img" src="chicharron.png" alt="Chicharron"></details>
-    <details><summary>Red Ground Beef</summary><p>Ingredients: ground beef, red chile, tomato, garlic, handmade tortilla.</p><p>💲 $7.00</p></details>
-    <details><summary>Green Ground Beef</summary><p>Ingredients: ground beef, green chile, onion, spices, handmade tortilla.</p><p>💲 $7.00</p></details>
-    <details><summary>Red Arriero (Eggs & Chile)</summary><p>Ingredients: scrambled eggs, red chile sauce, cheese, handmade tortilla.</p><p>💲 $6.00</p></details>
-    <details><summary>Green Arriero (Eggs & Chile)</summary><p>Ingredients: scrambled eggs, green chile sauce, cheese, handmade tortilla.</p><p>💲 $6.00</p></details>
-    <details><summary>Winnie Burrito</summary><p>Ingredients: sliced sausage, refried beans, handmade tortilla.</p><p>💲 $7.00</p><img class="menu-img" src="winnie.png" alt="Winnie"></details>
-    <details><summary>Beans & Cheese</summary><p>Ingredients: refried beans, yellow cheese, handmade tortilla.</p><p>💲 $6.00</p><img class="menu-img" src="frijolesconqueso.png" alt="Beans"></details>
-    <details><summary>Rajas with Cream</summary><p>Ingredients: roasted chile strips, sour cream, corn, onion, handmade tortilla.</p><p>💲 $6.00</p><img class="menu-img" src="rajasconqueso.png" alt="Rajas"></details>
-    <details><summary>Picadillo</summary><p>Ingredients: ground beef, potatoes, tomato, onion, handmade tortilla.</p><p>💲 $7.00</p><img class="menu-img" src="picadillo.png" alt="Picadillo"></details>
-  </section>
-
-  <section class="menu" id="menu-es" style="display:none">
-    <h2>📅 Menú semanal con ingredientes (Español)</h2>
-    <details><summary>Asado de puerco con papas</summary><p>Ingredientes: carne de puerco en salsa roja con papas, ajo y tortilla hecha a mano.</p><p>💲 $7.00</p><img class="menu-img" src="asado%20de%20puerco.png" alt="Asado"></details>
-    <details><summary>Puerco en verde con papas</summary><p>Ingredientes: carne de puerco en salsa verde de tomatillo, papas, ajo y tortilla hecha a mano.</p><p>💲 $7.00</p></details>
-    <details><summary>Chicharrón en salsa verde</summary><p>Ingredientes: chicharrón prensado, salsa verde, ajo y tortilla hecha a mano.</p><p>💲 $7.00</p><img class="menu-img" src="chicharron.png" alt="Chicharron"></details>
-    <details><summary>Carne molida en rojo</summary><p>Ingredientes: carne molida, chile rojo, jitomate, ajo y tortilla hecha a mano.</p><p>💲 $7.00</p></details>
-    <details><summary>Carne molida en verde</summary><p>Ingredientes: carne molida, chile verde, cebolla, especias y tortilla hecha a mano.</p><p>💲 $7.00</p></details>
-    <details><summary>Arriero rojo (huevo y chile)</summary><p>Ingredientes: huevo revuelto, chile rojo, queso y tortilla hecha a mano.</p><p>💲 $6.00</p></details>
-    <details><summary>Arriero verde (huevo y chile)</summary><p>Ingredientes: huevo revuelto, chile verde, queso y tortilla hecha a mano.</p><p>💲 $6.00</p></details>
-    <details><summary>Winnie</summary><p>Ingredientes: salchicha en rodajas, frijoles refritos y tortilla hecha a mano.</p><p>💲 $7.00</p><img class="menu-img" src="winnie.png" alt="Winnie"></details>
-    <details><summary>Frijoles con queso</summary><p>Ingredientes: frijoles refritos, queso amarillo, tortilla hecha a mano.</p><p>💲 $6.00</p><img class="menu-img" src="frijolesconqueso.png" alt="Frijoles"></details>
-    <details><summary>Rajas con crema</summary><p>Ingredientes: tiras de chile asado, crema, elote, cebolla, tortilla hecha a mano.</p><p>💲 $6.00</p><img class="menu-img" src="rajasconqueso.png" alt="Rajas"></details>
-    <details><summary>Picadillo</summary><p>Ingredientes: carne molida, papas, jitomate, cebolla, tortilla hecha a mano.</p><p>💲 $7.00</p><img class="menu-img" src="picadillo.png" alt="Picadillo"></details>
-  </section>
-
-  <section class="menu price-section">
-    <h3>💲 Prices</h3>
-    <ul class="price-list">
-      <li>Regular burrito (no meat): $6.00</li>
-      <li>Meat burrito (beef or pork): $7.00</li>
-      <li>Combo (1 burrito + drink): $8.00</li>
-      <li>2 burritos (any kind): $11.00</li>
-      <li>3 burritos: $16.00</li>
-      <li>Drink only (soda or agua fresca): $2.00</li>
-    </ul>
-    <p><strong>🌟 Promo:</strong> Buy 5 burritos, get 1 FREE! 🎉</p>
-  </section>
-
-  <section class="menu">
-    <h2>🎓 About Me</h2>
-    <p>
-      Hello! My name is Naiqui Armendariz, and I’m currently a full-time university student studying Mechanical and Aerospace Engineering.
-      I'm funding my education one burrito at a time — made fresh daily with love and tradition straight from the borderlands.
-      Your support helps me continue my journey toward becoming an engineer and (hopefully!) one day an astronaut. 🚀✨
-    </p>
-    <p>
-      ¡Hola! Mi nombre es Naiqui Armendariz y actualmente soy estudiante de tiempo completo en Ingeniería Mecánica y Aeroespacial.
-      Estoy pagando mis estudios un burrito a la vez — hechos a mano con amor y con la tradición de nuestra querida frontera.
-      Con tu apoyo puedo seguir mi camino para convertirme en ingeniera y (¡ojalá!) algún día en astronauta. 🚀✨
-    </p>
-    <a class="btn-whatsapp" href="https://wa.me/15756370077?text=Hola%2C%20quiero%20hacer%20un%20pedido%20de%20burritos%20caseros" target="_blank">
-      📲 Order via WhatsApp · Ordenar por WhatsApp
-    </a>
-  </section>
-
-  <footer>
-    <p>© 2025 Mission: Burrito 3.0 · Las Cruces, NM · Handmade with 💖 and science</p>
-  </footer>
+  <a class="btn-whatsapp" href="https://wa.me/15756370077?text=Hello!%20I'd%20like%20to%20order%20some%20burritos%20from%20Mission%3A%20Burrito%203.0!" target="_blank">
+    <i class="fab fa-whatsapp"></i> Order Now
+  </a>
 
   <script>
-    function switchLang(lang) {
-      document.getElementById('menu-en').style.display = (lang === 'en') ? 'block' : 'none';
-      document.getElementById('menu-es').style.display = (lang === 'es') ? 'block' : 'none';
+    function sendOrder() {
+      const burrito = document.getElementById('burrito').value;
+      if (burrito) {
+        const url = `https://wa.me/15756370077?text=Hi!%20I'd%20like%20to%20order%20a%20${encodeURIComponent(burrito)}%20burrito%20from%20Mission%3A%20Burrito%203.0!`;
+        window.open(url, '_blank');
+      } else {
+        alert("Please select a burrito to order.");
+      }
     }
   </script>
 </body>
