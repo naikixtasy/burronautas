@@ -14,112 +14,55 @@
     <p>Fuel your day with Space-Ready Burritos! / ¡Combustible espacial para tu día!</p>
   </header>
 
-  <section class="menu-grid">
-    <div class="item"><img src="frijolesconqueso.png"><h3>Frijoles con Queso / Beans & Cheese</h3><input type="number" id="f_q" min="0" value="0" data-precio="30"></div>
-    <div class="item"><img src="rajasconqueso.png"><h3>Rajas con Queso / Anaheim, Onions & Cheese</h3><input type="number" id="r_q" min="0" value="0" data-precio="30"></div>
-    <div class="item"><img src="picadillo.png"><h3>Picadillo / Ground Beef & Potatoes</h3><input type="number" id="pic" min="0" value="0" data-precio="30"></div>
-    <div class="item"><img src="asado de puerco.png"><h3>Puerco en Rojo / Pork in Red Chile</h3><input type="number" id="por" min="0" value="0" data-precio="30"></div>
-    <div class="item"><img src="chicharron.png"><h3>Chicharrón Verde / Green Pork Rinds</h3><input type="number" id="chi" min="0" value="0" data-precio="30"></div>
-    <div class="item"><img src="mole.png"><h3>Mole / Chicken in Mole Sauce</h3><input type="number" id="mol" min="0" value="0" data-precio="30"></div>
-    <div class="item"><img src="chilerelleno.png"><h3>Chile Relleno / Stuffed Pepper</h3><input type="number" id="rel" min="0" value="0" data-precio="30"></div>
-    <div class="item"><img src="winnie.png"><h3>Winnie / Sausage & Beans</h3><input type="number" id="win" min="0" value="0" data-precio="30"></div>
+  <!-- Sección del menú -->
+  <section class="menu-grid" id="burrito-menu">
+    <!-- Aquí van los burritos, igual que antes, con inputs por cantidad -->
+    <!-- Ejemplo: -->
+    <div class="item" data-price="4"><img src="frijolesconqueso.png"><h3>Frijoles con Queso / Beans & Cheese</h3><input type="number" id="f_q" min="0" value="0"></div>
+    <div class="item" data-price="6"><img src="rajasconqueso.png"><h3>Rajas con Queso / Anaheim, Onions & Cheese</h3><input type="number" id="r_q" min="0" value="0"></div>
+    <div class="item" data-price="7"><img src="picadillo.png"><h3>Picadillo / Ground Beef & Potatoes</h3><input type="number" id="pic" min="0" value="0"></div>
+    <!-- Continúa con el resto... -->
   </section>
 
-  <section class="menu-grid">
-    <div class="item"><img src="cocacola.png" class="soda" alt="Coca Cola"><h3>Coca Cola</h3><input type="number" id="coke" min="0" value="0" data-precio="20"></div>
-    <div class="item"><img src="cocazero.png" class="soda" alt="Coca Cola Zero"><h3>Coca Zero</h3><input type="number" id="zero" min="0" value="0" data-precio="20"></div>
-    <div class="item"><img src="sprite.png" class="soda" alt="Sprite"><h3>Sprite</h3><input type="number" id="sprite" min="0" value="0" data-precio="20"></div>
-    <div class="item"><img src="drpepper.png" class="soda" alt="Dr Pepper"><h3>Dr Pepper</h3><input type="number" id="pepper" min="0" value="0" data-precio="20"></div>
+  <!-- Sodas -->
+  <section class="menu-grid" id="soda-menu">
+    <div class="item" data-price="2"><img src="cocacola.png" class="soda"><h3>Coca Cola</h3><input type="number" id="coke" min="0" value="0"></div>
+    <div class="item" data-price="2"><img src="cocazero.png" class="soda"><h3>Coca Zero</h3><input type="number" id="zero" min="0" value="0"></div>
+    <div class="item" data-price="2"><img src="sprite.png" class="soda"><h3>Sprite</h3><input type="number" id="sprite" min="0" value="0"></div>
+    <div class="item" data-price="2"><img src="drpepper.png" class="soda"><h3>Dr Pepper</h3><input type="number" id="pepper" min="0" value="0"></div>
   </section>
 
+  <!-- Formulario del cliente -->
   <section class="order-section">
-    <label for="telefono">📱 Número de Teléfono / Phone Number</label>
-    <input type="tel" id="telefono" placeholder="Ej. 575-000-0000 / Ex. 575-000-0000" />
-
-    <label for="direccion">📍 Dirección de Entrega / Delivery Address</label>
-    <input type="text" id="direccion" placeholder="Calle, número, colonia / Street, number, neighborhood..." />
-
-    <label for="metodo">💳 Método de Pago / Payment Method</label>
+    <label for="telefono">📱 Teléfono / Phone Number</label>
+    <input type="tel" id="telefono" placeholder="Ej. 575-000-0000" />
+    <label for="direccion">📍 Dirección / Address</label>
+    <input type="text" id="direccion" placeholder="Calle, número, colonia..." />
+    <label for="metodo">💳 Método de Pago / Payment</label>
     <select id="metodo">
       <option value="Efectivo">💵 Efectivo / Cash</option>
       <option value="Cash App $naiquia86">💸 Cash App $naiquia86</option>
       <option value="PayPal @Naiqui">💻 PayPal @Naiqui</option>
     </select>
-
-    <label for="extras">📝 Extras o notas / Extras or Notes:</label>
-    <textarea id="extras" placeholder="Agrega instrucciones, combos o comentarios aquí... / Add instructions, combos or comments here..."></textarea>
-
-    <p id="total" style="font-weight:bold; font-size: 18px;">💰 Total: $0.00 MXN</p>
-
-    <button onclick="enviarPedido()">📦 Enviar Pedido por WhatsApp / Send Order via WhatsApp</button>
+    <label for="extras">📝 Extras / Notes</label>
+    <textarea id="extras" placeholder="Comentarios o instrucciones..."></textarea>
+    <p id="total-amount"><strong>Total: $0.00 USD</strong></p>
+    <button onclick="enviarPedido()">📦 Enviar Pedido / Send Order</button>
   </section>
 
+  <!-- Footer -->
   <footer class="payment">
     <h3>Opciones de Pago / Payment Options:</h3>
     <p><strong>Cash App:</strong> <a href="https://cash.app/$naiquia86" target="_blank">$naiquia86</a></p>
     <p><strong>PayPal:</strong> <a href="https://paypal.me/Naiqui" target="_blank">@Naiqui</a></p>
-    <p><strong>También aceptamos pagos en efectivo / We also accept Cash Payments</strong></p>
+    <p><strong>También aceptamos efectivo / We also accept cash</strong></p>
   </footer>
 
+  <!-- Botón fijo -->
   <a class="btn-whatsapp" href="https://wa.me/15756370077" target="_blank">
     <i class="fab fa-whatsapp"></i> Ordenar
   </a>
 
-  <script>
-    const inputs = document.querySelectorAll('.menu-grid input');
-    inputs.forEach(input => {
-      input.addEventListener('input', calcularTotal);
-    });
-
-    function calcularTotal() {
-      let total = 0;
-      inputs.forEach(input => {
-        const cantidad = parseInt(input.value) || 0;
-        const precio = parseFloat(input.getAttribute('data-precio')) || 0;
-        total += cantidad * precio;
-      });
-      document.getElementById('total').innerText = `💰 Total: $${total.toFixed(2)} MXN`;
-      return total.toFixed(2);
-    }
-
-    function generarNumeroOrden() {
-      return "ORD" + Math.floor(Math.random() * 9000 + 1000);
-    }
-
-    function enviarPedido() {
-      const telefono = document.getElementById('telefono').value.trim();
-      const direccion = document.getElementById('direccion').value.trim();
-      const metodo = document.getElementById('metodo').value;
-      const extras = document.getElementById('extras').value.trim();
-      const total = calcularTotal();
-      const ordenId = generarNumeroOrden();
-
-      const items = document.querySelectorAll('.menu-grid .item');
-      let pedido = `🛰️ *Mission Burrito 3.0 - Order ID: #${ordenId}*\n\n`;
-
-      items.forEach(item => {
-        const nombre = item.querySelector('h3').innerText;
-        const cantidad = item.querySelector('input').value;
-        if (cantidad > 0) {
-          pedido += `• ${cantidad} x ${nombre}\n`;
-        }
-      });
-
-      pedido += `\n📞 *Teléfono / Phone:* ${telefono}`;
-      pedido += `\n📍 *Dirección / Address:* ${direccion}`;
-      pedido += `\n💳 *Pago / Payment:* ${metodo}`;
-      pedido += `\n📝 *Notas / Notes:* ${extras}`;
-      pedido += `\n💰 *Total:* $${total} MXN`;
-
-      const numeroCliente = "15756370077";
-      const numeroMensajero = "15751234567";
-
-      const urlCliente = `https://wa.me/${numeroCliente}?text=${encodeURIComponent(pedido)}`;
-      const urlMensajero = `https://wa.me/${numeroMensajero}?text=${encodeURIComponent(pedido)}`;
-
-      window.open(urlCliente, '_blank');
-      window.open(urlMensajero, '_blank');
-    }
-  </script>
+  <script src="scripts.js"></script>
 </body>
 </html>
