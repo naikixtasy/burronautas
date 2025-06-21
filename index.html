@@ -8,22 +8,17 @@
   <style>
     body {
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to bottom right, #fff3e0, #ffe0b2);
+      background: #fff;
       color: #333;
       margin: 0;
       padding: 0;
     }
 
     header {
-      background-color: #ff6f00;
+      background-color: #8c0b42;
       color: white;
       padding: 2em 1em;
       text-align: center;
-    }
-
-    header img {
-      max-width: 220px;
-      margin-bottom: 1em;
     }
 
     section {
@@ -58,15 +53,10 @@
       margin: 0.3em 0;
     }
 
-    .item p {
-      font-size: 0.9em;
-      color: #666;
-    }
-
     .counter-row {
       display: flex;
-      justify-content: center;
       flex-wrap: wrap;
+      justify-content: center;
       gap: 1em;
       margin: 1em 0;
     }
@@ -89,7 +79,7 @@
     .order-section {
       text-align: center;
       padding: 2em;
-      background: #fff;
+      background: #cfc7bd;
       border-radius: 20px;
       margin: 2em auto;
       max-width: 700px;
@@ -102,7 +92,8 @@
       font-weight: bold;
     }
 
-    .order-section textarea, .order-section button {
+    .order-section textarea,
+    .order-section button {
       padding: 0.7em;
       margin: 0.5em;
       font-size: 1em;
@@ -111,12 +102,8 @@
       max-width: 500px;
     }
 
-    .order-section textarea {
-      min-height: 80px;
-    }
-
     .order-section button {
-      background-color: #25D366;
+      background-color: #A7BABE;
       color: white;
       font-weight: bold;
       border: none;
@@ -168,15 +155,11 @@
       padding: 0;
     }
 
-    .prices li {
-      margin: 0.5em 0;
-    }
-
     .payment a {
       display: inline-block;
       margin: 0.5em;
       padding: 0.7em 1.5em;
-      background-color: #ff6f00;
+      background-color: #8c0b42;
       color: white;
       border-radius: 8px;
       text-decoration: none;
@@ -191,7 +174,7 @@
 
   <section>
     <div class="menu-grid">
-      <div class="item"><img src="frijolesconqueso.png"><h3>Frijoles con queso</h3><p>Beans & Cheese</p></div>
+      <div class="item"><img src="frijolesconqueso.png"><h3>Frijoles con Queso</h3><p>Beans & Cheese</p></div>
       <div class="item"><img src="picadillo.png"><h3>Picadillo</h3><p>Beef & Potatoes</p></div>
       <div class="item"><img src="winnie.png"><h3>Winnie</h3><p>Sliced Hot Dog</p></div>
       <div class="item"><img src="chicharron.png"><h3>Chicharrón Verde</h3><p>Pork Rinds</p></div>
@@ -218,52 +201,64 @@
   <div class="order-section">
     <h2>Quick Order / Pedido Rápido</h2>
     <div class="counter-row">
-      <div class="counter-item">Frijoles con Queso<input type="number" id="f_q" min="0" value="0"></div>
-      <div class="counter-item">Rajas con Queso<input type="number" id="r_q" min="0" value="0"></div>
+      <div class="counter-item">Frijoles<input type="number" id="f_q" min="0" value="0"></div>
+      <div class="counter-item">Rajas<input type="number" id="r_q" min="0" value="0"></div>
       <div class="counter-item">Picadillo<input type="number" id="pic" min="0" value="0"></div>
-      <div class="counter-item">Puerco en Rojo<input type="number" id="por" min="0" value="0"></div>
-      <div class="counter-item">Chicharrón Verde<input type="number" id="chi" min="0" value="0"></div>
+      <div class="counter-item">Puerco<input type="number" id="por" min="0" value="0"></div>
+      <div class="counter-item">Chicharrón<input type="number" id="chi" min="0" value="0"></div>
       <div class="counter-item">Mole<input type="number" id="mol" min="0" value="0"></div>
-      <div class="counter-item">Chile Relleno<input type="number" id="rel" min="0" value="0"></div>
+      <div class="counter-item">Relleno<input type="number" id="rel" min="0" value="0"></div>
       <div class="counter-item">Winnie<input type="number" id="win" min="0" value="0"></div>
+      <div class="counter-item">Bebida<input type="number" id="beb" min="0" value="0"></div>
     </div>
     <label>Extras / Instrucciones:</label>
-    <textarea id="extras" placeholder="📝 Add extras, instructions, drinks, etc. / Agrega extras, instrucciones, bebidas..."></textarea>
-    <button onclick="sendOrder()">📲 Send Order via WhatsApp</button>
+    <textarea id="extras" placeholder="Agrega extras, instrucciones, bebidas..."></textarea>
+    <button onclick="sendOrder()">📲 Enviar por WhatsApp</button>
   </div>
 
   <div class="payment">
-    <h3>💳 Payment Options / Opciones de Pago</h3>
+    <h3>💳 Opciones de Pago</h3>
     <p><strong>Cash App:</strong> <a href="https://cash.app/$Naikia86" target="_blank">$Naikia86</a></p>
     <p><strong>PayPal:</strong> <a href="https://paypal.me/Naiqui" target="_blank">@Naiqui</a></p>
-    <p><strong>We also accept cash payments! / ¡También aceptamos pagos en efectivo!</strong></p>
+    <p><strong>¡También aceptamos efectivo!</strong></p>
   </div>
 
   <a class="btn-whatsapp" href="https://wa.me/15756370077" target="_blank">
-    <i class="fab fa-whatsapp"></i> Order Now
+    <i class="fab fa-whatsapp"></i> Pedir Ahora
   </a>
 
   <script>
     function sendOrder() {
-      let order = '';
       const items = [
-        ['Frijoles con Queso', 'f_q'], ['Rajas con Queso', 'r_q'], ['Picadillo', 'pic'],
-        ['Puerco en Rojo', 'por'], ['Chicharrón Verde', 'chi'], ['Mole', 'mol'],
-        ['Chile Relleno', 'rel'], ['Winnie', 'win']
+        ['Frijoles con Queso', 'f_q', 4],
+        ['Rajas con Queso', 'r_q', 5],
+        ['Picadillo', 'pic', 6],
+        ['Puerco en Rojo', 'por', 6],
+        ['Chicharrón Verde', 'chi', 6],
+        ['Mole', 'mol', 6],
+        ['Chile Relleno', 'rel', 6],
+        ['Winnie', 'win', 6],
+        ['Bebida', 'beb', 1.5]
       ];
-      items.forEach(([label, id]) => {
-        const qty = document.getElementById(id).value;
-        if (qty > 0) order += `${qty} ${label}, `;
-      });
-      order = order.trim().replace(/,$/, '');
-      const extras = document.getElementById('extras').value.trim();
-      if (order.length > 0) {
-        const text = `Hi! I'd like to order:%0A${encodeURIComponent(order)}%0AExtras/Notes: ${encodeURIComponent(extras)}`;
-        const url = `https://wa.me/15756370077?text=${text}`;
-        window.open(url, '_blank');
-      } else {
-        alert("Please select at least one burrito / Por favor selecciona al menos un burrito.");
+
+      let order = '';
+      let total = 0;
+      for (const [label, id, price] of items) {
+        const qty = parseInt(document.getElementById(id).value) || 0;
+        if (qty > 0) {
+          order += `${qty} x ${label}, `;
+          total += qty * price;
+        }
       }
+
+      const extras = document.getElementById('extras').value.trim();
+      if (!order) {
+        alert("Por favor selecciona al menos un burrito o bebida.");
+        return;
+      }
+
+      const finalMessage = `Hola! Quisiera ordenar:%0A${encodeURIComponent(order)}%0AExtras: ${encodeURIComponent(extras)}%0ATotal estimado: $${total.toFixed(2)}`;
+      window.open(`https://wa.me/15756370077?text=${finalMessage}`, '_blank');
     }
   </script>
 </body>
