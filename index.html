@@ -50,24 +50,25 @@
 </section>
 
 <section class="order-section">
-  <label for="telefono">📱 Número de Teléfono</label>
-  <input type="tel" id="telefono" placeholder="Ej. 575-000-0000" />
+  <label for="telefono">📱 Número de Teléfono / Phone Number</label>
+  <input type="tel" id="telefono" placeholder="Ej. 575-000-0000 / Ex. 575-000-0000" />
 
-  <label for="direccion">📍 Dirección de Entrega</label>
-  <input type="text" id="direccion" placeholder="Calle, número, colonia..." />
+  <label for="direccion">📍 Dirección de Entrega / Delivery Address</label>
+  <input type="text" id="direccion" placeholder="Calle, número, colonia / Street, number, neighborhood..." />
 
-  <label for="metodo">💳 Método de Pago</label>
+  <label for="metodo">💳 Método de Pago / Payment Method</label>
   <select id="metodo">
-    <option value="Efectivo">Efectivo</option>
-    <option value="Cash App $naiquia86">Cash App $naiquia86</option>
-    <option value="PayPal @Naiqui">PayPal @Naiqui</option>
+    <option value="Efectivo">💵 Efectivo / Cash</option>
+    <option value="Cash App $naiquia86">💸 Cash App $naiquia86</option>
+    <option value="PayPal @Naiqui">💻 PayPal @Naiqui</option>
   </select>
 
-  <label for="extras">📝 Extras o notas:</label>
-  <textarea id="extras" placeholder="Agrega instrucciones, combos o comentarios aquí..."></textarea>
+  <label for="extras">📝 Extras o notas / Extras or Notes:</label>
+  <textarea id="extras" placeholder="Agrega instrucciones, combos o comentarios aquí... / Add instructions, combos or comments here..."></textarea>
 
-  <button onclick="enviarPedido()">📦 Enviar Pedido por WhatsApp</button>
+  <button onclick="enviarPedido()">📦 Enviar Pedido por WhatsApp / Send Order via WhatsApp</button>
 </section>
+
 
   <footer class="payment">
     <h3>Opciones de Pago:</h3>
@@ -122,7 +123,7 @@
     const extras = document.getElementById('extras').value;
 
     const items = document.querySelectorAll('.menu-grid .item');
-    let pedido = "*🚀 Pedido Mission Burrito 3.0:*\n\n";
+    let pedido = "*🚀 Mission Burrito 3.0 Order / Pedido:*\n\n";
 
     items.forEach(item => {
       const nombre = item.querySelector('h3').innerText;
@@ -132,18 +133,17 @@
       }
     });
 
-    pedido += `\n📞 *Teléfono:* ${telefono}`;
-    pedido += `\n📍 *Dirección:* ${direccion}`;
-    pedido += `\n💳 *Método de Pago:* ${metodo}`;
-    pedido += `\n📝 *Notas:* ${extras}`;
+    pedido += `\n📞 *Teléfono / Phone:* ${telefono}`;
+    pedido += `\n📍 *Dirección / Address:* ${direccion}`;
+    pedido += `\n💳 *Pago / Payment:* ${metodo}`;
+    pedido += `\n📝 *Notas / Notes:* ${extras}`;
 
-    const numeroCliente = "15756370077";       // ← tu número real
-    const numeroMensajero = "15751234567";     // ← número del repartidor
+    const numeroCliente = "15756370077";       // Tu número de contacto
+    const numeroMensajero = "15751234567";     // Número del mensajero
 
     const urlCliente = `https://wa.me/${numeroCliente}?text=${encodeURIComponent(pedido)}`;
     const urlMensajero = `https://wa.me/${numeroMensajero}?text=${encodeURIComponent(pedido)}`;
 
-    // Abre WhatsApp para el cliente y el mensajero
     window.open(urlCliente, '_blank');
     window.open(urlMensajero, '_blank');
   }
