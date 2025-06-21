@@ -73,6 +73,13 @@
       box-shadow: 0 8px 20px rgba(0,0,0,0.1);
     }
 
+    .order-section label {
+      display: block;
+      margin-top: 1em;
+      font-weight: bold;
+    }
+
+    .order-section input[type="number"],
     .order-section select, .order-section textarea, .order-section button {
       padding: 0.7em;
       margin: 0.5em;
@@ -142,6 +149,22 @@
     .prices li {
       margin: 0.5em 0;
     }
+
+    .payment {
+      text-align: center;
+      margin-top: 2em;
+      font-size: 1em;
+    }
+
+    .payment a {
+      display: inline-block;
+      margin: 0.5em;
+      padding: 0.7em 1.5em;
+      background-color: #ff6f00;
+      color: white;
+      border-radius: 8px;
+      text-decoration: none;
+    }
   </style>
 </head>
 <body>
@@ -166,29 +189,39 @@
   <div class="prices">
     <h2>💲 Prices / Precios</h2>
     <ul>
-      <li>Basic Burrito (Frijoles con Queso, Rajas): $3.50</li>
-      <li>Meat Burritos (Picadillo, Puerco, Chicharrón, Mole, Chile Relleno, Winnie): $4.50</li>
+      <li>Basic Burrito (Frijoles con Queso): $4.00</li>
+      <li>Vegetarian (Rajas): $5.00</li>
+      <li>Meat Burritos (Picadillo, Puerco, Chicharrón, Mole, Chile Relleno, Winnie): $6.00</li>
       <li>Add Cheese 🧀: +$0.50</li>
       <li>Add Drink 🥤: +$1.50</li>
-      <li>Special Combo (Burrito + Drink + Sweet): $6.50</li>
+      <li>Special Combo (Any Burrito + Drink): $7.00</li>
+      <li>Promo: 2 Burritos + 2 Drinks = $12.00</li>
     </ul>
   </div>
 
   <div class="order-section">
     <h2>Quick Order / Pedido Rápido</h2>
-    <select id="burrito">
-      <option value="">🌯 Choose your burrito / Elige tu burrito</option>
+    <label>Select Burritos (Hold Ctrl/Command to select multiple):</label>
+    <select multiple id="burritos" size="8">
       <option value="Frijoles con queso">Frijoles con queso</option>
-      <option value="Picadillo">Picadillo</option>
-      <option value="Winnie">Winnie</option>
-      <option value="Chicharrón Verde">Chicharrón Verde</option>
-      <option value="Puerco en Rojo">Puerco en Rojo</option>
-      <option value="Mole">Mole</option>
       <option value="Rajas con queso">Rajas con queso</option>
+      <option value="Picadillo">Picadillo</option>
+      <option value="Puerco en Rojo">Puerco en Rojo</option>
+      <option value="Chicharrón Verde">Chicharrón Verde</option>
+      <option value="Mole">Mole</option>
       <option value="Chile Relleno">Chile Relleno</option>
+      <option value="Winnie">Winnie</option>
     </select>
+    <label>Extras / Instrucciones:</label>
     <textarea id="extras" placeholder="📝 Add extras, instructions, drinks, etc. / Agrega extras, instrucciones, bebidas..."></textarea>
     <button onclick="sendOrder()">📲 Send Order via WhatsApp</button>
+  </div>
+
+  <div class="payment">
+    <h3>💳 Payment Options / Opciones de Pago</h3>
+    <p><strong>Cash App:</strong> <a href="https://cash.app/$Naikia86" target="_blank">$Naikia86</a></p>
+    <p><strong>PayPal:</strong> <a href="https://paypal.me/Naiqui" target="_blank">@Naiqui</a></p>
+    <p><strong>We also accept cash payments! / ¡También aceptamos pagos en efectivo!</strong></p>
   </div>
 
   <a class="btn-whatsapp" href="https://wa.me/15756370077" target="_blank">
@@ -197,14 +230,15 @@
 
   <script>
     function sendOrder() {
-      const burrito = document.getElementById('burrito').value;
+      const selected = Array.from(document.getElementById('burritos').selectedOptions).map(opt => opt.value);
       const extras = document.getElementById('extras').value;
-      if (burrito) {
-        const text = `Hi! I'd like to order a ${burrito} burrito.%0AExtras/Notes: ${encodeURIComponent(extras)}`;
+      if (selected.length > 0) {
+        const burritosList = selected.join(', ');
+        const text = `Hi! I'd like to order the following burritos: ${burritosList}.%0AExtras/Notes: ${encodeURIComponent(extras)}`;
         const url = `https://wa.me/15756370077?text=${text}`;
         window.open(url, '_blank');
       } else {
-        alert("Please select a burrito to order / Por favor selecciona un burrito.");
+        alert("Please select at least one burrito / Por favor selecciona al menos un burrito.");
       }
     }
   </script>
