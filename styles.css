@@ -9,12 +9,7 @@ body {
 
 header {
   background-color: rgba(0, 0, 0, 0.5);
-  padding: 1.5rem;
-}
-
-header img {
-  height: 80px;
-  margin-bottom: 0.5rem;
+  padding: 2rem 1rem 1rem;
 }
 
 header h1 {
@@ -22,14 +17,10 @@ header h1 {
   margin: 0.5rem 0;
 }
 
-header p {
-  font-size: 1rem;
-  color: #ccc;
-}
 .big-logo {
   width: 280px;
   max-width: 90%;
-  margin: 20px auto;
+  margin: 15px auto 10px;
   display: block;
   transition: transform 0.3s ease;
 }
@@ -38,6 +29,11 @@ header p {
   transform: scale(1.05);
 }
 
+header p {
+  font-size: 1rem;
+  color: #ccc;
+  font-style: italic;
+}
 
 .menu-grid {
   display: grid;
