@@ -26,6 +26,18 @@ header p {
   font-size: 1rem;
   color: #ccc;
 }
+.big-logo {
+  width: 280px;
+  max-width: 90%;
+  margin: 20px auto;
+  display: block;
+  transition: transform 0.3s ease;
+}
+
+.big-logo:hover {
+  transform: scale(1.05);
+}
+
 
 .menu-grid {
   display: grid;
