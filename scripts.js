@@ -69,10 +69,11 @@
 
 <!-- 📜 SCRIPT -->
 <script>
-  const precios = {
-    f_q: 4, r_q: 6, pic: 7, por: 7, chi: 7, mol: 7, rel: 6, win: 7,
-    coke: 2, zero: 2, sprite: 2, pepper: 2
-  };
+const precios = {
+  f_q: 4, r_q: 6, pic: 7, por: 7, chi: 7, mol: 6, rel: 7, win: 6,
+  coke: 2, zero: 2, sprite: 2, pepper: 2
+};
+
 
   function calcularTotal() {
     let total = 0;
