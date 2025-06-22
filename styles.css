@@ -47,7 +47,7 @@ header p {
   border-radius: 10px;
   padding: 1rem;
   box-shadow: 0 0 10px rgba(0,0,0,0.4);
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
 .item:hover {
@@ -60,6 +60,7 @@ header p {
   height: 160px;
   object-fit: cover;
   border-radius: 8px;
+  transition: transform 0.3s ease;
 }
 
 .item h3 {
@@ -74,6 +75,7 @@ header p {
   text-align: center;
   border-radius: 5px;
   border: none;
+  cursor: pointer;
 }
 
 .order-section {
@@ -134,6 +136,7 @@ footer.payment {
 
 footer a {
   color: #00d4ff;
+  text-decoration: underline;
 }
 
 .btn-whatsapp {
@@ -147,4 +150,9 @@ footer a {
   text-decoration: none;
   font-weight: bold;
   box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: background 0.3s ease;
+}
+
+.btn-whatsapp:hover {
+  background: #1ebe5d;
 }
