@@ -79,3 +79,12 @@ function enviarPedido() {
   const url = `https://wa.me/15756370077?text=${encodeURIComponent(pedido)}`;
   window.open(url, '_blank');
 }
+// Mostrar banner promocional 2x1
+window.addEventListener("DOMContentLoaded", () => {
+  const hoy = new Date();
+  const inicioPromo = new Date("2025-06-30");
+  const finPromo = new Date("2025-07-04");
+  if (hoy >= inicioPromo && hoy <= finPromo) {
+    document.getElementById("promo-banner").style.display = "block";
+  }
+});
