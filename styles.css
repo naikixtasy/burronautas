@@ -238,7 +238,7 @@ footer a {
 @keyframes pulseLogo {
   0% { transform: scale(1); filter: drop-shadow(0 0 10px #ffb3ec); }
   50% { transform: scale(1.05); filter: drop-shadow(0 0 30px #a3c6ff); }
-  100% { transform: scale(1); filter: drop-shadow(0 0 10px #ffb3ec); }
+ 
 }
 
 .titulo {
