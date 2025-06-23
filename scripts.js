@@ -13,13 +13,13 @@ function estaEnPromocion() {
 }
 
 function calcularTotal() {
-  let total = 0;
+  let totalSinDescuento = 0;
   let burritos = [];
 
   for (const id in precios) {
     const cantidad = parseInt(document.getElementById(id)?.value || 0);
     const precioUnitario = precios[id];
-    total += cantidad * precioUnitario;
+    totalSinDescuento += cantidad * precioUnitario;
 
     if (burritoIds.includes(id) && cantidad > 0) {
       for (let i = 0; i < cantidad; i++) {
@@ -28,20 +28,34 @@ function calcularTotal() {
     }
   }
 
-  // Aplica el 2x1: el más barato de los burritos es gratis
+  let descuento = 0;
   if (estaEnPromocion() && burritos.length >= 2) {
-    const burritoGratis = Math.min(...burritos);
-    total -= burritoGratis;
+    burritos.sort((a, b) => a - b);
+    for (let i = 0; i + 1 < burritos.length; i += 2) {
+      descuento += burritos[i]; // uno gratis por cada par
+    }
   }
 
-  // Suma delivery fee
-  total += 3;
+  const envio = 3;
+  const totalFinal = totalSinDescuento - descuento + envio;
 
-  document.getElementById("total").innerText = `Total: $${total.toFixed(2)} USD`;
-  return total.toFixed(2);
+  // Actualiza visualmente el desglose si los elementos existen
+  const subtotalElem = document.getElementById("subtotal");
+  const descuentoElem = document.getElementById("descuento");
+  const envioElem = document.getElementById("envio");
+  const totalFinalElem = document.getElementById("totalFinal");
+
+  if (subtotalElem) subtotalElem.innerText = `🧾 Subtotal sin descuento: $${totalSinDescuento.toFixed(2)}`;
+  if (descuentoElem) descuentoElem.innerText = `🎁 Descuento 2x1 aplicado: -$${descuento.toFixed(2)}`;
+  if (envioElem) envioElem.innerText = `🚚 Envío: +$${envio.toFixed(2)}`;
+  if (totalFinalElem) totalFinalElem.innerText = `💰 Total con descuento y envío: $${totalFinal.toFixed(2)}`;
+
+  // Actualiza el total general
+  document.getElementById("total").innerText = `Total: $${totalFinal.toFixed(2)} USD`;
+  return totalFinal.toFixed(2);
 }
 
-// Recalcular total en tiempo real
+// Recalcular en tiempo real
 document.querySelectorAll("input[type='number']").forEach(input => {
   input.addEventListener("input", calcularTotal);
 });
@@ -79,6 +93,7 @@ function enviarPedido() {
   const url = `https://wa.me/15756370077?text=${encodeURIComponent(pedido)}`;
   window.open(url, '_blank');
 }
+
 // Mostrar banner promocional 2x1
 window.addEventListener("DOMContentLoaded", () => {
   const hoy = new Date();
