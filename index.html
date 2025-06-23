@@ -105,5 +105,69 @@
       }
     });
   </script>
+<script>
+tsParticles.load("tsparticles", {
+  fullScreen: { enable: false },
+  background: {
+    color: {
+      value: "#0a001f"
+    }
+  },
+  fpsLimit: 60,
+  interactivity: {
+    events: {
+      onHover: {
+        enable: true,
+        mode: "repulse"
+      },
+      resize: true
+    },
+    modes: {
+      repulse: {
+        distance: 100,
+        duration: 0.4
+      }
+    }
+  },
+  particles: {
+    color: {
+      value: ["#ffb3ec", "#b3d1ff", "#c8a2ff", "#00ffe1", "#f0f8ff"]
+    },
+    links: {
+      enable: false
+    },
+    collisions: {
+      enable: false
+    },
+    move: {
+      direction: "none",
+      enable: true,
+      outModes: "bounce",
+      random: true,
+      speed: 1,
+      straight: false
+    },
+    number: {
+      value: 80,
+      density: {
+        enable: true,
+        area: 800
+      }
+    },
+    opacity: {
+      value: 0.5,
+      random: true
+    },
+    shape: {
+      type: "circle"
+    },
+    size: {
+      value: { min: 1, max: 5 }
+    }
+  },
+  detectRetina: true
+});
+</script>
+
 </body>
 </html>
