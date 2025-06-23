@@ -62,7 +62,7 @@ function generarLinkMaps(direccion) {
 
 function enviarPedido() {
   const telefono = document.getElementById('telefono').value.trim();
-  const direccion = document.getElementById('direccion').value.trim();
+  const direccion = document.getElementById('address').value.trim();
   const metodo = document.getElementById('metodo').value;
   const extras = document.getElementById('extras').value.trim();
   const total = calcularTotal();
