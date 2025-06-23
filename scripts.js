@@ -63,6 +63,12 @@ function generarLinkMaps(direccion) {
 function enviarPedido() {
   const telefono = document.getElementById('telefono').value.trim();
   const direccion = document.getElementById('address').value.trim();
+
+  if (!telefono || !direccion) {
+    alert("Por favor llena el número de teléfono y la dirección antes de enviar el pedido.");
+    return;
+  }
+
   const metodo = document.getElementById('metodo').value;
   const extras = document.getElementById('extras').value.trim();
   const total = calcularTotal();
@@ -71,14 +77,21 @@ function enviarPedido() {
 
   const items = document.querySelectorAll('.menu-grid .item');
   let pedido = `🛰️ *Burronautas Order #${numeroOrden}*\n\n`;
+  let hayProductos = false;
 
   items.forEach(item => {
     const nombre = item.querySelector('h3').innerText;
     const cantidad = item.querySelector('input').value;
     if (parseInt(cantidad) > 0) {
+      hayProductos = true;
       pedido += `• ${cantidad} x ${nombre}\n`;
     }
   });
+
+  if (!hayProductos) {
+    alert("Debes seleccionar al menos un producto antes de enviar el pedido.");
+    return;
+  }
 
   pedido += `\n📞 *Teléfono / Phone:* ${telefono}`;
   pedido += `\n📍 *Dirección / Address:* ${direccion}`;
@@ -178,4 +191,3 @@ tsParticles.load("tsparticles", {
   },
   detectRetina: true
 });
-
