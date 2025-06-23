@@ -7,7 +7,6 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1YBj8EHU37x31wjrEMcY0g2m61rgYwP8&libraries=places"></script>
 </head>
 <body>
   <header class="hero">
@@ -36,10 +35,10 @@
   </section>
 
   <section class="menu-grid">
-    <div class="item"><img src="cocacola.png" class="soda" alt="Coca Cola"><h3>Coca Cola ($2)</h3><input type="number" id="coke" min="0" value="0"></div>
-    <div class="item"><img src="cocazero.png" class="soda" alt="Coca Cola Zero"><h3>Coca Zero ($2)</h3><input type="number" id="zero" min="0" value="0"></div>
-    <div class="item"><img src="sprite.png" class="soda" alt="Sprite"><h3>Sprite ($2)</h3><input type="number" id="sprite" min="0" value="0"></div>
-    <div class="item"><img src="drpepper.png" class="soda" alt="Dr Pepper"><h3>Dr Pepper ($2)</h3><input type="number" id="pepper" min="0" value="0"></div>
+    <div class="item"><img src="cocacola.png" class="soda"><h3>Coca Cola ($2)</h3><input type="number" id="coke" min="0" value="0"></div>
+    <div class="item"><img src="cocazero.png" class="soda"><h3>Coca Zero ($2)</h3><input type="number" id="zero" min="0" value="0"></div>
+    <div class="item"><img src="sprite.png" class="soda"><h3>Sprite ($2)</h3><input type="number" id="sprite" min="0" value="0"></div>
+    <div class="item"><img src="drpepper.png" class="soda"><h3>Dr Pepper ($2)</h3><input type="number" id="pepper" min="0" value="0"></div>
   </section>
 
   <div class="form-field">
@@ -90,15 +89,6 @@
   </footer>
 
   <script src="scripts.js"></script>
-  <script>
-    function initAutocomplete() {
-      const input = document.getElementById("direccion");
-      const autocomplete = new google.maps.places.Autocomplete(input, {
-        types: ["address"],
-        componentRestrictions: { country: "us" }
-      });
-    }
-    window.onload = initAutocomplete;
-  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1YBj8EHU37x31wjrEMcY0g2m61rgYwP8&libraries=places&callback=initAutocomplete" async defer></script>
 </body>
 </html>
