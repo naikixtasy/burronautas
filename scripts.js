@@ -7,7 +7,7 @@ const burritoIds = ["f_q", "r_q", "pic", "por", "chi", "mol", "rel", "win"];
 
 function estaEnPromocion() {
   const hoy = new Date();
-  const inicio = new Date("2025-06-23");
+  const inicio = new Date("2025-06-30");
   const fin = new Date("2025-07-04");
   return hoy >= inicio && hoy <= fin;
 }
@@ -97,7 +97,7 @@ function enviarPedido() {
 // Mostrar banner promocional 2x1
 window.addEventListener("DOMContentLoaded", () => {
   const hoy = new Date();
-  const inicioPromo = new Date("2025-06-23");
+  const inicioPromo = new Date("2025-06-30");
   const finPromo = new Date("2025-07-04");
   if (hoy >= inicioPromo && hoy <= finPromo) {
     document.getElementById("promo-banner").style.display = "block";
