@@ -56,7 +56,6 @@ header p {
   margin: 0 auto;
 }
 
-
 .item {
   background-color: rgba(255, 255, 255, 0.05);
   border-radius: 10px;
@@ -163,6 +162,7 @@ footer a {
   border-radius: 8px;
   padding: 5px;
 }
+
 .ahorro-msg {
   background-color: #ffe44c;
   color: #000;
@@ -179,6 +179,7 @@ footer a {
   0%, 100% { box-shadow: 0 0 5px #ff7f00; }
   50% { box-shadow: 0 0 20px #ffaa00; }
 }
+
 #tsparticles {
   position: fixed;
   z-index: -1;
@@ -187,6 +188,7 @@ footer a {
   top: 0;
   left: 0;
 }
+
 /* Hero Section */
 .hero {
   text-align: center;
@@ -197,20 +199,15 @@ footer a {
 
 .hero-content {
   display: inline-block;
-  background: rgba(10, 0, 31, 0.8);
+  background: rgba(10, 0, 31, 0.0); /* Fondo transparente para dejar ver partículas */
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 0 0 25px #cfa3ff;
   animation: glowBorder 4s infinite alternate;
 }
 
 @keyframes glowBorder {
-  from {
-    box-shadow: 0 0 15px #ff9bff;
-  }
-  to {
-    box-shadow: 0 0 35px #99e6ff;
-  }
+  from { box-shadow: 0 0 15px #ff9bff; }
+  to { box-shadow: 0 0 35px #99e6ff; }
 }
 
 .logo-brillante img {
@@ -223,7 +220,6 @@ footer a {
 @keyframes pulseLogo {
   0% { transform: scale(1); filter: drop-shadow(0 0 10px #ffb3ec); }
   50% { transform: scale(1.05); filter: drop-shadow(0 0 30px #a3c6ff); }
- 
 }
 
 .titulo {
@@ -241,6 +237,7 @@ footer a {
   margin-top: 15px;
   line-height: 1.5em;
 }
+
 .btn-whatsapp-order {
   background: linear-gradient(45deg, #8f00ff, #c244ff);
   color: white;
@@ -265,6 +262,8 @@ footer a {
   background: linear-gradient(45deg, #a64dff, #e271ff);
   box-shadow: 0 0 25px #ff99ff;
 }
+
+/* Form Field */
 .form-field {
   margin-bottom: 1.5rem;
   text-align: left;
@@ -297,6 +296,13 @@ footer a {
   background: rgba(255, 255, 255, 0.1);
   color: white;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: url('data:image/svg+xml;utf8,<svg fill="%23fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
+  background-repeat: no-repeat;
+  background-position-x: 98%;
+  background-position-y: center;
 }
 
 .form-field input::placeholder,
@@ -308,4 +314,3 @@ footer a {
   resize: vertical;
   min-height: 100px;
 }
-
