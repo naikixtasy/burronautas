@@ -14,6 +14,18 @@
     <img src="burronautas.png" alt="Burronautas Logo" class="big-logo">
     <p>Fuel your day with Space-Ready Burritos! / ¡Combustible espacial para tu día!</p>
   </header>
+<div id="promo-banner" class="promo-banner" style="display:none;">
+  🎉 ¡Promoción 2x1 del 30 de junio al 4 de julio! El burrito más barato es GRATIS. 🚀
+</div>
+// Mostrar banner promocional si la fecha está dentro del rango
+window.addEventListener("DOMContentLoaded", () => {
+  const hoy = new Date();
+  const inicioPromo = new Date("2025-06-30");
+  const finPromo = new Date("2025-07-04");
+  if (hoy >= inicioPromo && hoy <= finPromo) {
+    document.getElementById("promo-banner").style.display = "block";
+  }
+});
 
   <section class="menu-grid">
     <!-- Burritos -->

@@ -4,22 +4,49 @@ const precios = {
 };
 
 function calcularTotal() {
+  const precios = {
+    f_q: 4, r_q: 6, pic: 7, por: 7, chi: 7, mol: 6, rel: 7, win: 6,
+    coke: 2, zero: 2, sprite: 2, pepper: 2
+  };
+
   let total = 0;
+  let burritos = [];
+
   for (const id in precios) {
     const cantidad = parseInt(document.getElementById(id)?.value || 0);
-    total += cantidad * precios[id];
+    const subtotal = cantidad * precios[id];
+    total += subtotal;
+
+    // Solo cuenta burritos para aplicar 2x1
+    if (['f_q', 'r_q', 'pic', 'por', 'chi', 'mol', 'rel', 'win'].includes(id)) {
+      for (let i = 0; i < cantidad; i++) {
+        burritos.push(precios[id]);
+      }
+    }
   }
 
-  const deliveryFee = 3.00;
-  const totalConEnvio = total + deliveryFee;
+  // Verifica si está dentro del periodo de promoción
+  const hoy = new Date();
+  const inicioPromo = new Date("2025-06-30");
+  const finPromo = new Date("2025-07-04");
+  let descuento = 0;
+  let promoActiva = false;
 
-  document.getElementById("total").innerHTML = `
-    🧾 Subtotal: $${total.toFixed(2)}<br>
-    🚚 Delivery Fee: $${deliveryFee.toFixed(2)}<br>
-    💲 <strong>Total: $${totalConEnvio.toFixed(2)}</strong>
-  `;
+  if (hoy >= inicioPromo && hoy <= finPromo && burritos.length >= 2) {
+    descuento = Math.min(...burritos);
+    total -= descuento;
+    promoActiva = true;
+  }
 
-  return totalConEnvio.toFixed(2); // Regresa el total con envío incluido
+  // Agrega cargo de entrega
+  total += 3;
+
+  let textoPromo = promoActiva
+    ? `💲Total: $${total.toFixed(2)} (2x1 activo + $3 delivery fee)`
+    : `💲Total: $${total.toFixed(2)} (incluye $3 delivery fee)`;
+
+  document.getElementById("total").innerText = textoPromo;
+  return total.toFixed(2);
 }
 
 

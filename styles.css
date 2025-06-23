@@ -166,3 +166,14 @@ footer a {
   border-radius: 8px;
   padding: 5px;
 }
+.promo-banner {
+  background-color: #ffcf33;
+  color: #000;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  border: 2px dashed #000;
+  border-radius: 10px;
+}
