@@ -7,7 +7,7 @@ const burritoIds = ["f_q", "r_q", "pic", "por", "chi", "mol", "rel", "win"];
 
 function estaEnPromocion() {
   const hoy = new Date();
-  const inicio = new Date("2025-06-30");
+  const inicio = new Date("2025-06-23");
   const fin = new Date("2025-07-04");
   return hoy >= inicio && hoy <= fin;
 }
