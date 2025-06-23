@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -80,8 +81,11 @@
   🎁 ¡Estás ahorrando con la promoción 2x1! 🤑 <span id="monto-ahorrado"></span> menos en tu orden.
      </div>
 
-  <button onclick="enviarPedido()">📦 Enviar Pedido por WhatsApp / Send Order via WhatsApp</button>
-</section>
+<div style="text-align: center; margin-top: 20px;">
+  <button onclick="enviarPedido()" class="btn-whatsapp-order">
+    <i class="fab fa-whatsapp"></i> Enviar Pedido por WhatsApp / Send Order via WhatsApp
+  </button>
+</div>
 
 
   <footer class="payment">

@@ -241,4 +241,28 @@ footer a {
   margin-top: 15px;
   line-height: 1.5em;
 }
+.btn-whatsapp-order {
+  background: linear-gradient(45deg, #8f00ff, #c244ff);
+  color: white;
+  border: none;
+  padding: 14px 28px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border-radius: 50px;
+  box-shadow: 0 0 15px #bb66ff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.btn-whatsapp-order i {
+  font-size: 1.4rem;
+}
+
+.btn-whatsapp-order:hover {
+  background: linear-gradient(45deg, #a64dff, #e271ff);
+  box-shadow: 0 0 25px #ff99ff;
+}
 
