@@ -1,7 +1,20 @@
-const precios = {
-  f_q: 4, r_q: 6, pic: 7, por: 7, chi: 7, mol: 7, rel: 6, win: 7,
-  coke: 2, zero: 2, sprite: 2, pepper: 2
-};
+
+document.addEventListener("DOMContentLoaded", () => {
+  // Mostrar banner promocional si la fecha está dentro del rango
+  const hoy = new Date();
+  const inicioPromo = new Date("2025-06-30");
+  const finPromo = new Date("2025-07-04");
+  if (hoy >= inicioPromo && hoy <= finPromo) {
+    document.getElementById("promo-banner").style.display = "block";
+  }
+
+  // Recalcular total al cargar y cuando se cambie una cantidad
+  document.querySelectorAll("input[type='number']").forEach(input => {
+    input.addEventListener("input", calcularTotal);
+  });
+
+  calcularTotal(); // Inicializa total en 0 al cargar
+});
 
 function calcularTotal() {
   const precios = {
@@ -9,79 +22,91 @@ function calcularTotal() {
     coke: 2, zero: 2, sprite: 2, pepper: 2
   };
 
+  const deliveryFee = 3;
+  const hoy = new Date();
+  const inicioPromo = new Date("2025-06-30");
+  const finPromo = new Date("2025-07-04");
+
   let total = 0;
-  let burritos = [];
+  const burritoIds = ["f_q", "r_q", "pic", "por", "chi", "mol", "rel", "win"];
+  let burritoPrices = [];
 
   for (const id in precios) {
     const cantidad = parseInt(document.getElementById(id)?.value || 0);
-    const subtotal = cantidad * precios[id];
+    const precioUnitario = precios[id];
+    const subtotal = cantidad * precioUnitario;
     total += subtotal;
 
-    // Solo cuenta burritos para aplicar 2x1
-    if (['f_q', 'r_q', 'pic', 'por', 'chi', 'mol', 'rel', 'win'].includes(id)) {
+    if (burritoIds.includes(id)) {
       for (let i = 0; i < cantidad; i++) {
-        burritos.push(precios[id]);
+        burritoPrices.push(precioUnitario);
       }
     }
   }
 
-  // Verifica si está dentro del periodo de promoción
-  const hoy = new Date();
-  const inicioPromo = new Date("2025-06-30");
-  const finPromo = new Date("2025-07-04");
-  let descuento = 0;
-  let promoActiva = false;
-
-  if (hoy >= inicioPromo && hoy <= finPromo && burritos.length >= 2) {
-    descuento = Math.min(...burritos);
-    total -= descuento;
-    promoActiva = true;
+  if (hoy >= inicioPromo && hoy <= finPromo && burritoPrices.length >= 2) {
+    burritoPrices.sort((a, b) => a - b); // menor a mayor
+    total -= burritoPrices[0]; // aplica 2x1, descuenta el más barato
   }
 
-  // Agrega cargo de entrega
-  total += 3;
+  const totalConEnvio = total + deliveryFee;
 
-  let textoPromo = promoActiva
-    ? `💲Total: $${total.toFixed(2)} (2x1 activo + $3 delivery fee)`
-    : `💲Total: $${total.toFixed(2)} (incluye $3 delivery fee)`;
+  document.getElementById("total").innerHTML = `
+    🧾 Subtotal: $${total.toFixed(2)}<br>
+    🚚 Delivery Fee: $${deliveryFee.toFixed(2)}<br>
+    🪐 <strong>Total: $${totalConEnvio.toFixed(2)}</strong>
+  `;
 
-  document.getElementById("total").innerText = textoPromo;
-  return total.toFixed(2);
+  return totalConEnvio.toFixed(2);
 }
 
-
-// Recalcular total en tiempo real
-document.querySelectorAll("input[type='number']").forEach(input => {
-  input.addEventListener("input", calcularTotal);
-});
+function generarNumeroOrden() {
+  const ahora = new Date();
+  return 'B-' + ahora.getTime();
+}
 
 function enviarPedido() {
-  const telefono = document.getElementById('telefono').value.trim();
-  const direccion = document.getElementById('direccion').value.trim();
+  const telefono = document.getElementById('telefono').value;
+  const direccion = document.getElementById('direccion').value;
   const metodo = document.getElementById('metodo').value;
-  const extras = document.getElementById('extras').value.trim();
-  const total = calcularTotal();
-  const idOrden = Math.floor(Math.random() * 90000 + 10000);
+  const extras = document.getElementById('extras').value;
+  const numeroOrden = generarNumeroOrden();
 
+  const precios = {
+    f_q: 4, r_q: 6, pic: 7, por: 7, chi: 7, mol: 6, rel: 7, win: 6,
+    coke: 2, zero: 2, sprite: 2, pepper: 2
+  };
+
+  let pedido = `🛰️ *Burronautas Order #${numeroOrden}*
+
+`;
   const items = document.querySelectorAll('.menu-grid .item');
-  let pedido = `🛸 *Burronautas 🚀*\n🧾 *Orden No. ${idOrden}*\n\n`;
 
   items.forEach(item => {
-    const nombre = item.querySelector('h3').childNodes[0].textContent.trim();
+    const nombre = item.querySelector('h3').innerText;
     const input = item.querySelector('input');
     const cantidad = parseInt(input?.value || 0);
-    const id = input?.id;
     if (cantidad > 0) {
-      pedido += `• ${cantidad} x ${nombre} - $${(cantidad * precios[id]).toFixed(2)}\n`;
+      pedido += `• ${cantidad} x ${nombre}
+`;
     }
   });
 
-  pedido += `\n💲 *Total (incluye envío): $${total}*`;
-  pedido += `\n📞 *Teléfono / Phone:* ${telefono}`;
-  pedido += `\n📍 *Dirección / Address:* ${direccion}`;
-  pedido += `\n💳 *Pago / Payment:* ${metodo}`;
-  pedido += `\n📝 *Notas / Notes:* ${extras}`;
+  const total = document.getElementById('total').textContent;
 
-  const url = `https://wa.me/15756370077?text=${encodeURIComponent(pedido)}`;
+  pedido += `
+📞 *Teléfono / Phone:* ${telefono}`;
+  pedido += `
+📍 *Dirección / Address:* ${direccion}`;
+  pedido += `
+💳 *Pago / Payment:* ${metodo}`;
+  pedido += `
+📝 *Notas / Notes:* ${extras}`;
+  pedido += `
+💰 *${total}*`;
+  pedido += `
+🔢 *Order ID:* ${numeroOrden}`;
+
+  const url = \`https://wa.me/15756370077?text=\${encodeURIComponent(pedido)}\`;
   window.open(url, '_blank');
 }
