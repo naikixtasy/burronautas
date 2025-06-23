@@ -93,23 +93,28 @@ function enviarPedido() {
 }
 
 function initAutocomplete() {
-  const input = document.getElementById("direccion");
+  const input = document.getElementById("address");
   const autocomplete = new google.maps.places.Autocomplete(input, {
-    types: ["address"],
-    componentRestrictions: { country: "us" }
+    componentRestrictions: { country: ["us"] },
+    fields: ["formatted_address", "geometry"],
   });
 
-  autocomplete.addListener("place_changed", () => {
+  autocomplete.addListener("place_changed", function () {
     const place = autocomplete.getPlace();
-    input.value = place.formatted_address || place.name;
+    if (!place.geometry) return;
+
+    const address = place.formatted_address;
+    const lat = place.geometry.location.lat();
+    const lng = place.geometry.location.lng();
+    const mapsLink = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
+
+    document.getElementById("address").setAttribute("data-maps-link", mapsLink);
+    document.getElementById("address").setAttribute("data-formatted-address", address);
   });
 }
 
-window.addEventListener("DOMContentLoaded", () => {
-  if (estaEnPromocion()) {
-    document.getElementById("promo-banner").style.display = "block";
-  }
-});
+window.initAutocomplete = initAutocomplete;
+
 tsParticles.load("tsparticles", {
   background: {
     color: "#0b001a"
