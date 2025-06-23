@@ -194,4 +194,12 @@ footer a {
   0%, 100% { box-shadow: 0 0 5px #ff7f00; }
   50% { box-shadow: 0 0 20px #ffaa00; }
 }
+#tsparticles {
+  position: fixed;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
 
