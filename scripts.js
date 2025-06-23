@@ -82,7 +82,7 @@ function enviarPedido() {
 // Mostrar banner promocional 2x1
 window.addEventListener("DOMContentLoaded", () => {
   const hoy = new Date();
-  const inicioPromo = new Date("2025-06-30");
+  const inicioPromo = new Date("2025-06-23");
   const finPromo = new Date("2025-07-04");
   if (hoy >= inicioPromo && hoy <= finPromo) {
     document.getElementById("promo-banner").style.display = "block";
