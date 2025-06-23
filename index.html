@@ -1,174 +1,104 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1YBj8EHU37x31wjrEMcY0g2m61rgYwP8&libraries=places"></script>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Burronautas - Las Cruces, NM</title>
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1YBj8EHU37x31wjrEMcY0g2m61rgYwP8&libraries=places"></script>
 </head>
-
 <body>
-<div id="tsparticles"></div>
-
-<header class="hero">
-  <div class="hero-content" style="background: none; box-shadow: none;">
-    <h1 class="titulo">🛰️ Burronautas - Las Cruces, NM</h1>
-    <div class="logo-brillante">
-      <img src="burronautas.png" alt="Burronautas Logo" class="big-logo">
+  <header class="hero">
+    <div class="hero-content">
+      <h1 class="titulo">🛰️ Burronautas - Las Cruces, NM</h1>
+      <div class="logo-brillante">
+        <img src="burronautas.png" alt="Burronautas Logo" class="big-logo">
+      </div>
+      <p class="eslogan">✨ Fuel your day with Space-Ready Burritos! ✨<br>🚀 ¡Combustible espacial para tu día! 🚀</p>
     </div>
-    <p class="eslogan">✨ Fuel your day with Space-Ready Burritos! ✨<br>🚀 ¡Combustible espacial para tu día! 🚀</p>
+  </header>
+
+  <div id="promo-banner" class="promo-banner" style="display: none;">
+    🎉 ¡Promoción 2x1 del 30 de junio al 4 de julio! El burrito más barato es GRATIS. 🚀
   </div>
-</header>
 
-<div id="promo-banner" class="promo-banner" style="display: none;">
-  🎉 ¡Promoción 2x1 del 30 de junio al 4 de julio! El burrito más barato es GRATIS. 🚀
-</div>
+  <section class="menu-grid">
+    <div class="item"><img src="frijolesconqueso.png"><h3>Frijoles con Queso / Beans & Cheese ($4)</h3><input type="number" id="f_q" min="0" value="0"></div>
+    <div class="item"><img src="rajasconqueso.png"><h3>Rajas con Queso / Anaheim, Onions & Cheese ($6)</h3><input type="number" id="r_q" min="0" value="0"></div>
+    <div class="item"><img src="picadillo.png"><h3>Picadillo / Ground Beef & Potatoes ($7)</h3><input type="number" id="pic" min="0" value="0"></div>
+    <div class="item"><img src="asado de puerco.png"><h3>Puerco en Rojo / Pork in Red Chile ($7)</h3><input type="number" id="por" min="0" value="0"></div>
+    <div class="item"><img src="chicharron.png"><h3>Chicharrón Verde / Green Pork Rinds ($7)</h3><input type="number" id="chi" min="0" value="0"></div>
+    <div class="item"><img src="mole.png"><h3>Mole / Chicken in Mole Sauce ($6)</h3><input type="number" id="mol" min="0" value="0"></div>
+    <div class="item"><img src="chilerelleno.png"><h3>Chile Relleno / Stuffed Pepper ($7)</h3><input type="number" id="rel" min="0" value="0"></div>
+    <div class="item"><img src="winnie.png"><h3>Winnie / Sausage & Beans ($6)</h3><input type="number" id="win" min="0" value="0"></div>
+  </section>
 
-<section class="menu-grid">
-  <div class="item"><img src="frijolesconqueso.png"><h3>Frijoles con Queso / Beans & Cheese ($4)</h3><input type="number" id="f_q" min="0" value="0" onchange="updateTotal()"></div>
-  <div class="item"><img src="rajasconqueso.png"><h3>Rajas con Queso / Anaheim, Onions & Cheese ($6)</h3><input type="number" id="r_q" min="0" value="0" onchange="updateTotal()"></div>
-  <div class="item"><img src="picadillo.png"><h3>Picadillo / Ground Beef & Potatoes ($7)</h3><input type="number" id="pic" min="0" value="0" onchange="updateTotal()"></div>
-  <div class="item"><img src="asado de puerco.png"><h3>Puerco en Rojo / Pork in Red Chile ($7)</h3><input type="number" id="por" min="0" value="0" onchange="updateTotal()"></div>
-  <div class="item"><img src="chicharron.png"><h3>Chicharrón Verde / Green Pork Rinds ($7)</h3><input type="number" id="chi" min="0" value="0" onchange="updateTotal()"></div>
-  <div class="item"><img src="mole.png"><h3>Mole / Chicken in Mole Sauce ($6)</h3><input type="number" id="mol" min="0" value="0" onchange="updateTotal()"></div>
-  <div class="item"><img src="chilerelleno.png"><h3>Chile Relleno / Stuffed Pepper ($7)</h3><input type="number" id="rel" min="0" value="0" onchange="updateTotal()"></div>
-  <div class="item"><img src="winnie.png"><h3>Winnie / Sausage & Beans ($6)</h3><input type="number" id="win" min="0" value="0" onchange="updateTotal()"></div>
-</section>
+  <section class="menu-grid">
+    <div class="item"><img src="cocacola.png" class="soda" alt="Coca Cola"><h3>Coca Cola ($2)</h3><input type="number" id="coke" min="0" value="0"></div>
+    <div class="item"><img src="cocazero.png" class="soda" alt="Coca Cola Zero"><h3>Coca Zero ($2)</h3><input type="number" id="zero" min="0" value="0"></div>
+    <div class="item"><img src="sprite.png" class="soda" alt="Sprite"><h3>Sprite ($2)</h3><input type="number" id="sprite" min="0" value="0"></div>
+    <div class="item"><img src="drpepper.png" class="soda" alt="Dr Pepper"><h3>Dr Pepper ($2)</h3><input type="number" id="pepper" min="0" value="0"></div>
+  </section>
 
-<section class="menu-grid">
-  <div class="item"><img src="cocacola.png" class="soda"><h3>Coca Cola ($2)</h3><input type="number" id="coke" min="0" value="0" onchange="updateTotal()"></div>
-  <div class="item"><img src="cocazero.png" class="soda"><h3>Coca Zero ($2)</h3><input type="number" id="zero" min="0" value="0" onchange="updateTotal()"></div>
-  <div class="item"><img src="sprite.png" class="soda"><h3>Sprite ($2)</h3><input type="number" id="sprite" min="0" value="0" onchange="updateTotal()"></div>
-  <div class="item"><img src="drpepper.png" class="soda"><h3>Dr Pepper ($2)</h3><input type="number" id="pepper" min="0" value="0" onchange="updateTotal()"></div>
-</section>
+  <div class="form-field">
+    <label for="telefono"><i class="fas fa-phone"></i> Phone Number / Número de Teléfono</label>
+    <input type="tel" id="telefono" placeholder="e.g. 575-000-0000" required>
+  </div>
 
-<div class="form-field">
-  <label for="telefono"><i class="fas fa-phone"></i> Phone Number / Número de Teléfono</label>
-  <input type="tel" id="telefono" placeholder="e.g. 575-000-0000" required>
-</div>
+  <div class="form-field">
+    <label for="direccion"><i class="fas fa-map-marker-alt"></i> Delivery Address / Dirección de Entrega</label>
+    <input type="text" id="direccion" placeholder="Start typing your address..." required>
+  </div>
 
-<div class="form-field">
-  <label for="direccion"><i class="fas fa-map-marker-alt"></i> Delivery Address / Dirección de Entrega</label>
-  <input type="text" id="direccion" placeholder="Street, number, neighborhood..." required onFocus="initAutocomplete()">
-</div>
+  <div class="form-field">
+    <label for="metodo"><i class="fas fa-credit-card"></i> Payment Method / Método de Pago</label>
+    <select id="metodo">
+      <option value="cash">💵 Cash / Efectivo</option>
+      <option value="cashapp">💚 Cash App</option>
+      <option value="paypal">💙 PayPal</option>
+    </select>
+  </div>
 
+  <div class="form-field">
+    <label for="extras"><i class="fas fa-comment-dots"></i> Notes or Combos / Notas o Combos</label>
+    <textarea id="extras" placeholder="Add instructions, combos, or comments..."></textarea>
+  </div>
 
-<div class="form-field">
-  <label for="payment">💳 Payment Method / Método de Pago</label>
-  <select id="payment" name="payment">
-    <option value="cash">💵 Cash / Efectivo</option>
-    <option value="cashapp">💚 Cash App</option>
-    <option value="paypal">💙 PayPal</option>
-  </select>
-</div>
+  <p id="subtotal"></p>
+  <p id="descuento"></p>
+  <p id="envio"></p>
+  <p id="totalFinal" style="font-weight:bold;"></p>
+  <p id="total" style="font-weight:bold;">Total: $0.00 USD</p>
 
-<div class="form-field">
-  <label for="extras"><i class="fas fa-comment-dots"></i> Notes or Combos / Notas o Combos</label>
-  <textarea id="extras" placeholder="Add instructions, combos, or comments..."></textarea>
-</div>
+  <p style="color: orange; font-weight: bold;">
+    🚚 Delivery fee of $3.00 will be added / Se agregará un cargo de $3.00 por entrega
+  </p>
 
-<p id="subtotal" style="margin-top:10px;"></p>
-<p id="descuento"></p>
-<p id="envio"></p>
-<p id="totalFinal" style="font-weight:bold;"></p>
-<p id="total" style="font-weight:bold; margin-top:10px;">Total: $0.00 USD</p>
+  <div style="text-align: center; margin-top: 20px;">
+    <button onclick="enviarPedido()" class="btn-whatsapp-order">
+      <i class="fab fa-whatsapp"></i> Enviar Pedido por WhatsApp / Send Order via WhatsApp
+    </button>
+  </div>
 
-<p style="color: orange; font-weight: bold;">
-  🚚 Delivery fee of $3.00 will be added / Se agregará un cargo de $3.00 por entrega
-</p>
+  <footer class="payment">
+    <h3>Opciones de Pago / Payment Options:</h3>
+    <p><strong>Cash App:</strong> <a href="https://cash.app/$naiquia86" target="_blank">$naiquia86</a></p>
+    <p><strong>PayPal:</strong> <a href="https://paypal.me/Naiqui" target="_blank">@Naiqui</a></p>
+    <p><strong>También aceptamos pagos en efectivo / We also accept Cash Payments</strong></p>
+  </footer>
 
-<div id="ahorro-msg" class="ahorro-msg" style="display:none;">
-  🎁 ¡Estás ahorrando con la promoción 2x1! 🤑 <span id="monto-ahorrado"></span> menos en tu orden.
-</div>
-
-<div style="text-align: center; margin-top: 20px;">
-  <button onclick="enviarPedido()" class="btn-whatsapp-order">
-    <i class="fab fa-whatsapp"></i> Enviar Pedido por WhatsApp / Send Order via WhatsApp
-  </button>
-</div>
-
-<footer class="payment">
-  <h3>Opciones de Pago / Payment Options:</h3>
-  <p><strong>Cash App:</strong> <a href="https://cash.app/$naiquia86" target="_blank">$naiquia86</a></p>
-  <p><strong>PayPal:</strong> <a href="https://paypal.me/Naiqui" target="_blank">@Naiqui</a></p>
-  <p><strong>También aceptamos pagos en efectivo / We also accept Cash Payments</strong></p>
-</footer>
-
-<!-- Script principal -->
-<script src="scripts.js"></script>
-
-<!-- Mostrar promo -->
-<script>
-  window.addEventListener("DOMContentLoaded", () => {
-    const hoy = new Date();
-    const inicioPromo = new Date("2025-06-30");
-    const finPromo = new Date("2025-07-04");
-    if (hoy >= inicioPromo && hoy <= finPromo) {
-      document.getElementById("promo-banner").style.display = "block";
+  <script src="scripts.js"></script>
+  <script>
+    function initAutocomplete() {
+      const input = document.getElementById("direccion");
+      const autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ["address"],
+        componentRestrictions: { country: "us" }
+      });
     }
-  });
-</script>
-
-<!-- tsParticles efecto nebulosa -->
-<script>
-tsParticles.load("tsparticles", {
-  fullScreen: { enable: false },
-  background: { color: { value: "#0a001f" } },
-  fpsLimit: 60,
-  interactivity: {
-    events: {
-      onHover: { enable: true, mode: "repulse" },
-      resize: true
-    },
-    modes: { repulse: { distance: 100, duration: 0.4 } }
-  },
-  particles: {
-    color: { value: ["#ffb3ec", "#b3d1ff", "#c8a2ff", "#00ffe1", "#f0f8ff"] },
-    links: { enable: false },
-    collisions: { enable: false },
-    move: {
-      direction: "none",
-      enable: true,
-      outModes: "bounce",
-      random: true,
-      speed: 1,
-      straight: false
-    },
-    number: { value: 80, density: { enable: true, area: 800 } },
-    opacity: { value: 0.5, random: true },
-    shape: { type: "circle" },
-    size: { value: { min: 1, max: 5 } }
-  },
-  detectRetina: true
-});
-</script>
-<script>
-let autocomplete;
-
-function initAutocomplete() {
-  if (!autocomplete) {
-    autocomplete = new google.maps.places.Autocomplete(
-      document.getElementById('direccion'),
-      { types: ['geocode'], componentRestrictions: { country: "us" } }
-    );
-    autocomplete.addListener('place_changed', function () {
-      const place = autocomplete.getPlace();
-      const location = place.formatted_address || place.name;
-      document.getElementById('direccion').value = location;
-    });
-  }
-}
-
-// Función para generar link de Google Maps y agregarlo al mensaje de WhatsApp
-function generarLinkMaps(direccion) {
-  const encoded = encodeURIComponent(direccion);
-  return `https://www.google.com/maps/search/?api=1&query=${encoded}`;
-}
-</script>
-
+    window.onload = initAutocomplete;
+  </script>
 </body>
 </html>
