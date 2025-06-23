@@ -35,6 +35,18 @@ header p {
   font-style: italic;
 }
 
+.promo-banner {
+  background-color: #ffcf33;
+  color: #000;
+  text-align: center;
+  padding: 10px;
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 10px;
+  border: 2px dashed #000;
+  border-radius: 10px;
+}
+
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
@@ -165,15 +177,4 @@ footer a {
   background: #fff;
   border-radius: 8px;
   padding: 5px;
-}
-.promo-banner {
-  background-color: #ffcf33;
-  color: #000;
-  text-align: center;
-  padding: 10px;
-  font-weight: bold;
-  font-size: 1.1em;
-  margin-bottom: 10px;
-  border: 2px dashed #000;
-  border-radius: 10px;
 }
