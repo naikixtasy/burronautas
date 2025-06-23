@@ -32,29 +32,22 @@ function calcularTotal() {
   if (estaEnPromocion() && burritos.length >= 2) {
     burritos.sort((a, b) => a - b);
     for (let i = 0; i + 1 < burritos.length; i += 2) {
-      descuento += burritos[i]; // uno gratis por cada par
+      descuento += burritos[i];
     }
   }
 
   const envio = 3;
   const totalFinal = totalSinDescuento - descuento + envio;
 
-  // Actualiza visualmente el desglose si los elementos existen
-  const subtotalElem = document.getElementById("subtotal");
-  const descuentoElem = document.getElementById("descuento");
-  const envioElem = document.getElementById("envio");
-  const totalFinalElem = document.getElementById("totalFinal");
-
-  if (subtotalElem) subtotalElem.innerText = `🧾 Subtotal sin descuento: $${totalSinDescuento.toFixed(2)}`;
-  if (descuentoElem) descuentoElem.innerText = `🎁 Descuento 2x1 aplicado: -$${descuento.toFixed(2)}`;
-  if (envioElem) envioElem.innerText = `🚚 Envío: +$${envio.toFixed(2)}`;
-  if (totalFinalElem) totalFinalElem.innerText = `💰 Total con descuento y envío: $${totalFinal.toFixed(2)}`;
-
+  document.getElementById("subtotal").innerText = `🧾 Subtotal sin descuento: $${totalSinDescuento.toFixed(2)}`;
+  document.getElementById("descuento").innerText = `🎁 Descuento 2x1 aplicado: -$${descuento.toFixed(2)}`;
+  document.getElementById("envio").innerText = `🚚 Envío: +$${envio.toFixed(2)}`;
+  document.getElementById("totalFinal").innerText = `💰 Total con descuento y envío: $${totalFinal.toFixed(2)}`;
   document.getElementById("total").innerText = `Total: $${totalFinal.toFixed(2)} USD`;
+
   return totalFinal.toFixed(2);
 }
 
-// Recalcular total en tiempo real
 document.querySelectorAll("input[type='number']").forEach(input => {
   input.addEventListener("input", calcularTotal);
 });
@@ -64,18 +57,16 @@ function generarNumeroOrden() {
 }
 
 function generarLinkMaps(direccion) {
-  const encoded = encodeURIComponent(direccion);
-  return `https://www.google.com/maps/search/?api=1&query=${encoded}`;
+  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccion)}`;
 }
 
 function enviarPedido() {
   const telefono = document.getElementById('telefono').value.trim();
   const direccion = document.getElementById('direccion').value.trim();
-  const metodo = document.getElementById('payment').value;
+  const metodo = document.getElementById('metodo').value;
   const extras = document.getElementById('extras').value.trim();
   const total = calcularTotal();
   const numeroOrden = generarNumeroOrden();
-
   const mapsLink = generarLinkMaps(direccion);
 
   const items = document.querySelectorAll('.menu-grid .item');
@@ -101,26 +92,21 @@ function enviarPedido() {
   window.open(url, '_blank');
 }
 
-// Mostrar banner si hay promoción
+function initAutocomplete() {
+  const input = document.getElementById("direccion");
+  const autocomplete = new google.maps.places.Autocomplete(input, {
+    types: ["address"],
+    componentRestrictions: { country: "us" }
+  });
+
+  autocomplete.addListener("place_changed", () => {
+    const place = autocomplete.getPlace();
+    input.value = place.formatted_address || place.name;
+  });
+}
+
 window.addEventListener("DOMContentLoaded", () => {
-  const hoy = new Date();
-  const inicioPromo = new Date("2025-06-30");
-  const finPromo = new Date("2025-07-04");
-  if (hoy >= inicioPromo && hoy <= finPromo) {
+  if (estaEnPromocion()) {
     document.getElementById("promo-banner").style.display = "block";
   }
 });
-
-// Autocompletado de direcciones (Google Maps API)
-let autocomplete;
-function initAutocomplete() {
-  autocomplete = new google.maps.places.Autocomplete(
-    document.getElementById('direccion'),
-    { types: ['geocode'], componentRestrictions: { country: "us" } }
-  );
-  autocomplete.addListener('place_changed', function () {
-    const place = autocomplete.getPlace();
-    const location = place.formatted_address || place.name;
-    document.getElementById('direccion').value = location;
-  });
-}
