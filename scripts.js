@@ -9,9 +9,19 @@ function calcularTotal() {
     const cantidad = parseInt(document.getElementById(id)?.value || 0);
     total += cantidad * precios[id];
   }
-  document.getElementById("total").innerText = `💲Total: $${total.toFixed(2)}`;
-  return total.toFixed(2);
+
+  const deliveryFee = 3.00;
+  const totalConEnvio = total + deliveryFee;
+
+  document.getElementById("total").innerHTML = `
+    🧾 Subtotal: $${total.toFixed(2)}<br>
+    🚚 Delivery Fee: $${deliveryFee.toFixed(2)}<br>
+    💲 <strong>Total: $${totalConEnvio.toFixed(2)}</strong>
+  `;
+
+  return totalConEnvio.toFixed(2); // Regresa el total con envío incluido
 }
+
 
 // Recalcular total en tiempo real
 document.querySelectorAll("input[type='number']").forEach(input => {
@@ -39,7 +49,7 @@ function enviarPedido() {
     }
   });
 
-  pedido += `\n💲 *Total: $${total}*`;
+  pedido += `\n💲 *Total (incluye envío): $${total}*`;
   pedido += `\n📞 *Teléfono / Phone:* ${telefono}`;
   pedido += `\n📍 *Dirección / Address:* ${direccion}`;
   pedido += `\n💳 *Pago / Payment:* ${metodo}`;
