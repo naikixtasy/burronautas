@@ -15,29 +15,29 @@
     <p>Fuel your day with Space-Ready Burritos! / ¡Combustible espacial para tu día!</p>
   </header>
 
-  <!-- Banner de promoción -->
-  <div id="promo-banner" class="promo-banner" style="display:none;">
+  <!-- 🔥 Banner promocional 2x1 -->
+  <div id="promo-banner" class="promo-banner" style="display: none;">
     🎉 ¡Promoción 2x1 del 30 de junio al 4 de julio! El burrito más barato es GRATIS. 🚀
   </div>
 
   <section class="menu-grid">
     <!-- Burritos -->
-    <div class="item"><img src="frijolesconqueso.png"><h3>Frijoles con Queso / Beans & Cheese ($4)</h3><input type="number" id="f_q" min="0" value="0"></div>
-    <div class="item"><img src="rajasconqueso.png"><h3>Rajas con Queso / Anaheim, Onions & Cheese ($6)</h3><input type="number" id="r_q" min="0" value="0"></div>
-    <div class="item"><img src="picadillo.png"><h3>Picadillo / Ground Beef & Potatoes ($7)</h3><input type="number" id="pic" min="0" value="0"></div>
-    <div class="item"><img src="asado de puerco.png"><h3>Puerco en Rojo / Pork in Red Chile ($7)</h3><input type="number" id="por" min="0" value="0"></div>
-    <div class="item"><img src="chicharron.png"><h3>Chicharrón Verde / Green Pork Rinds ($7)</h3><input type="number" id="chi" min="0" value="0"></div>
-    <div class="item"><img src="mole.png"><h3>Mole / Chicken in Mole Sauce ($6)</h3><input type="number" id="mol" min="0" value="0"></div>
-    <div class="item"><img src="chilerelleno.png"><h3>Chile Relleno / Stuffed Pepper ($7)</h3><input type="number" id="rel" min="0" value="0"></div>
-    <div class="item"><img src="winnie.png"><h3>Winnie / Sausage & Beans ($6)</h3><input type="number" id="win" min="0" value="0"></div>
+    <div class="item"><img src="frijolesconqueso.png"><h3>Frijoles con Queso / Beans & Cheese ($4)</h3><input type="number" id="f_q" min="0" value="0" onchange="updateTotal()"></div>
+    <div class="item"><img src="rajasconqueso.png"><h3>Rajas con Queso / Anaheim, Onions & Cheese ($6)</h3><input type="number" id="r_q" min="0" value="0" onchange="updateTotal()"></div>
+    <div class="item"><img src="picadillo.png"><h3>Picadillo / Ground Beef & Potatoes ($7)</h3><input type="number" id="pic" min="0" value="0" onchange="updateTotal()"></div>
+    <div class="item"><img src="asado de puerco.png"><h3>Puerco en Rojo / Pork in Red Chile ($7)</h3><input type="number" id="por" min="0" value="0" onchange="updateTotal()"></div>
+    <div class="item"><img src="chicharron.png"><h3>Chicharrón Verde / Green Pork Rinds ($7)</h3><input type="number" id="chi" min="0" value="0" onchange="updateTotal()"></div>
+    <div class="item"><img src="mole.png"><h3>Mole / Chicken in Mole Sauce ($6)</h3><input type="number" id="mol" min="0" value="0" onchange="updateTotal()"></div>
+    <div class="item"><img src="chilerelleno.png"><h3>Chile Relleno / Stuffed Pepper ($7)</h3><input type="number" id="rel" min="0" value="0" onchange="updateTotal()"></div>
+    <div class="item"><img src="winnie.png"><h3>Winnie / Sausage & Beans ($6)</h3><input type="number" id="win" min="0" value="0" onchange="updateTotal()"></div>
   </section>
 
   <section class="menu-grid">
     <!-- Sodas -->
-    <div class="item"><img src="cocacola.png" class="soda"><h3>Coca Cola ($2)</h3><input type="number" id="coke" min="0" value="0"></div>
-    <div class="item"><img src="cocazero.png" class="soda"><h3>Coca Zero ($2)</h3><input type="number" id="zero" min="0" value="0"></div>
-    <div class="item"><img src="sprite.png" class="soda"><h3>Sprite ($2)</h3><input type="number" id="sprite" min="0" value="0"></div>
-    <div class="item"><img src="drpepper.png" class="soda"><h3>Dr Pepper ($2)</h3><input type="number" id="pepper" min="0" value="0"></div>
+    <div class="item"><img src="cocacola.png" class="soda" alt="Coca Cola"><h3>Coca Cola ($2)</h3><input type="number" id="coke" min="0" value="0" onchange="updateTotal()"></div>
+    <div class="item"><img src="cocazero.png" class="soda" alt="Coca Cola Zero"><h3>Coca Zero ($2)</h3><input type="number" id="zero" min="0" value="0" onchange="updateTotal()"></div>
+    <div class="item"><img src="sprite.png" class="soda" alt="Sprite"><h3>Sprite ($2)</h3><input type="number" id="sprite" min="0" value="0" onchange="updateTotal()"></div>
+    <div class="item"><img src="drpepper.png" class="soda" alt="Dr Pepper"><h3>Dr Pepper ($2)</h3><input type="number" id="pepper" min="0" value="0" onchange="updateTotal()"></div>
   </section>
 
   <section class="order-section">
@@ -76,7 +76,19 @@
     <i class="fab fa-whatsapp"></i> Ordenar
   </a>
 
-  <!-- Script externo final -->
+  <!-- Script principal -->
   <script src="scripts.js"></script>
+
+  <!-- Script para mostrar banner si la fecha está dentro del rango -->
+  <script>
+    window.addEventListener("DOMContentLoaded", () => {
+      const hoy = new Date();
+      const inicioPromo = new Date("2025-06-30");
+      const finPromo = new Date("2025-07-04");
+      if (hoy >= inicioPromo && hoy <= finPromo) {
+        document.getElementById("promo-banner").style.display = "block";
+      }
+    });
+  </script>
 </body>
 </html>
