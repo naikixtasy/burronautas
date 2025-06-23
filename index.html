@@ -41,29 +41,38 @@
   </section>
 
   <section class="order-section">
-    <label for="telefono">📱 Número de Teléfono / Phone Number</label>
-    <input type="tel" id="telefono" placeholder="Ej. 575-000-0000 / Ex. 575-000-0000" />
+  <label for="telefono">📱 Número de Teléfono / Phone Number</label>
+  <input type="tel" id="telefono" placeholder="Ej. 575-000-0000 / Ex. 575-000-0000" />
 
-    <label for="direccion">📍 Dirección de Entrega / Delivery Address</label>
-    <input type="text" id="direccion" placeholder="Calle, número, colonia / Street, number, neighborhood..." />
+  <label for="direccion">📍 Dirección de Entrega / Delivery Address</label>
+  <input type="text" id="direccion" placeholder="Calle, número, colonia / Street, number, neighborhood..." />
 
-    <label for="metodo">💳 Método de Pago / Payment Method</label>
-    <select id="metodo">
-      <option value="Efectivo">💵 Efectivo / Cash</option>
-      <option value="Cash App $naiquia86">💸 Cash App $naiquia86</option>
-      <option value="PayPal @Naiqui">💻 PayPal @Naiqui</option>
-    </select>
+  <label for="metodo">💳 Método de Pago / Payment Method</label>
+  <select id="metodo">
+    <option value="Efectivo">💵 Efectivo / Cash</option>
+    <option value="Cash App $naiquia86">💸 Cash App $naiquia86</option>
+    <option value="PayPal @Naiqui">💻 PayPal @Naiqui</option>
+  </select>
 
-    <label for="extras">📝 Extras o notas / Extras or Notes:</label>
-    <textarea id="extras" placeholder="Agrega instrucciones, combos o comentarios aquí... / Add instructions, combos or comments here..."></textarea>
+  <label for="extras">📝 Extras o notas / Extras or Notes:</label>
+  <textarea id="extras" placeholder="Agrega instrucciones, combos o comentarios aquí... / Add instructions, combos or comments here..."></textarea>
 
-    <p id="total" style="font-weight:bold; margin-top:10px;">Total: $0.00 USD</p>
-    <p style="color: orange; font-weight: bold;">
-      🚚 Delivery fee of $3.00 will be added / Se agregará un cargo de $3.00 por entrega
-    </p>
+  <!-- 🔍 Nuevo desglose de precios -->
+  <p id="subtotal" style="margin-top:10px;"></p>
+  <p id="descuento"></p>
+  <p id="envio"></p>
+  <p id="totalFinal" style="font-weight:bold;"></p>
 
-    <button onclick="enviarPedido()">📦 Enviar Pedido por WhatsApp / Send Order via WhatsApp</button>
-  </section>
+  <!-- Total general por compatibilidad -->
+  <p id="total" style="font-weight:bold; margin-top:10px;">Total: $0.00 USD</p>
+
+  <p style="color: orange; font-weight: bold;">
+    🚚 Delivery fee of $3.00 will be added / Se agregará un cargo de $3.00 por entrega
+  </p>
+
+  <button onclick="enviarPedido()">📦 Enviar Pedido por WhatsApp / Send Order via WhatsApp</button>
+</section>
+
 
   <footer class="payment">
     <h3>Opciones de Pago / Payment Options:</h3>
