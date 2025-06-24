@@ -63,9 +63,10 @@ function generarLinkMaps(direccion) {
 function enviarPedido() {
   const telefono = document.getElementById('telefono').value.trim();
   const direccion = document.getElementById('address').value.trim();
+  const fechaEntrega = document.getElementById('fecha').value;
 
-  if (!telefono || !direccion) {
-    alert("Por favor llena el número de teléfono y la dirección antes de enviar el pedido.");
+  if (!telefono || !direccion || !fechaEntrega) {
+    alert("Por favor llena el número de teléfono, la dirección y la fecha antes de enviar el pedido.");
     return;
   }
 
@@ -95,6 +96,13 @@ function enviarPedido() {
 
   pedido += `\n📞 *Teléfono / Phone:* ${telefono}`;
   pedido += `\n📍 *Dirección / Address:* ${direccion}`;
+  pedido += `\n📅 *Fecha de entrega / Delivery Date:* ${fechaEntrega}`;
+
+  const hoy = new Date().toISOString().split('T')[0];
+  if (fechaEntrega !== hoy) {
+    pedido += `\n⚠️ *¡ORDEN ANTICIPADA!*`;
+  }
+
   pedido += `\n🗺️ *Mapa:* ${mapsLink}`;
   pedido += `\n💳 *Pago / Payment:* ${metodo}`;
   pedido += `\n📝 *Notas / Notes:* ${extras}`;
