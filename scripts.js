@@ -1,7 +1,9 @@
 const precios = {
   f_q: 4, r_q: 6, pic: 7, por: 7, chi: 7, mol: 6, rel: 7, win: 6,
-  coke: 2, zero: 2, sprite: 2, pepper: 2
+  coke: 2, zero: 2, sprite: 2, pepper: 2,
+  mex: 3 // Added Mexican Coke
 };
+
 
 const burritoIds = ["f_q", "r_q", "pic", "por", "chi", "mol", "rel", "win"];
 
