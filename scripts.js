@@ -137,7 +137,6 @@ function doPost(e) {
   }
 }
 
-
   const url = `https://wa.me/15756370077?text=${encodeURIComponent(pedido)}`;
   window.open(url, '_blank');
 }
