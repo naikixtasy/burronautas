@@ -111,6 +111,21 @@ function enviarPedido() {
   pedido += `\n💰 *Total (incluye envío): $${total}*`;
   pedido += `\n🔢 *Order ID:* ${numeroOrden}`;
 
+  registrarEnSheet({
+  orderId: numeroOrden,
+  items: Array.from(items).filter(item => parseInt(item.querySelector('input').value) > 0).map(item => {
+    const nombre = item.querySelector('h3').innerText;
+    const cantidad = item.querySelector('input').value;
+    return `${cantidad} x ${nombre}`;
+  }),
+  telefono,
+  direccion,
+  fechaEntrega,
+  metodo,
+  extras,
+  total
+});
+
   const url = `https://wa.me/15756370077?text=${encodeURIComponent(pedido)}`;
   window.open(url, '_blank');
 }
@@ -134,6 +149,16 @@ function initAutocomplete() {
     document.getElementById("address").setAttribute("data-maps-link", mapsLink);
     document.getElementById("address").setAttribute("data-formatted-address", address);
   });
+}
+function registrarEnSheet(data) {
+  fetch('https://script.google.com/macros/s/AKfycbwLzlUNvbb7VaIRr98C8x9gxyDSGanOxjYG0UubRW1QvqPjz0f_yxz8k0EOk5Ua2LUxjg/exec', {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(response => response.text())
+  .then(result => console.log("✅ Pedido registrado en Sheets:", result))
+  .catch(error => console.error("❌ Error al registrar:", error));
 }
 
 window.initAutocomplete = initAutocomplete;
@@ -201,3 +226,5 @@ tsParticles.load("tsparticles", {
   },
   detectRetina: true
 });
+
+
