@@ -151,7 +151,7 @@ function initAutocomplete() {
   });
 }
 function registrarEnSheet(data) {
-  fetch('https://script.google.com/macros/s/AKfycbwLzlUNvbb7VaIRr98C8x9gxyDSGanOxjYG0UubRW1QvqPjz0f_yxz8k0EOk5Ua2LUxjg/exec', {
+  fetfetch('https://script.google.com/macros/s/AKfycbwz1ubwwO1tMle5Z8IU1r3F5NxbfatlAlliUUsfz8rbAJ-No4xDPNFrZ-ofbykaDaGgtw/exec', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: { 'Content-Type': 'application/json' }
