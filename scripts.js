@@ -151,15 +151,24 @@ function initAutocomplete() {
   });
 }
 function registrarEnSheet(data) {
-  fetch('https://script.google.com/macros/s/AKfycbwz1ubwwO1tMle5Z8lU1r3F5NxbfatIAIliUUsfz8rbAJ-No4xDPNFrZ-ofbykaDaGgtw/exec', {
+  const direccionTexto = document.getElementById("address").getAttribute("data-formatted-address") 
+                      || document.getElementById("address").value;
+
+  const datosFinales = {
+    ...data,
+    direccion: direccionTexto
+  };
+
+  fetch('https://script.google.com/macros/s/AKfycbzGIuFsac9udRijp6bCuDM-Q0XlTM0iKeLYmkafVBsrq8iYuuBVcNYPcYOcFer88e7S/exec', {
     method: 'POST',
-    body: JSON.stringify(data),
+    body: JSON.stringify(datosFinales),
     headers: { 'Content-Type': 'application/json' }
   })
   .then(response => response.text())
   .then(result => console.log("✅ Pedido registrado en Sheets:", result))
   .catch(error => console.error("❌ Error al registrar:", error));
 }
+
 
 window.initAutocomplete = initAutocomplete;
 
