@@ -1,7 +1,9 @@
 const precios = {
   f_q: 4, r_q: 6, pic: 7, por: 7, chi: 7, mol: 6, rel: 7, win: 6,
-  coke: 2, zero: 2, sprite: 2, pepper: 2, mex: 3 // agregado Mexican Coke
+  coke: 2, zero: 2, sprite: 2, pepper: 2,
+  mex: 3 // Added Mexican Coke
 };
+
 
 const burritoIds = ["f_q", "r_q", "pic", "por", "chi", "mol", "rel", "win"];
 
@@ -60,18 +62,6 @@ function generarLinkMaps(direccion) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccion)}`;
 }
 
-// ✅ NUEVA FUNCIÓN para registrar en Google Sheets
-function registrarEnSheet(data) {
-  fetch('https://script.google.com/macros/s/AKfycbwLzlUNvbb7VaIRr98C8x9gxyDSGanOxjYG0UubRW1QvqPjz0f_yxz8k0EOk5Ua2LUxjg/exec', {
-    method: 'POST',
-    body: JSON.stringify(data),
-    headers: { 'Content-Type': 'application/json' }
-  })
-  .then(response => response.text())
-  .then(result => console.log("Registrado en Sheet:", result))
-  .catch(error => console.error("Error al registrar:", error));
-}
-
 function enviarPedido() {
   const telefono = document.getElementById('telefono').value.trim();
   const direccion = document.getElementById('address').value.trim();
@@ -105,22 +95,6 @@ function enviarPedido() {
     alert("Debes seleccionar al menos un producto antes de enviar el pedido.");
     return;
   }
-
-  // ✅ REGISTRAR EN GOOGLE SHEETS
-  registrarEnSheet({
-    orderId: numeroOrden,
-    items: Array.from(items).filter(item => parseInt(item.querySelector('input').value) > 0).map(item => {
-      const nombre = item.querySelector('h3').innerText;
-      const cantidad = item.querySelector('input').value;
-      return `${cantidad} x ${nombre}`;
-    }),
-    telefono,
-    direccion,
-    fechaEntrega,
-    metodo,
-    extras,
-    total
-  });
 
   pedido += `\n📞 *Teléfono / Phone:* ${telefono}`;
   pedido += `\n📍 *Dirección / Address:* ${direccion}`;
@@ -163,3 +137,67 @@ function initAutocomplete() {
 }
 
 window.initAutocomplete = initAutocomplete;
+
+tsParticles.load("tsparticles", {
+  background: {
+    color: "#0b001a"
+  },
+  fpsLimit: 60,
+  interactivity: {
+    events: {
+      onHover: {
+        enable: true,
+        mode: "repulse"
+      },
+      resize: true
+    },
+    modes: {
+      repulse: {
+        distance: 150,
+        duration: 0.4
+      }
+    }
+  },
+  particles: {
+    color: {
+      value: ["#ffffff", "#bb86fc", "#80d8ff", "#ff4081"]
+    },
+    links: {
+      color: "#ffffff",
+      distance: 120,
+      enable: true,
+      opacity: 0.2,
+      width: 1
+    },
+    collisions: {
+      enable: false
+    },
+    move: {
+      direction: "none",
+      enable: true,
+      outModes: {
+        default: "bounce"
+      },
+      random: false,
+      speed: 1,
+      straight: false
+    },
+    number: {
+      density: {
+        enable: true,
+        area: 900
+      },
+      value: 60
+    },
+    opacity: {
+      value: 0.3
+    },
+    shape: {
+      type: "circle"
+    },
+    size: {
+      value: { min: 1, max: 4 }
+    }
+  },
+  detectRetina: true
+});
