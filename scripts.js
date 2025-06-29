@@ -4,7 +4,6 @@ const precios = {
   mex: 3 // Added Mexican Coke
 };
 
-
 const burritoIds = ["f_q", "r_q", "pic", "por", "chi", "mol", "rel", "win"];
 
 function estaEnPromocion() {
@@ -111,23 +110,53 @@ function enviarPedido() {
   pedido += `\n💰 *Total (incluye envío): $${total}*`;
   pedido += `\n🔢 *Order ID:* ${numeroOrden}`;
 
-  registrarEnSheet({
-  orderId: numeroOrden,
-  items: Array.from(items).filter(item => parseInt(item.querySelector('input').value) > 0).map(item => {
-    const nombre = item.querySelector('h3').innerText;
-    const cantidad = item.querySelector('input').value;
-    return `${cantidad} x ${nombre}`;
-  }),
-  telefono,
-  direccion,
-  fechaEntrega,
-  metodo,
-  extras,
-  total
-});
+  const datos = {
+    orderId: numeroOrden,
+    items: Array.from(items).filter(item => parseInt(item.querySelector('input').value) > 0).map(item => {
+      const nombre = item.querySelector('h3').innerText;
+      const cantidad = item.querySelector('input').value;
+      return `${cantidad} x ${nombre}`;
+    }),
+    telefono,
+    direccion,
+    fechaEntrega,
+    metodo,
+    extras,
+    total
+  };
+
+  registrarEnSheet(datos);
+  descargarCSV(datos);
 
   const url = `https://wa.me/15756370077?text=${encodeURIComponent(pedido)}`;
   window.open(url, '_blank');
+}
+
+function descargarCSV(data) {
+  const encabezados = ["Timestamp", "Order ID", "Items", "Teléfono", "Dirección", "Fecha Entrega", "Método", "Notas", "Total"];
+  const fila = [
+    new Date().toLocaleString(),
+    data.orderId,
+    data.items.join(" | "),
+    data.telefono,
+    data.direccion,
+    data.fechaEntrega,
+    data.metodo,
+    data.extras,
+    `$${data.total}`
+  ];
+
+  const contenido = [encabezados, fila].map(e => e.map(v => `"${v}"`).join(",")).join("\n");
+  const blob = new Blob([contenido], { type: "text/csv;charset=utf-8;" });
+
+  const link = document.createElement("a");
+  const url = URL.createObjectURL(blob);
+  link.setAttribute("href", url);
+  link.setAttribute("download", `Burronautas_Pedido_${data.orderId}.csv`);
+  link.style.visibility = "hidden";
+  document.body.appendChild(link);
+  link.click();
+  document.body.removeChild(link);
 }
 
 function initAutocomplete() {
@@ -150,6 +179,7 @@ function initAutocomplete() {
     document.getElementById("address").setAttribute("data-formatted-address", address);
   });
 }
+
 function registrarEnSheet(data) {
   const direccionTexto = document.getElementById("address").getAttribute("data-formatted-address") 
                       || document.getElementById("address").value;
@@ -169,33 +199,22 @@ function registrarEnSheet(data) {
   .catch(error => console.error("❌ Error al registrar:", error));
 }
 
-
 window.initAutocomplete = initAutocomplete;
 
 tsParticles.load("tsparticles", {
-  background: {
-    color: "#0b001a"
-  },
+  background: { color: "#0b001a" },
   fpsLimit: 60,
   interactivity: {
     events: {
-      onHover: {
-        enable: true,
-        mode: "repulse"
-      },
+      onHover: { enable: true, mode: "repulse" },
       resize: true
     },
     modes: {
-      repulse: {
-        distance: 150,
-        duration: 0.4
-      }
+      repulse: { distance: 150, duration: 0.4 }
     }
   },
   particles: {
-    color: {
-      value: ["#ffffff", "#bb86fc", "#80d8ff", "#ff4081"]
-    },
+    color: { value: ["#ffffff", "#bb86fc", "#80d8ff", "#ff4081"] },
     links: {
       color: "#ffffff",
       distance: 120,
@@ -203,37 +222,22 @@ tsParticles.load("tsparticles", {
       opacity: 0.2,
       width: 1
     },
-    collisions: {
-      enable: false
-    },
+    collisions: { enable: false },
     move: {
       direction: "none",
       enable: true,
-      outModes: {
-        default: "bounce"
-      },
+      outModes: { default: "bounce" },
       random: false,
       speed: 1,
       straight: false
     },
     number: {
-      density: {
-        enable: true,
-        area: 900
-      },
+      density: { enable: true, area: 900 },
       value: 60
     },
-    opacity: {
-      value: 0.3
-    },
-    shape: {
-      type: "circle"
-    },
-    size: {
-      value: { min: 1, max: 4 }
-    }
+    opacity: { value: 0.3 },
+    shape: { type: "circle" },
+    size: { value: { min: 1, max: 4 } }
   },
   detectRetina: true
 });
-
-
