@@ -159,7 +159,7 @@ function registrarEnSheet(data) {
     direccion: direccionTexto
   };
 
-  fetch('https://https://script.google.com/macros/library/d/1kLe1Txg5PIJc1QZn7EcYF8_WPpBlu9b7vu1Yi5aqGaM7Kb_LBbT3gBeN/1', {
+  fetch('https://script.google.com/macros/s/AKfycbxtNszQtCUlSoLtUQmbX59VrDJ11EhC0rYftkUaUspjWi_exrKK87OkVr9y99Z6hF-F/exec', {
     method: 'POST',
     body: JSON.stringify(datosFinales),
     headers: { 'Content-Type': 'application/json' }
