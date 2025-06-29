@@ -4,7 +4,6 @@ const precios = {
   mex: 3 // Added Mexican Coke
 };
 
-
 const burritoIds = ["f_q", "r_q", "pic", "por", "chi", "mol", "rel", "win"];
 
 function estaEnPromocion() {
@@ -112,19 +111,19 @@ function enviarPedido() {
   pedido += `\n🔢 *Order ID:* ${numeroOrden}`;
 
   registrarEnSheet({
-  orderId: numeroOrden,
-  items: Array.from(items).filter(item => parseInt(item.querySelector('input').value) > 0).map(item => {
-    const nombre = item.querySelector('h3').innerText;
-    const cantidad = item.querySelector('input').value;
-    return `${cantidad} x ${nombre}`;
-  }),
-  telefono,
-  direccion,
-  fechaEntrega,
-  metodo,
-  extras,
-  total
-});
+    orderId: numeroOrden,
+    items: Array.from(items).filter(item => parseInt(item.querySelector('input').value) > 0).map(item => {
+      const nombre = item.querySelector('h3').innerText;
+      const cantidad = item.querySelector('input').value;
+      return `${cantidad} x ${nombre}`;
+    }),
+    telefono,
+    direccion,
+    fechaEntrega,
+    metodo,
+    extras,
+    total
+  });
 
   const url = `https://wa.me/15756370077?text=${encodeURIComponent(pedido)}`;
   window.open(url, '_blank');
@@ -150,6 +149,7 @@ function initAutocomplete() {
     document.getElementById("address").setAttribute("data-formatted-address", address);
   });
 }
+
 function registrarEnSheet(data) {
   fetch('https://script.google.com/macros/s/AKfycbwz1ubwwO1tMle5Z8lU1r3F5NxbfatIAIliUUsfz8rbAJ-No4xDPNFrZ-ofbykaDaGgtw/exec', {
     method: 'POST',
@@ -226,5 +226,3 @@ tsParticles.load("tsparticles", {
   },
   detectRetina: true
 });
-
-
