@@ -151,7 +151,7 @@ function initAutocomplete() {
 }
 
 function registrarEnSheet(data) {
-  fetch('https://script.google.com/macros/s/AKfycbyWYWWvHx5g4p8G8nvyHiNjBqJ6JNOlreW3cGgPtb7i0-eDdVzp8Z1AZATivLTlVNLsFw/exec', {
+  fetch('https://script.google.com/macros/s/AKfycbzGIuFsac9udRijp6bCuDM-Q0XlTM0iKeLYmkafVBsrq8iYuuBVcNYPcYOcFer88e7S/exec', {
     method: 'POST',
     body: JSON.stringify(data),
     headers: { 'Content-Type': 'application/json' }
