@@ -111,20 +111,32 @@ function enviarPedido() {
   pedido += `\n💰 *Total (incluye envío): $${total}*`;
   pedido += `\n🔢 *Order ID:* ${numeroOrden}`;
 
-  registrarEnSheet({
-  orderId: numeroOrden,
-  items: Array.from(items).filter(item => parseInt(item.querySelector('input').value) > 0).map(item => {
-    const nombre = item.querySelector('h3').innerText;
-    const cantidad = item.querySelector('input').value;
-    return `${cantidad} x ${nombre}`;
-  }),
-  telefono,
-  direccion,
-  fechaEntrega,
-  metodo,
-  extras,
-  total
-});
+function doPost(e) {
+  try {
+    const sheet = SpreadsheetApp.getActiveSpreadsheet().getSheetByName("Burronautas_control"); // ⚠️ Ajusta el nombre exacto si es distinto
+    if (!sheet) throw new Error("Hoja 'Burronautas_control' no encontrada");
+
+    const data = JSON.parse(e.postData.contents);
+
+    sheet.appendRow([
+      new Date(),
+      data.orderId,
+      data.items.join("\n"),
+      data.telefono,
+      data.direccion,
+      data.fechaEntrega,
+      data.metodo,
+      data.extras,
+      data.total
+    ]);
+
+    return ContentService.createTextOutput("OK");
+  } catch (error) {
+    Logger.log("❌ ERROR en doPost: " + error.message);
+    return ContentService.createTextOutput("ERROR: " + error.message);
+  }
+}
+
 
   const url = `https://wa.me/15756370077?text=${encodeURIComponent(pedido)}`;
   window.open(url, '_blank');
