@@ -22,8 +22,12 @@ function calcularTotal() {
   let totalSinDescuento = 0;
   let burritos = [];
 
-  for (const id in precios) {
-    const cantidad = parseInt(document.getElementById(id)?.value || 0);
+ for (const id in precios) {
+  const input = document.getElementById(id);
+  if (!input || input.disabled) continue;
+
+  const cantidad = parseInt(input.value || 0);
+
     const precioUnitario = precios[id];
     totalSinDescuento += cantidad * precioUnitario;
 
