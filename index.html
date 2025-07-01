@@ -8,6 +8,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1YBj8EHU37x31wjrEMcY0g2m61rgYwP8&libraries=places,geometry&callback=initAutocomplete" async defer></script>
+  <style>
+    body {
+      background: url('nebula-background.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: white;
+    }
+  </style>
 </head>
 <body>
 <a href="https://www.instagram.com/burronautas_las_cruces/" target="_blank" class="floating-instagram">
@@ -82,7 +89,7 @@
   <textarea id="extras" placeholder="Add instructions, combos, or comments... / Agrega instrucciones, combos o comentarios..."></textarea>
 </div>
 
-<!-- Cálculos -->
+<!-- Totales -->
 <p id="subtotal"></p>
 <p id="descuento"></p>
 <p id="envio"></p>
@@ -116,48 +123,45 @@
   <p><strong>We also accept cash payments / También aceptamos pagos en efectivo</strong></p>
 </footer>
 
+<!-- Scripts -->
 <script src="scripts.js"></script>
-
 <script>
-tsParticles.load("tsparticles", {
-  fullScreen: { enable: false },
-  background: { color: { value: "transparent" } },
-  particles: {
-    number: {
-      value: 60,
-      density: { enable: true, area: 800 }
+  tsParticles.load("tsparticles", {
+    fullScreen: { enable: false },
+    background: { color: { value: "transparent" } },
+    particles: {
+      number: { value: 60, density: { enable: true, area: 800 } },
+      color: { value: ["#ffffff", "#b967ff", "#7ec8e3", "#f0a3ff", "#ffde59"] },
+      shape: { type: "circle" },
+      opacity: {
+        value: 0.8,
+        random: true,
+        anim: { enable: true, speed: 1, opacity_min: 0.3, sync: false }
+      },
+      size: {
+        value: { min: 1, max: 4 },
+        anim: { enable: true, speed: 2, size_min: 0.3, sync: false }
+      },
+      move: {
+        enable: true,
+        speed: 0.6,
+        direction: "none",
+        outModes: "out"
+      }
     },
-    color: { value: ["#ffffff", "#b967ff", "#7ec8e3", "#f0a3ff", "#ffde59"] },
-    shape: { type: "circle" },
-    opacity: {
-      value: 0.8,
-      random: true,
-      anim: { enable: true, speed: 1, opacity_min: 0.3, sync: false }
+    interactivity: {
+      events: {
+        onHover: { enable: true, mode: "repulse" },
+        onClick: { enable: true, mode: "push" },
+        resize: true
+      },
+      modes: {
+        repulse: { distance: 70, duration: 0.4 },
+        push: { quantity: 2 }
+      }
     },
-    size: {
-      value: { min: 1, max: 4 },
-      anim: { enable: true, speed: 2, size_min: 0.3, sync: false }
-    },
-    move: {
-      enable: true,
-      speed: 0.6,
-      direction: "none",
-      outModes: "out"
-    }
-  },
-  interactivity: {
-    events: {
-      onHover: { enable: true, mode: "repulse" },
-      onClick: { enable: true, mode: "push" },
-      resize: true
-    },
-    modes: {
-      repulse: { distance: 70, duration: 0.4 },
-      push: { quantity: 2 }
-    }
-  },
-  detectRetina: true
-});
+    detectRetina: true
+  });
 </script>
 
 </body>
