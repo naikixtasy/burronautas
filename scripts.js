@@ -2,27 +2,26 @@ let autocomplete;
 let distanciaGlobal = 0;
 
 function initAutocomplete() {
-  const input = document.getElementById("address");
-  autocomplete = new google.maps.places.Autocomplete(input);
-  autocomplete.addListener("place_changed", calcularDistancia);
-}
+  const input = document.getElementById('address');
+  autocomplete = new google.maps.places.Autocomplete(input, {
+    types: ['address'],
+    componentRestrictions: { country: "us" }
+  });
 
-function calcularDistancia() {
-  const place = autocomplete.getPlace();
-  if (!place.geometry || !place.geometry.location) {
-    return;
-  }
+  autocomplete.addListener("place_changed", () => {
+    const place = autocomplete.getPlace();
+    if (!place.geometry) return;
 
-  const destino = place.geometry.location;
-  const base = new google.maps.LatLng(32.303189, -106.735188); // Dirección base: 100 Vista Del Monte, Las Cruces
+    const base = new google.maps.LatLng(32.3112, -106.7637); // Dirección base
+    const destino = place.geometry.location;
 
-  const distancia = google.maps.geometry.spherical.computeDistanceBetween(base, destino);
-  const millas = distancia / 1609.34;
-  distanciaGlobal = millas;
+    const distanciaMillas = google.maps.geometry.spherical.computeDistanceBetween(base, destino) * 0.000621371;
+    const distanciaRedondeada = Math.round(distanciaMillas * 10) / 10;
+    distanciaGlobal = distanciaRedondeada;
+    document.getElementById('distanciaValor').innerText = distanciaRedondeada.toFixed(1);
 
-  document.getElementById("distanciaValor").textContent = millas.toFixed(2);
-
-  actualizarTotales();
+    actualizarTotales();
+  });
 }
 
 function actualizarTotales() {
@@ -31,22 +30,25 @@ function actualizarTotales() {
     coke: 2, zero: 2, sprite: 2, pepper: 2, mex: 3
   };
 
+  const burritos = ["f_q", "r_q", "pic", "por", "chi", "mol", "rel", "win"];
+
   let subtotal = 0;
+  let cantidadesBurritos = [];
+
   for (let id in precios) {
     const cantidad = parseInt(document.getElementById(id).value) || 0;
     subtotal += precios[id] * cantidad;
+
+    if (burritos.includes(id)) {
+      cantidadesBurritos.push(...Array(cantidad).fill(precios[id]));
+    }
   }
 
-  // Calcular descuento 2x1
-  let cantidades = Object.keys(precios).map(id => {
-    const cantidad = parseInt(document.getElementById(id).value) || 0;
-    return Array(cantidad).fill(precios[id]);
-  }).flat();
-
-  cantidades.sort((a, b) => a - b);
+  // Calcular descuento 2x1 solo para burritos
+  cantidadesBurritos.sort((a, b) => a - b);
   let descuento = 0;
-  for (let i = 0; i < cantidades.length - 1; i += 2) {
-    descuento += Math.min(cantidades[i], cantidades[i + 1]);
+  for (let i = 0; i < cantidadesBurritos.length - 1; i += 2) {
+    descuento += Math.min(cantidadesBurritos[i], cantidadesBurritos[i + 1]);
   }
 
   // Calcular envío
@@ -54,7 +56,7 @@ function actualizarTotales() {
   let mensajeEnvio = "";
 
   if (distanciaGlobal > 0) {
-    envio = 3; // Base fee
+    envio = 3; // Base
     if (distanciaGlobal > 5) {
       const extra = Math.ceil((distanciaGlobal - 5) / 2);
       envio += extra;
@@ -126,29 +128,5 @@ window.onload = () => {
 
   const hoy = new Date().toISOString().split("T")[0];
   document.getElementById("fecha").setAttribute("min", hoy);
+  initAutocomplete();
 };
-
-let autocomplete;
-
-function initAutocomplete() {
-  const input = document.getElementById('address');
-  autocomplete = new google.maps.places.Autocomplete(input, {
-    types: ['address'],
-    componentRestrictions: { country: "us" }
-  });
-
-  autocomplete.addListener("place_changed", () => {
-    const place = autocomplete.getPlace();
-    if (!place.geometry) return;
-
-    const base = new google.maps.LatLng(32.3112, -106.7637); // Dirección base
-    const destino = place.geometry.location;
-
-    const distanciaMillas = google.maps.geometry.spherical.computeDistanceBetween(base, destino) * 0.000621371;
-    const distanciaRedondeada = Math.round(distanciaMillas * 10) / 10;
-    document.getElementById('distanciaValor').innerText = distanciaRedondeada.toFixed(1);
-
-    calcularEnvio(distanciaRedondeada);
-  });
-}
-
