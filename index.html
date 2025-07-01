@@ -8,12 +8,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
   <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1YBj8EHU37x31wjrEMcY0g2m61rgYwP8&libraries=places,geometry&callback=initAutocomplete" async defer></script>
-
-
-
 </head>
+
 <a href="https://www.instagram.com/burronautas_las_cruces/" target="_blank" class="floating-instagram">
-  <i class="fab fa-instagram"></i> También puedes pedir por Instagram
+  <i class="fab fa-instagram"></i> Order via Instagram / También puedes pedir por Instagram
 </a>
 
 <body>
@@ -29,28 +27,26 @@
   </header>
 
   <div id="promo-banner" class="promo-banner" style="display: none;">
-    🎉 ¡Promoción 2x1 del 30 de junio al 4 de julio! El burrito más barato es GRATIS. 🚀
+    🎉 2x1 Promo from June 30 to July 4! Cheapest burrito is FREE. / ¡Promoción 2x1 del 30 de junio al 4 de julio! El burrito más barato es GRATIS. 🚀
   </div>
 
   <section class="menu-grid">
-    <div class="item"><img src="frijolesconqueso.png"><h3>Frijoles con Queso / Beans & Cheese ($4)</h3><input type="number" id="f_q" min="0" value="0"></div>
-    <div class="item"><img src="rajasconqueso.png"><h3>Rajas con Queso / Anaheim, Onions & Cheese ($6)</h3><input type="number" id="r_q" min="0" value="0"></div>
-    <div class="item"><img src="picadillo.png"><h3>Picadillo / Ground Beef & Potatoes ($7)</h3><input type="number" id="pic" min="0" value="0"></div>
-    <div class="item"><img src="asado de puerco.png"><h3>Puerco en Rojo / Pork in Red Chile ($7)</h3><input type="number" id="por" min="0" value="0"></div>
-    <div class="item"><img src="chicharron.png"><h3>Chicharrón Verde / Green Pork Rinds ($7)</h3><input type="number" id="chi" min="0" value="0"></div>
-    <div class="item"><img src="mole.png"><h3>Mole / Chicken in Mole Sauce ($6)</h3><input type="number" id="mol" min="0" value="0"></div>
-    <div class="item"><img src="chilerelleno.png"><h3>Chile Relleno / Stuffed Pepper ($7)</h3><input type="number" id="rel" min="0" value="0"></div>
-    <div class="item"><img src="winnie.png"><h3>Winnie / Sausage & Beans ($6)</h3><input type="number" id="win" min="0" value="0"></div>
+    <div class="item"><img src="frijolesconqueso.png"><h3>Beans & Cheese / Frijoles con Queso ($4)</h3><input type="number" id="f_q" min="0" value="0"></div>
+    <div class="item"><img src="rajasconqueso.png"><h3>Anaheim, Onions & Cheese / Rajas con Queso ($6)</h3><input type="number" id="r_q" min="0" value="0"></div>
+    <div class="item"><img src="picadillo.png"><h3>Ground Beef & Potatoes / Picadillo ($7)</h3><input type="number" id="pic" min="0" value="0"></div>
+    <div class="item"><img src="asado de puerco.png"><h3>Pork in Red Chile / Puerco en Rojo ($7)</h3><input type="number" id="por" min="0" value="0"></div>
+    <div class="item"><img src="chicharron.png"><h3>Green Pork Rinds / Chicharrón Verde ($7)</h3><input type="number" id="chi" min="0" value="0"></div>
+    <div class="item"><img src="mole.png"><h3>Chicken in Mole Sauce / Mole ($6)</h3><input type="number" id="mol" min="0" value="0"></div>
+    <div class="item"><img src="chilerelleno.png"><h3>Stuffed Pepper / Chile Relleno ($7)</h3><input type="number" id="rel" min="0" value="0"></div>
+    <div class="item"><img src="winnie.png"><h3>Sausage & Beans / Winnie ($6)</h3><input type="number" id="win" min="0" value="0"></div>
   </section>
 
   <section class="menu-grid">
     <div class="item"><img src="cocacola.png" class="soda"><h3>Coca Cola ($2)</h3><input type="number" id="coke" min="0" value="0"></div>
     <div class="item"><img src="cocazero.png" class="soda"><h3>Coca Zero ($2)</h3><input type="number" id="zero" min="0" value="0"></div>
     <div class="item"><img src="sprite.png" class="soda"><h3>Sprite ($2)</h3><input type="number" id="sprite" min="0" value="0"></div>
-    <div class="item"><img src="drpepper.png" class="soda"><h3>Dr Pepper ($2)</h3><input type="number" id="pepper" min="0" value="0">
+    <div class="item"><img src="drpepper.png" class="soda"><h3>Dr Pepper ($2)</h3><input type="number" id="pepper" min="0" value="0"></div>
     <div class="item"><img src="mexicancoke.png" class="soda"><h3>Mexican Coke ($3)</h3><input type="number" id="mex" min="0" value="0"></div>
-
-</div>
   </section>
 
   <div class="form-field">
@@ -60,11 +56,11 @@
 
   <div class="form-field">
     <label for="direccion"><i class="fas fa-map-marker-alt"></i> Delivery Address / Dirección de Entrega</label>
-    <input type="text" id="address" placeholder="Start typing your address..." required>
+    <input type="text" id="address" placeholder="Start typing your address... / Comienza a escribir tu dirección..." required>
   </div>
 
   <div class="form-field">
-    <label for="fecha"><i class="fas fa-calendar-alt"></i> Fecha de Entrega / Delivery Date</label>
+    <label for="fecha"><i class="fas fa-calendar-alt"></i> Delivery Date / Fecha de Entrega</label>
     <input type="date" id="fecha" required>
   </div>
 
@@ -79,46 +75,41 @@
 
   <div class="form-field">
     <label for="extras"><i class="fas fa-comment-dots"></i> Notes or Combos / Notas o Combos</label>
-    <textarea id="extras" placeholder="Add instructions, combos, or comments..."></textarea>
+    <textarea id="extras" placeholder="Add instructions, combos, or comments... / Agrega instrucciones, combos o comentarios..."></textarea>
   </div>
 
   <p id="subtotal"></p>
   <p id="descuento"></p>
   <p id="envio"></p>
-    <div id="envioDistancia" style="margin-top: 5px; font-size: 0.9em; color: #ccc;">
-  Distancia calculada desde la base: <span id="distanciaValor">...</span> millas
-  <br>
-  <span id="mensajeEnvioExtra" style="color: #ff9999; font-weight: bold;"></span>
-</div>
-
+  <div id="envioDistancia" style="margin-top: 5px; font-size: 0.9em; color: #ccc;">
+    📏 Distance from base: <span id="distanciaValor">...</span> miles / millas<br>
+    <span id="mensajeEnvioExtra" style="color: #ff9999; font-weight: bold;"></span>
+  </div>
 
   <p id="totalFinal" style="font-weight:bold;"></p>
   <p id="total" style="font-weight:bold;">Total: $0.00 USD</p>
 
   <p style="color: orange; font-weight: bold;">
-    🚚 Delivery fee of $3.00 will be added (5 mile ratio) + $1 extra per each 2 extra miles/ Se agregará un cargo de $3.00 por entrega (radio de 5 millas) + $1 extra por cada 
+    🚚 Delivery fee of $3.00 will be added (5 mile ratio) + $1 extra per each 2 extra miles / Se agregará un cargo de $3.00 por entrega (radio de 5 millas) + $1 extra por cada 2 millas adicionales
   </p>
 
   <div style="text-align: center; margin-top: 20px;">
-  <button onclick="enviarPedido()" class="btn-whatsapp-order">
-    <i class="fab fa-whatsapp"></i> Enviar Pedido por WhatsApp / Send Order via WhatsApp
-  </button>
-  <br><br>
-  <button onclick="prepararMensajeInstagram()" class="btn-instagram-order">
-  <i class="fab fa-instagram"></i> Order via Instagram Direct
-</button>
-
-</div>
-
+    <button onclick="enviarPedido()" class="btn-whatsapp-order">
+      <i class="fab fa-whatsapp"></i> Send Order via WhatsApp / Enviar Pedido por WhatsApp
+    </button>
+    <br><br>
+    <button onclick="prepararMensajeInstagram()" class="btn-instagram-order">
+      <i class="fab fa-instagram"></i> Order via Instagram Direct / También puedes pedir por Instagram
+    </button>
+  </div>
 
   <footer class="payment">
-    <h3>Opciones de Pago / Payment Options:</h3>
+    <h3>Payment Options / Opciones de Pago:</h3>
     <p><strong>Cash App:</strong> <a href="https://cash.app/$naiquia86" target="_blank">$naiquia86</a></p>
     <p><strong>PayPal:</strong> <a href="https://paypal.me/Naiqui" target="_blank">@Naiqui</a></p>
-    <p><strong>También aceptamos pagos en efectivo / We also accept Cash Payments</strong></p>
+    <p><strong>We also accept cash payments / También aceptamos pagos en efectivo</strong></p>
   </footer>
 
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1YBj8EHU37x31wjrEMcY0g2m61rgYwP8&libraries=places&callback=initAutocomplete" async defer></script>
-<script src="scripts.js"></script>
+  <script src="scripts.js"></script>
 </body>
 </html>
