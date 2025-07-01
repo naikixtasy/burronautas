@@ -65,7 +65,6 @@ function generarTextoPedido() {
   const telefono = document.getElementById('telefono').value.trim();
   const direccion = document.getElementById('address').value.trim();
   const fechaEntrega = document.getElementById('fecha').value;
-
   const metodo = document.getElementById('metodo').value;
   const extras = document.getElementById('extras').value.trim();
   const total = calcularTotal();
@@ -209,7 +208,6 @@ function registrarEnSheet(data) {
 
 window.initAutocomplete = initAutocomplete;
 
-// Partículas decorativas
 tsParticles.load("tsparticles", {
   background: { color: "#0b001a" },
   fpsLimit: 60,
