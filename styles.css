@@ -1,3 +1,14 @@
+/* Fondo de partículas */
+#tsparticles {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+/* General */
 body {
   font-family: 'Segoe UI', sans-serif;
   background-color: transparent;
@@ -8,6 +19,7 @@ body {
   box-sizing: border-box;
 }
 
+/* Encabezado */
 header {
   background-color: transparent;
   padding: 20px;
@@ -48,6 +60,7 @@ header p {
   border-radius: 10px;
 }
 
+/* Grid del menú */
 .menu-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
@@ -101,93 +114,6 @@ header p {
   cursor: pointer;
 }
 
-.order-section {
-  background: #220044;
-  padding: 2rem;
-  max-width: 800px;
-  margin: auto;
-  border-radius: 12px;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
-  text-align: left;
-}
-
-.order-section label,
-.order-section textarea,
-.order-section input,
-.order-section select {
-  display: block;
-  width: 100%;
-  margin-bottom: 1rem;
-}
-
-.order-section input,
-.order-section select,
-.order-section textarea {
-  padding: 10px;
-  font-size: 1rem;
-  border-radius: 5px;
-  border: none;
-}
-
-.order-section button {
-  background: #8f00ff;
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 6px;
-  font-size: 1.1rem;
-  cursor: pointer;
-  transition: background 0.3s ease;
-}
-
-.order-section button:hover {
-  background: #a64dff;
-}
-
-#total {
-  color: #00ffcc;
-  font-size: 1.2rem;
-  text-align: center;
-}
-
-footer.payment {
-  background: #110022;
-  color: #ccc;
-  padding: 2rem;
-  font-size: 0.9rem;
-}
-
-footer a {
-  color: #00d4ff;
-  text-decoration: underline;
-}
-
-.ahorro-msg {
-  background-color: #ffe44c;
-  color: #000;
-  border: 2px dashed #ff7f00;
-  padding: 10px;
-  margin-top: 15px;
-  font-weight: bold;
-  border-radius: 8px;
-  text-align: center;
-  animation: brillo 1.5s infinite;
-}
-
-@keyframes brillo {
-  0%, 100% { box-shadow: 0 0 5px #ff7f00; }
-  50% { box-shadow: 0 0 20px #ffaa00; }
-}
-
-#tsparticles {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: -1;
-}
-
 /* Hero Section */
 .hero {
   text-align: center;
@@ -233,7 +159,7 @@ footer a {
   line-height: 1.5em;
 }
 
-/* Botones de orden */
+/* Botones */
 .btn-whatsapp-order,
 .btn-instagram-order {
   border: none;
@@ -277,7 +203,7 @@ footer a {
   font-size: 1.4rem;
 }
 
-/* Campo de formulario */
+/* Campos del formulario */
 .form-field {
   margin-bottom: 1.5rem;
   text-align: left;
@@ -310,10 +236,6 @@ footer a {
   background: rgba(255, 255, 255, 0.1);
   color: white;
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.05);
-  background-image: url('data:image/svg+xml;utf8,<svg fill="%23fff" height="24" viewBox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg"><path d="M7 10l5 5 5-5z"/></svg>');
-  background-repeat: no-repeat;
-  background-position-x: 98%;
-  background-position-y: center;
 }
 
 .form-field input::placeholder,
@@ -324,6 +246,37 @@ footer a {
 .form-field textarea {
   resize: vertical;
   min-height: 100px;
+}
+
+/* Pie de página */
+footer.payment {
+  background: #110022;
+  color: #ccc;
+  padding: 2rem;
+  font-size: 0.9rem;
+}
+
+footer a {
+  color: #00d4ff;
+  text-decoration: underline;
+}
+
+/* Ahorro/Descuento */
+.ahorro-msg {
+  background-color: #ffe44c;
+  color: #000;
+  border: 2px dashed #ff7f00;
+  padding: 10px;
+  margin-top: 15px;
+  font-weight: bold;
+  border-radius: 8px;
+  text-align: center;
+  animation: brillo 1.5s infinite;
+}
+
+@keyframes brillo {
+  0%, 100% { box-shadow: 0 0 5px #ff7f00; }
+  50% { box-shadow: 0 0 20px #ffaa00; }
 }
 
 /* Botón flotante Instagram */
