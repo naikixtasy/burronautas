@@ -65,8 +65,8 @@ function calcularTotal() {
   const envio = calcularEnvio();
   const totalFinal = totalSinDescuento - descuento + envio;
 
-  document.getElementById("subtotal").innerText = `🧾 Subtotal (no discount): $${totalSinDescuento.toFixed(2)}`;
-  document.getElementById("descuento").innerText = `🎁 2x1 Discount applied: -$${descuento.toFixed(2)}`;
+  document.getElementById("subtotal").innerText = `📟 Subtotal (no discount): $${totalSinDescuento.toFixed(2)}`;
+  document.getElementById("descuento").innerText = `🏱 2x1 Discount applied: -$${descuento.toFixed(2)}`;
   document.getElementById("envio").innerText = `🚚 Delivery: +$${envio.toFixed(2)}`;
   document.getElementById("totalFinal").innerText = `💰 Total (with discount and delivery): $${totalFinal.toFixed(2)}`;
   document.getElementById("total").innerText = `Total: $${totalFinal.toFixed(2)} USD`;
@@ -97,7 +97,7 @@ function generarTextoPedido() {
   const mapsLink = generarLinkMaps(direccion);
 
   const items = document.querySelectorAll('.menu-grid .item');
-  let pedido = `🛰️ *Burronautas Order #${numeroOrden}*\n\n`;
+  let pedido = `🚀 *Burronautas Order #${numeroOrden}*\n\n`;
   let hayProductos = false;
 
   items.forEach(item => {
@@ -113,7 +113,7 @@ function generarTextoPedido() {
 
   pedido += `\n📞 *Phone:* ${telefono}`;
   pedido += `\n📍 *Address:* ${direccion}`;
-  pedido += `\n📅 *Delivery Date:* ${fechaEntrega}`;
+  pedido += `\n🗕️ *Delivery Date:* ${fechaEntrega}`;
   if (fechaEntrega !== new Date().toISOString().split('T')[0]) {
     pedido += `\n⚠️ *ADVANCE ORDER!* / *¡ORDEN ANTICIPADA!*`;
   }
@@ -233,24 +233,3 @@ function registrarEnSheet(data) {
 }
 
 window.initAutocomplete = initAutocomplete;
-
-// tsParticles config (no change)
-tsParticles.load("tsparticles", {
-  background: { color: "#0b001a" },
-  fpsLimit: 60,
-  interactivity: {
-    events: { onHover: { enable: true, mode: "repulse" }, resize: true },
-    modes: { repulse: { distance: 150, duration: 0.4 } }
-  },
-  particles: {
-    color: { value: ["#ffffff", "#bb86fc", "#80d8ff", "#ff4081"] },
-    links: { color: "#ffffff", distance: 120, enable: true, opacity: 0.2, width: 1 },
-    collisions: { enable: false },
-    move: { enable: true, speed: 1, direction: "none", random: false, straight: false, outModes: { default: "bounce" } },
-    number: { density: { enable: true, area: 900 }, value: 60 },
-    opacity: { value: 0.3 },
-    shape: { type: "circle" },
-    size: { value: { min: 1, max: 4 } }
-  },
-  detectRetina: true
-});
