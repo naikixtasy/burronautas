@@ -61,15 +61,10 @@ function generarLinkMaps(direccion) {
   return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccion)}`;
 }
 
-function enviarPedido() {
+function generarTextoPedido() {
   const telefono = document.getElementById('telefono').value.trim();
   const direccion = document.getElementById('address').value.trim();
   const fechaEntrega = document.getElementById('fecha').value;
-
-  if (!telefono || !direccion || !fechaEntrega) {
-    alert("Por favor llena el número de teléfono, la dirección y la fecha antes de enviar el pedido.");
-    return;
-  }
 
   const metodo = document.getElementById('metodo').value;
   const extras = document.getElementById('extras').value.trim();
@@ -90,10 +85,7 @@ function enviarPedido() {
     }
   });
 
-  if (!hayProductos) {
-    alert("Debes seleccionar al menos un producto antes de enviar el pedido.");
-    return;
-  }
+  if (!hayProductos) return null;
 
   pedido += `\n📞 *Teléfono / Phone:* ${telefono}`;
   pedido += `\n📍 *Dirección / Address:* ${direccion}`;
@@ -110,10 +102,29 @@ function enviarPedido() {
   pedido += `\n💰 *Total (incluye envío): $${total}*`;
   pedido += `\n🔢 *Order ID:* ${numeroOrden}`;
 
+  return { texto: pedido, hayProductos, numeroOrden };
+}
+
+function enviarPedido() {
+  const telefono = document.getElementById('telefono').value.trim();
+  const direccion = document.getElementById('address').value.trim();
+  const fechaEntrega = document.getElementById('fecha').value;
+
+  if (!telefono || !direccion || !fechaEntrega) {
+    alert("Por favor llena el número de teléfono, la dirección y la fecha antes de enviar el pedido.");
+    return;
+  }
+
+  const { texto, hayProductos, numeroOrden } = generarTextoPedido();
+  if (!hayProductos) {
+    alert("Debes seleccionar al menos un producto antes de enviar el pedido.");
+    return;
+  }
+
   // Enviar a Google Sheets
   registrarEnSheet({
     orderId: numeroOrden,
-    items: Array.from(items).filter(item => parseInt(item.querySelector('input').value) > 0).map(item => {
+    items: Array.from(document.querySelectorAll('.menu-grid .item')).filter(item => parseInt(item.querySelector('input').value) > 0).map(item => {
       const nombre = item.querySelector('h3').innerText;
       const cantidad = item.querySelector('input').value;
       return `${cantidad} x ${nombre}`;
@@ -121,14 +132,39 @@ function enviarPedido() {
     telefono,
     direccion,
     fechaEntrega,
-    metodo,
-    extras,
-    total
+    metodo: document.getElementById('metodo').value,
+    extras: document.getElementById('extras').value.trim(),
+    total: calcularTotal()
   });
 
-  // Enviar por WhatsApp
-  const url = `https://wa.me/15756370077?text=${encodeURIComponent(pedido)}`;
+  const url = `https://wa.me/15756370077?text=${encodeURIComponent(texto)}`;
   window.open(url, '_blank');
+}
+
+function prepararMensajeInstagram() {
+  const telefono = document.getElementById('telefono').value.trim();
+  const direccion = document.getElementById('address').value.trim();
+  const fechaEntrega = document.getElementById('fecha').value;
+
+  if (!telefono || !direccion || !fechaEntrega) {
+    alert("Por favor llena el número de teléfono, la dirección y la fecha antes de enviar el pedido.");
+    return;
+  }
+
+  const { texto, hayProductos } = generarTextoPedido();
+
+  if (!hayProductos) {
+    alert("Debes seleccionar al menos un producto antes de generar el mensaje.");
+    return;
+  }
+
+  navigator.clipboard.writeText(texto).then(() => {
+    alert("✅ Tu pedido ha sido copiado. Ahora te llevamos a Instagram para que lo pegues en el chat.");
+    window.open("https://www.instagram.com/burronautas_las_cruces/", "_blank");
+  }).catch(err => {
+    alert("❌ Hubo un problema al copiar el mensaje. Intenta de nuevo.");
+    console.error(err);
+  });
 }
 
 function initAutocomplete() {
@@ -173,7 +209,7 @@ function registrarEnSheet(data) {
 
 window.initAutocomplete = initAutocomplete;
 
-// Partículas (decorativo)
+// Partículas decorativas
 tsParticles.load("tsparticles", {
   background: { color: "#0b001a" },
   fpsLimit: 60,
