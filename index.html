@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -7,14 +7,13 @@
   <link rel="stylesheet" href="styles.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/tsparticles@2.11.1/tsparticles.bundle.min.js"></script>
-  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1YBj8EHU37x31wjrEMcY0g2m61rgYwP8&libraries=places,geometry&callback=initAutocomplete" async defer></script>
 </head>
 
-<a href="https://www.instagram.com/burronautas_las_cruces/" target="_blank" class="floating-instagram">
-  <i class="fab fa-instagram"></i> Order via Instagram / También puedes pedir por Instagram
-</a>
-
 <body>
+  <a href="https://www.instagram.com/burronautas_las_cruces/" target="_blank" class="floating-instagram">
+    <i class="fab fa-instagram"></i> Order via Instagram / También puedes pedir por Instagram
+  </a>
+
   <div id="tsparticles"></div>
   <header class="hero">
     <div class="hero-content">
@@ -27,7 +26,7 @@
   </header>
 
   <div id="promo-banner" class="promo-banner" style="display: none;">
-    🎉 2x1 Promo from June 30 to July 4! Cheapest burrito is FREE. / ¡Promoción 2x1 del 30 de junio al 4 de julio! El burrito más barato es GRATIS. 🚀
+    🎉 2x1 Promo from June 30 to July 4! Cheapest burrito is FREE. 🚀
   </div>
 
   <section class="menu-grid">
@@ -56,7 +55,7 @@
 
   <div class="form-field">
     <label for="direccion"><i class="fas fa-map-marker-alt"></i> Delivery Address / Dirección de Entrega</label>
-    <input type="text" id="address" placeholder="Start typing your address... / Comienza a escribir tu dirección..." required>
+    <input type="text" id="address" placeholder="Start typing your address..." required>
   </div>
 
   <div class="form-field">
@@ -75,12 +74,13 @@
 
   <div class="form-field">
     <label for="extras"><i class="fas fa-comment-dots"></i> Notes or Combos / Notas o Combos</label>
-    <textarea id="extras" placeholder="Add instructions, combos, or comments... / Agrega instrucciones, combos o comentarios..."></textarea>
+    <textarea id="extras" placeholder="Add instructions, combos, or comments..."></textarea>
   </div>
 
   <p id="subtotal"></p>
   <p id="descuento"></p>
   <p id="envio"></p>
+
   <div id="envioDistancia" style="margin-top: 5px; font-size: 0.9em; color: #ccc;">
     📏 Distance from base: <span id="distanciaValor">...</span> miles / millas<br>
     <span id="mensajeEnvioExtra" style="color: #ff9999; font-weight: bold;"></span>
@@ -99,7 +99,7 @@
     </button>
     <br><br>
     <button onclick="prepararMensajeInstagram()" class="btn-instagram-order">
-      <i class="fab fa-instagram"></i> Order via Instagram Direct / También puedes pedir por Instagram
+      <i class="fab fa-instagram"></i> Order via Instagram Direct
     </button>
   </div>
 
@@ -107,9 +107,20 @@
     <h3>Payment Options / Opciones de Pago:</h3>
     <p><strong>Cash App:</strong> <a href="https://cash.app/$naiquia86" target="_blank">$naiquia86</a></p>
     <p><strong>PayPal:</strong> <a href="https://paypal.me/Naiqui" target="_blank">@Naiqui</a></p>
-    <p><strong>We also accept cash payments / También aceptamos pagos en efectivo</strong></p>
+    <p><strong>We also accept Cash Payments / También aceptamos pagos en efectivo</strong></p>
   </footer>
 
+  <!-- Scripts -->
   <script src="scripts.js"></script>
+  <script>
+    function initAutocomplete() {
+      const input = document.getElementById("address");
+      const autocomplete = new google.maps.places.Autocomplete(input, {
+        types: ['geocode'],
+        componentRestrictions: { country: 'us' }
+      });
+    }
+  </script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA1YBj8EHU37x31wjrEMcY0g2m61rgYwP8&libraries=places&callback=initAutocomplete" async defer></script>
 </body>
 </html>
