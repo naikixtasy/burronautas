@@ -127,3 +127,28 @@ window.onload = () => {
   const hoy = new Date().toISOString().split("T")[0];
   document.getElementById("fecha").setAttribute("min", hoy);
 };
+
+let autocomplete;
+
+function initAutocomplete() {
+  const input = document.getElementById('address');
+  autocomplete = new google.maps.places.Autocomplete(input, {
+    types: ['address'],
+    componentRestrictions: { country: "us" }
+  });
+
+  autocomplete.addListener("place_changed", () => {
+    const place = autocomplete.getPlace();
+    if (!place.geometry) return;
+
+    const base = new google.maps.LatLng(32.3112, -106.7637); // Dirección base
+    const destino = place.geometry.location;
+
+    const distanciaMillas = google.maps.geometry.spherical.computeDistanceBetween(base, destino) * 0.000621371;
+    const distanciaRedondeada = Math.round(distanciaMillas * 10) / 10;
+    document.getElementById('distanciaValor').innerText = distanciaRedondeada.toFixed(1);
+
+    calcularEnvio(distanciaRedondeada);
+  });
+}
+
