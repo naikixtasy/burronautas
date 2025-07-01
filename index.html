@@ -158,6 +158,30 @@ tsParticles.load("tsparticles", {
   detectRetina: true
 });
 </script>
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: -2;
+  background: radial-gradient(circle at 20% 30%, #2b0a3d, transparent 70%),
+              radial-gradient(circle at 80% 70%, #00043a, transparent 60%),
+              radial-gradient(circle at 50% 50%, #30004d, transparent 80%),
+              linear-gradient(120deg, #1a0033, #0f001a);
+  background-blend-mode: screen;
+  animation: backgroundPulse 15s ease-in-out infinite;
+}
+
+@keyframes backgroundPulse {
+  0%, 100% {
+    filter: brightness(1);
+  }
+  50% {
+    filter: brightness(1.2);
+  }
+}
 
 </body>
 </html>
