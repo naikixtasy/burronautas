@@ -16,8 +16,12 @@ function estaEnPromocion() {
 function calcularEnvio() {
   const lat = parseFloat(document.getElementById("address").getAttribute("data-lat"));
   const lng = parseFloat(document.getElementById("address").getAttribute("data-lng"));
+  const mensajeEnvioExtra = document.getElementById("mensajeEnvioExtra");
 
-  if (isNaN(lat) || isNaN(lng)) return 3.00;
+  if (isNaN(lat) || isNaN(lng)) {
+    mensajeEnvioExtra.innerText = "";
+    return 3.00;
+  }
 
   const baseLat = 32.2967;
   const baseLng = -106.7470;
@@ -30,11 +34,21 @@ function calcularEnvio() {
             Math.cos(toRad(baseLat)) * Math.cos(toRad(lat)) * Math.sin(dLng / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distancia = R * c;
+
   document.getElementById("distanciaValor").innerText = distancia.toFixed(2);
 
-  if (distancia <= 5) return 3.00;
+  if (distancia <= 5) {
+    mensajeEnvioExtra.innerText = "";
+    return 3.00;
+  }
+
   const extraMillas = distancia - 5;
-  return 3.00 + Math.ceil(extraMillas / 2) * 1.00;
+  const cargosExtra = Math.ceil(extraMillas / 2);
+  const totalEnvio = 3.00 + cargosExtra * 1.00;
+
+  mensajeEnvioExtra.innerText = `🛑 Esta dirección está a ${distancia.toFixed(2)} millas de distancia. Se agregará un cargo adicional de $${cargosExtra}.00 por distancia.`;
+
+  return totalEnvio;
 }
 
 function calcularTotal() {
@@ -65,7 +79,7 @@ function calcularTotal() {
   const totalFinal = totalSinDescuento - descuento + envio;
 
   document.getElementById("subtotal").innerText = `🧾 Subtotal sin descuento: $${totalSinDescuento.toFixed(2)}`;
-  document.getElementById("descuento").innerText = `🏱 Descuento 2x1 aplicado: -$${descuento.toFixed(2)}`;
+  document.getElementById("descuento").innerText = `🎁 Descuento 2x1 aplicado: -$${descuento.toFixed(2)}`;
   document.getElementById("envio").innerText = `🚚 Envío: +$${envio.toFixed(2)}`;
   document.getElementById("totalFinal").innerText = `💰 Total con descuento y envío: $${totalFinal.toFixed(2)}`;
   document.getElementById("total").innerText = `Total: $${totalFinal.toFixed(2)} USD`;
@@ -96,7 +110,7 @@ function generarTextoPedido() {
   const mapsLink = generarLinkMaps(direccion);
 
   const items = document.querySelectorAll('.menu-grid .item');
-  let pedido = `🚀 *Burronautas Order #${numeroOrden}*\n\n`;
+  let pedido = `🛰️ *Burronautas Order #${numeroOrden}*\n\n`;
   let hayProductos = false;
 
   items.forEach(item => {
@@ -112,7 +126,7 @@ function generarTextoPedido() {
 
   pedido += `\n📞 *Teléfono / Phone:* ${telefono}`;
   pedido += `\n📍 *Dirección / Address:* ${direccion}`;
-  pedido += `\n🗕️ *Fecha de entrega / Delivery Date:* ${fechaEntrega}`;
+  pedido += `\n📅 *Fecha de entrega / Delivery Date:* ${fechaEntrega}`;
 
   const hoy = new Date().toISOString().split('T')[0];
   if (fechaEntrega !== hoy) {
@@ -123,7 +137,7 @@ function generarTextoPedido() {
   pedido += `\n💳 *Pago / Payment:* ${metodo}`;
   pedido += `\n📝 *Notas / Notes:* ${extras}`;
   pedido += `\n💰 *Total (incluye envío): $${total}*`;
-  pedido += `\n🔹 *Order ID:* ${numeroOrden}`;
+  pedido += `\n🔢 *Order ID:* ${numeroOrden}`;
 
   return { texto: pedido, hayProductos, numeroOrden };
 }
@@ -210,7 +224,7 @@ function initAutocomplete() {
     document.getElementById("address").setAttribute("data-lat", lat);
     document.getElementById("address").setAttribute("data-lng", lng);
 
-    calcularTotal();
+    calcularTotal(); // Recalcula cuando hay nueva dirección
   });
 }
 
