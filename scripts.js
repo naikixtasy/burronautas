@@ -1,235 +1,129 @@
-// Precios
-const precios = {
-  f_q: 4, r_q: 6, pic: 7, por: 7, chi: 7, mol: 6, rel: 7, win: 6,
-  coke: 2, zero: 2, sprite: 2, pepper: 2,
-  mex: 3
-};
-
-const burritoIds = ["f_q", "r_q", "pic", "por", "chi", "mol", "rel", "win"];
-
-function estaEnPromocion() {
-  const hoy = new Date();
-  const inicio = new Date("2025-06-30");
-  const fin = new Date("2025-07-04");
-  return hoy >= inicio && hoy <= fin;
-}
-
-function calcularEnvio() {
-  const lat = parseFloat(document.getElementById("address").getAttribute("data-lat"));
-  const lng = parseFloat(document.getElementById("address").getAttribute("data-lng"));
-
-  if (isNaN(lat) || isNaN(lng)) return 3.00;
-
-  const baseLat = 32.2967;
-  const baseLng = -106.7470;
-  const R = 3958.8;
-  const toRad = deg => deg * (Math.PI / 180);
-
-  const dLat = toRad(lat - baseLat);
-  const dLng = toRad(lng - baseLng);
-  const a = Math.sin(dLat / 2) ** 2 +
-            Math.cos(toRad(baseLat)) * Math.cos(toRad(lat)) * Math.sin(dLng / 2) ** 2;
-  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-  const distancia = R * c;
-  document.getElementById("distanciaValor").innerText = distancia.toFixed(2);
-
-  if (distancia <= 5) return 3.00;
-  const extraMillas = distancia - 5;
-  return 3.00 + Math.ceil(extraMillas / 2) * 1.00;
-}
-
-function calcularTotal() {
-  let totalSinDescuento = 0;
-  let burritos = [];
-
-  for (const id in precios) {
-    const cantidad = parseInt(document.getElementById(id)?.value || 0);
-    const precioUnitario = precios[id];
-    totalSinDescuento += cantidad * precioUnitario;
-
-    if (burritoIds.includes(id) && cantidad > 0) {
-      for (let i = 0; i < cantidad; i++) {
-        burritos.push(precioUnitario);
-      }
-    }
-  }
-
-  let descuento = 0;
-  if (estaEnPromocion() && burritos.length >= 2) {
-    burritos.sort((a, b) => a - b);
-    for (let i = 0; i + 1 < burritos.length; i += 2) {
-      descuento += burritos[i];
-    }
-  }
-
-  const envio = calcularEnvio();
-  const totalFinal = totalSinDescuento - descuento + envio;
-
-  document.getElementById("subtotal").innerText = `📟 Subtotal (no discount): $${totalSinDescuento.toFixed(2)}`;
-  document.getElementById("descuento").innerText = `🏱 2x1 Discount applied: -$${descuento.toFixed(2)}`;
-  document.getElementById("envio").innerText = `🚚 Delivery: +$${envio.toFixed(2)}`;
-  document.getElementById("totalFinal").innerText = `💰 Total (with discount and delivery): $${totalFinal.toFixed(2)}`;
-  document.getElementById("total").innerText = `Total: $${totalFinal.toFixed(2)} USD`;
-
-  return totalFinal.toFixed(2);
-}
-
-document.querySelectorAll("input[type='number']").forEach(input => {
-  input.addEventListener("input", calcularTotal);
-});
-
-function generarNumeroOrden() {
-  return 'B-' + Date.now();
-}
-
-function generarLinkMaps(direccion) {
-  return `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(direccion)}`;
-}
-
-function generarTextoPedido() {
-  const telefono = document.getElementById('telefono').value.trim();
-  const direccion = document.getElementById('address').value.trim();
-  const fechaEntrega = document.getElementById('fecha').value;
-  const metodo = document.getElementById('metodo').value;
-  const extras = document.getElementById('extras').value.trim();
-  const total = calcularTotal();
-  const numeroOrden = generarNumeroOrden();
-  const mapsLink = generarLinkMaps(direccion);
-
-  const items = document.querySelectorAll('.menu-grid .item');
-  let pedido = `🚀 *Burronautas Order #${numeroOrden}*\n\n`;
-  let hayProductos = false;
-
-  items.forEach(item => {
-    const nombre = item.querySelector('h3').innerText;
-    const cantidad = item.querySelector('input').value;
-    if (parseInt(cantidad) > 0) {
-      hayProductos = true;
-      pedido += `• ${cantidad} x ${nombre}\n`;
-    }
-  });
-
-  if (!hayProductos) return null;
-
-  pedido += `\n📞 *Phone:* ${telefono}`;
-  pedido += `\n📍 *Address:* ${direccion}`;
-  pedido += `\n🗕️ *Delivery Date:* ${fechaEntrega}`;
-  if (fechaEntrega !== new Date().toISOString().split('T')[0]) {
-    pedido += `\n⚠️ *ADVANCE ORDER!* / *¡ORDEN ANTICIPADA!*`;
-  }
-
-  pedido += `\n🗺️ *Map:* ${mapsLink}`;
-  pedido += `\n💳 *Payment Method:* ${metodo}`;
-  pedido += `\n📝 *Notes:* ${extras}`;
-  pedido += `\n💰 *Total (with delivery): $${total}*`;
-  pedido += `\n🔢 *Order ID:* ${numeroOrden}`;
-
-  return { texto: pedido, hayProductos, numeroOrden };
-}
-
-function enviarPedido() {
-  const telefono = document.getElementById('telefono').value.trim();
-  const direccion = document.getElementById('address').value.trim();
-  const fechaEntrega = document.getElementById('fecha').value;
-
-  if (!telefono || !direccion || !fechaEntrega) {
-    alert("⚠️ Please fill in your phone number, address, and delivery date. / Por favor llena el número de teléfono, la dirección y la fecha.");
-    return;
-  }
-
-  const { texto, hayProductos, numeroOrden } = generarTextoPedido();
-  if (!hayProductos) {
-    alert("⚠️ Please select at least one product before sending. / Debes seleccionar al menos un producto.");
-    return;
-  }
-
-  registrarEnSheet({
-    orderId: numeroOrden,
-    items: Array.from(document.querySelectorAll('.menu-grid .item')).filter(item => parseInt(item.querySelector('input').value) > 0).map(item => {
-      const nombre = item.querySelector('h3').innerText;
-      const cantidad = item.querySelector('input').value;
-      return `${cantidad} x ${nombre}`;
-    }),
-    telefono,
-    direccion,
-    fechaEntrega,
-    metodo: document.getElementById('metodo').value,
-    extras: document.getElementById('extras').value.trim(),
-    total: calcularTotal()
-  });
-
-  const url = `https://wa.me/15756370077?text=${encodeURIComponent(texto)}`;
-  window.open(url, '_blank');
-}
-
-function prepararMensajeInstagram() {
-  const telefono = document.getElementById('telefono').value.trim();
-  const direccion = document.getElementById('address').value.trim();
-  const fechaEntrega = document.getElementById('fecha').value;
-
-  if (!telefono || !direccion || !fechaEntrega) {
-    alert("⚠️ Please fill in your phone number, address, and delivery date. / Por favor llena el número de teléfono, la dirección y la fecha.");
-    return;
-  }
-
-  const { texto, hayProductos } = generarTextoPedido();
-
-  if (!hayProductos) {
-    alert("⚠️ Please select at least one product. / Debes seleccionar al menos un producto.");
-    return;
-  }
-
-  navigator.clipboard.writeText(texto).then(() => {
-    alert("✅ Your order has been copied. We'll now redirect you to Instagram to paste it. / Tu pedido ha sido copiado. Ahora te llevamos a Instagram para que lo pegues.");
-    window.open("https://www.instagram.com/burronautas_las_cruces/", "_blank");
-  }).catch(err => {
-    alert("❌ Could not copy the order. Try again. / No se pudo copiar el pedido. Intenta de nuevo.");
-    console.error(err);
-  });
-}
+let autocomplete;
+let distanciaGlobal = 0;
 
 function initAutocomplete() {
   const input = document.getElementById("address");
-  const autocomplete = new google.maps.places.Autocomplete(input, {
-    componentRestrictions: { country: ["us"] },
-    fields: ["formatted_address", "geometry"],
-  });
-
-  autocomplete.addListener("place_changed", function () {
-    const place = autocomplete.getPlace();
-    if (!place.geometry) return;
-
-    const address = place.formatted_address;
-    const lat = place.geometry.location.lat();
-    const lng = place.geometry.location.lng();
-    const mapsLink = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
-
-    document.getElementById("address").setAttribute("data-maps-link", mapsLink);
-    document.getElementById("address").setAttribute("data-formatted-address", address);
-    document.getElementById("address").setAttribute("data-lat", lat);
-    document.getElementById("address").setAttribute("data-lng", lng);
-
-    calcularTotal();
-  });
+  autocomplete = new google.maps.places.Autocomplete(input);
+  autocomplete.addListener("place_changed", calcularDistancia);
 }
 
-function registrarEnSheet(data) {
-  const direccionTexto = document.getElementById("address").getAttribute("data-formatted-address") 
-                      || document.getElementById("address").value;
+function calcularDistancia() {
+  const place = autocomplete.getPlace();
+  if (!place.geometry || !place.geometry.location) {
+    return;
+  }
 
-  const datosFinales = {
-    ...data,
-    direccion: direccionTexto
+  const destino = place.geometry.location;
+  const base = new google.maps.LatLng(32.303189, -106.735188); // Dirección base: 100 Vista Del Monte, Las Cruces
+
+  const distancia = google.maps.geometry.spherical.computeDistanceBetween(base, destino);
+  const millas = distancia / 1609.34;
+  distanciaGlobal = millas;
+
+  document.getElementById("distanciaValor").textContent = millas.toFixed(2);
+
+  actualizarTotales();
+}
+
+function actualizarTotales() {
+  const precios = {
+    f_q: 4, r_q: 6, pic: 7, por: 7, chi: 7, mol: 6, rel: 7, win: 6,
+    coke: 2, zero: 2, sprite: 2, pepper: 2, mex: 3
   };
 
-  fetch('https://script.google.com/macros/s/AKfycbxtNszQtCUlSoLtUQmbX59VrDJ11EhC0rYftkUaUspjWi_exrKK87OkVr9y99Z6hF-F/exec', {
-    method: 'POST',
-    body: JSON.stringify(datosFinales),
-    headers: { 'Content-Type': 'application/json' }
-  })
-  .then(response => response.text())
-  .then(result => console.log("✅ Registered in Google Sheets:", result))
-  .catch(error => console.error("❌ Registration failed:", error));
+  let subtotal = 0;
+  for (let id in precios) {
+    const cantidad = parseInt(document.getElementById(id).value) || 0;
+    subtotal += precios[id] * cantidad;
+  }
+
+  // Calcular descuento 2x1
+  let cantidades = Object.keys(precios).map(id => {
+    const cantidad = parseInt(document.getElementById(id).value) || 0;
+    return Array(cantidad).fill(precios[id]);
+  }).flat();
+
+  cantidades.sort((a, b) => a - b);
+  let descuento = 0;
+  for (let i = 0; i < cantidades.length - 1; i += 2) {
+    descuento += Math.min(cantidades[i], cantidades[i + 1]);
+  }
+
+  // Calcular envío
+  let envio = 0;
+  let mensajeEnvio = "";
+
+  if (distanciaGlobal > 0) {
+    envio = 3; // Base fee
+    if (distanciaGlobal > 5) {
+      const extra = Math.ceil((distanciaGlobal - 5) / 2);
+      envio += extra;
+      mensajeEnvio = `🚨 Extra charge for distance: +$${extra}.00 USD / Cargo adicional por distancia: +$${extra}.00 USD`;
+    }
+  }
+
+  const total = subtotal + envio - descuento;
+
+  document.getElementById("subtotal").innerHTML = `Subtotal: $${subtotal.toFixed(2)} USD`;
+  document.getElementById("descuento").innerHTML = descuento > 0 ? `🎉 Discount: -$${descuento.toFixed(2)} USD` : "";
+  document.getElementById("envio").innerHTML = `🚚 Delivery Fee: $${envio.toFixed(2)} USD`;
+  document.getElementById("mensajeEnvioExtra").innerHTML = mensajeEnvio;
+  document.getElementById("total").innerHTML = `Total: $${total.toFixed(2)} USD`;
+  document.getElementById("totalFinal").innerHTML = "";
 }
 
-window.initAutocomplete = initAutocomplete;
+document.querySelectorAll("input[type='number']").forEach(input => {
+  input.addEventListener("input", actualizarTotales);
+});
+
+function generarResumenPedido() {
+  const items = document.querySelectorAll(".menu-grid .item");
+  let resumen = "";
+  items.forEach(item => {
+    const titulo = item.querySelector("h3").innerText.split(" ($")[0];
+    const cantidad = item.querySelector("input").value;
+    if (parseInt(cantidad) > 0) {
+      resumen += `- ${titulo}: ${cantidad}\n`;
+    }
+  });
+  return resumen;
+}
+
+function enviarPedido() {
+  const telefono = document.getElementById("telefono").value;
+  const address = document.getElementById("address").value;
+  const fecha = document.getElementById("fecha").value;
+  const metodo = document.getElementById("metodo").value;
+  const extras = document.getElementById("extras").value;
+
+  const pedido = generarResumenPedido();
+  const total = document.getElementById("total").innerText;
+
+  const mensaje = `🚀 *Burronautas Order* 🚀\n\n📦 *Order Summary / Resumen del Pedido:*\n${pedido}\n🏡 *Delivery Address:* ${address}\n📅 *Date:* ${fecha}\n💵 *Payment:* ${metodo}\n📞 *Phone:* ${telefono}\n📝 *Notes:* ${extras}\n\n${total}`;
+
+  const whatsappURL = `https://wa.me/15756370077?text=${encodeURIComponent(mensaje)}`;
+  window.open(whatsappURL, "_blank");
+}
+
+function prepararMensajeInstagram() {
+  const telefono = document.getElementById("telefono").value;
+  const address = document.getElementById("address").value;
+  const fecha = document.getElementById("fecha").value;
+  const metodo = document.getElementById("metodo").value;
+  const extras = document.getElementById("extras").value;
+
+  const pedido = generarResumenPedido();
+  const total = document.getElementById("total").innerText;
+
+  const mensaje = `🚀 BURRONAUTAS Order\n\n📦 Order Summary:\n${pedido}\n🏡 Address: ${address}\n📅 Date: ${fecha}\n💵 Payment: ${metodo}\n📞 Phone: ${telefono}\n📝 Notes: ${extras}\n\n${total}`;
+  navigator.clipboard.writeText(mensaje).then(() => {
+    alert("📋 Message copied! Now paste it in Instagram Direct. / ¡Mensaje copiado! Pega en Instagram Direct.");
+  });
+}
+
+window.onload = () => {
+  actualizarTotales();
+
+  const hoy = new Date().toISOString().split("T")[0];
+  document.getElementById("fecha").setAttribute("min", hoy);
+};
