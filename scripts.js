@@ -33,22 +33,30 @@ function actualizarTotales() {
   const burritos = ["f_q", "r_q", "pic", "por", "chi", "mol", "rel", "win"];
 
   let subtotal = 0;
-  let cantidadesBurritos = [];
+  let burritoPreciosIndividuales = [];
 
   for (let id in precios) {
     const cantidad = parseInt(document.getElementById(id).value) || 0;
     subtotal += precios[id] * cantidad;
 
     if (burritos.includes(id)) {
-      cantidadesBurritos.push(...Array(cantidad).fill(precios[id]));
+      for (let i = 0; i < cantidad; i++) {
+        burritoPreciosIndividuales.push(precios[id]);
+      }
     }
   }
 
-  // Calcular descuento 2x1 solo para burritos
-  cantidadesBurritos.sort((a, b) => a - b);
+  // Ordenar de mayor a menor para aplicar 2x1 correctamente (descontar el más barato de cada par)
+  burritoPreciosIndividuales.sort((a, b) => b - a);
   let descuento = 0;
-  for (let i = 0; i < cantidadesBurritos.length - 1; i += 2) {
-    descuento += Math.min(cantidadesBurritos[i], cantidadesBurritos[i + 1]);
+  const hoy = new Date();
+  const limite = new Date("2025-07-05");
+  if (hoy <= limite) {
+    while (burritoPreciosIndividuales.length > 1) {
+      const precioAlto = burritoPreciosIndividuales.shift(); // El más caro
+      const precioBajo = burritoPreciosIndividuales.pop();   // El más barato
+      descuento += precioBajo;
+    }
   }
 
   // Calcular envío
@@ -56,7 +64,7 @@ function actualizarTotales() {
   let mensajeEnvio = "";
 
   if (distanciaGlobal > 0) {
-    envio = 3; // Base
+    envio = 3;
     if (distanciaGlobal > 5) {
       const extra = Math.ceil((distanciaGlobal - 5) / 2);
       envio += extra;
