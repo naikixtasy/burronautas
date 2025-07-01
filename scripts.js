@@ -46,15 +46,15 @@ function actualizarTotales() {
     }
   }
 
-  // Ordenar de mayor a menor para aplicar 2x1 correctamente (descontar el más barato de cada par)
+  // Descuento 2x1 válido hasta el 5 de julio
   burritoPreciosIndividuales.sort((a, b) => b - a);
   let descuento = 0;
   const hoy = new Date();
   const limite = new Date("2025-07-05");
   if (hoy <= limite) {
     while (burritoPreciosIndividuales.length > 1) {
-      const precioAlto = burritoPreciosIndividuales.shift(); // El más caro
-      const precioBajo = burritoPreciosIndividuales.pop();   // El más barato
+      const precioAlto = burritoPreciosIndividuales.shift();
+      const precioBajo = burritoPreciosIndividuales.pop();
       descuento += precioBajo;
     }
   }
@@ -86,14 +86,16 @@ document.querySelectorAll("input[type='number']").forEach(input => {
   input.addEventListener("input", actualizarTotales);
 });
 
-function generarResumenPedido() {
+function generarResumenPedidoLista() {
   const items = document.querySelectorAll(".menu-grid .item");
   let resumen = "";
   items.forEach(item => {
-    const titulo = item.querySelector("h3").innerText.split(" ($")[0];
-    const cantidad = item.querySelector("input").value;
-    if (parseInt(cantidad) > 0) {
-      resumen += `- ${titulo}: ${cantidad}\n`;
+    const titulo = item.querySelector("h3").innerText;
+    const cantidad = parseInt(item.querySelector("input").value);
+    if (cantidad > 0) {
+      const nombre = titulo.split(" ($")[0];
+      const precio = titulo.split(" ($")[1].replace(")", "");
+      resumen += `* ${cantidad} x ${nombre} ($${precio})\n`;
     }
   });
   return resumen;
@@ -102,16 +104,17 @@ function generarResumenPedido() {
 function enviarPedido() {
   const telefono = document.getElementById("telefono").value;
   const address = document.getElementById("address").value;
-  const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
   const fecha = document.getElementById("fecha").value;
   const metodo = document.getElementById("metodo").value;
   const extras = document.getElementById("extras").value;
+  const total = document.getElementById("total").innerText.split(": $")[1];
+  const distanciaTexto = document.getElementById("distanciaValor").innerText;
 
-  const pedido = generarResumenPedido();
-  const total = document.getElementById("total").innerText;
+  const pedido = generarResumenPedidoLista();
+  const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+  const orderId = "B-" + Date.now();
 
-  const mensaje = `🚀 BURRONAUTAS Order\n\n📦 Order Summary:\n${pedido}\n🏡 Address: ${address}\n📍 Map: ${mapsLink}\n📅 Date: ${fecha}\n💵 Payment: ${metodo}\n📞 Phone: ${telefono}\n📝 Notes: ${extras}\n\n${total}`;
-
+  const mensaje = `🛰️ Burronautas Order #${orderId}\n\n${pedido}\n📞 Teléfono / Phone: ${telefono}\n📍 Dirección / Address: ${address}\n📅 Fecha de entrega / Delivery Date: ${fecha}\n🗺️ Mapa: ${mapsLink}\n💳 Pago / Payment: ${metodo}\n📝 Notas / Notes: ${extras}\n🚚 Distancia estimada: ${distanciaTexto} mi\n💰 Total (incluye envío): $${total}\n🔢 Order ID: ${orderId}`;
 
   const whatsappURL = `https://wa.me/15756370077?text=${encodeURIComponent(mensaje)}`;
   window.open(whatsappURL, "_blank");
@@ -123,11 +126,15 @@ function prepararMensajeInstagram() {
   const fecha = document.getElementById("fecha").value;
   const metodo = document.getElementById("metodo").value;
   const extras = document.getElementById("extras").value;
+  const total = document.getElementById("total").innerText.split(": $")[1];
+  const distanciaTexto = document.getElementById("distanciaValor").innerText;
 
-  const pedido = generarResumenPedido();
-  const total = document.getElementById("total").innerText;
+  const pedido = generarResumenPedidoLista();
+  const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
+  const orderId = "B-" + Date.now();
 
-  const mensaje = `🚀 BURRONAUTAS Order\n\n📦 Order Summary:\n${pedido}\n🏡 Address: ${address}\n📅 Date: ${fecha}\n💵 Payment: ${metodo}\n📞 Phone: ${telefono}\n📝 Notes: ${extras}\n\n${total}`;
+  const mensaje = `🛰️ Burronautas Order #${orderId}\n\n${pedido}\n📞 Teléfono / Phone: ${telefono}\n📍 Dirección / Address: ${address}\n📅 Fecha de entrega / Delivery Date: ${fecha}\n🗺️ Mapa: ${mapsLink}\n💳 Pago / Payment: ${metodo}\n📝 Notas / Notes: ${extras}\n🚚 Distancia estimada: ${distanciaTexto} mi\n💰 Total (incluye envío): $${total}\n🔢 Order ID: ${orderId}`;
+
   navigator.clipboard.writeText(mensaje).then(() => {
     alert("📋 Message copied! Now paste it in Instagram Direct. / ¡Mensaje copiado! Pega en Instagram Direct.");
   });
@@ -135,7 +142,6 @@ function prepararMensajeInstagram() {
 
 window.onload = () => {
   actualizarTotales();
-
   const hoy = new Date().toISOString().split("T")[0];
   document.getElementById("fecha").setAttribute("min", hoy);
   initAutocomplete();
