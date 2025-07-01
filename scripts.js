@@ -1,10 +1,10 @@
 const precios = {
   f_q: 4, r_q: 6, pic: 7, por: 7, chi: 7, mol: 6, rel: 7, win: 6,
-  coke: 2, zero: 2, sprite: 2, pepper: 2, mex: 3
+  coke: 2, zero: 2, sprite: 2, pepper: 2,
+  mex: 3
 };
 
 const burritoIds = ["f_q", "r_q", "pic", "por", "chi", "mol", "rel", "win"];
-let distanciaEnMillas = 0;
 
 function estaEnPromocion() {
   const hoy = new Date();
@@ -13,26 +13,19 @@ function estaEnPromocion() {
   return hoy >= inicio && hoy <= fin;
 }
 
-function calcularEnvio(distancia) {
-  if (distancia <= 5) return 3;
-  return 3 + Math.ceil((distancia - 5) / 2);
-}
-
 function calcularTotal() {
   let totalSinDescuento = 0;
   let burritos = [];
 
- for (const id in precios) {
-  const input = document.getElementById(id);
-  if (!input || input.disabled) continue;
-
-  const cantidad = parseInt(input.value || 0);
-
+  for (const id in precios) {
+    const cantidad = parseInt(document.getElementById(id)?.value || 0);
     const precioUnitario = precios[id];
     totalSinDescuento += cantidad * precioUnitario;
 
     if (burritoIds.includes(id) && cantidad > 0) {
-      for (let i = 0; i < cantidad; i++) burritos.push(precioUnitario);
+      for (let i = 0; i < cantidad; i++) {
+        burritos.push(precioUnitario);
+      }
     }
   }
 
@@ -44,12 +37,12 @@ function calcularTotal() {
     }
   }
 
-  const envio = calcularEnvio(distanciaEnMillas);
+  const envio = 3;
   const totalFinal = totalSinDescuento - descuento + envio;
 
   document.getElementById("subtotal").innerText = `🧾 Subtotal sin descuento: $${totalSinDescuento.toFixed(2)}`;
   document.getElementById("descuento").innerText = `🎁 Descuento 2x1 aplicado: -$${descuento.toFixed(2)}`;
-  document.getElementById("envio").innerText = `🚚 Envío (${distanciaEnMillas.toFixed(1)} mi): +$${envio.toFixed(2)}`;
+  document.getElementById("envio").innerText = `🚚 Envío: +$${envio.toFixed(2)}`;
   document.getElementById("totalFinal").innerText = `💰 Total con descuento y envío: $${totalFinal.toFixed(2)}`;
   document.getElementById("total").innerText = `Total: $${totalFinal.toFixed(2)} USD`;
 
@@ -105,16 +98,35 @@ function enviarPedido() {
   pedido += `\n📞 *Teléfono / Phone:* ${telefono}`;
   pedido += `\n📍 *Dirección / Address:* ${direccion}`;
   pedido += `\n📅 *Fecha de entrega / Delivery Date:* ${fechaEntrega}`;
-  if (fechaEntrega !== new Date().toISOString().split('T')[0]) {
+
+  const hoy = new Date().toISOString().split('T')[0];
+  if (fechaEntrega !== hoy) {
     pedido += `\n⚠️ *¡ORDEN ANTICIPADA!*`;
   }
+
   pedido += `\n🗺️ *Mapa:* ${mapsLink}`;
   pedido += `\n💳 *Pago / Payment:* ${metodo}`;
   pedido += `\n📝 *Notas / Notes:* ${extras}`;
-  pedido += `\n🚚 *Distancia estimada:* ${distanciaEnMillas.toFixed(1)} mi`;
   pedido += `\n💰 *Total (incluye envío): $${total}*`;
   pedido += `\n🔢 *Order ID:* ${numeroOrden}`;
 
+  // Enviar a Google Sheets
+  registrarEnSheet({
+    orderId: numeroOrden,
+    items: Array.from(items).filter(item => parseInt(item.querySelector('input').value) > 0).map(item => {
+      const nombre = item.querySelector('h3').innerText;
+      const cantidad = item.querySelector('input').value;
+      return `${cantidad} x ${nombre}`;
+    }),
+    telefono,
+    direccion,
+    fechaEntrega,
+    metodo,
+    extras,
+    total
+  });
+
+  // Enviar por WhatsApp
   const url = `https://wa.me/15756370077?text=${encodeURIComponent(pedido)}`;
   window.open(url, '_blank');
 }
@@ -130,21 +142,38 @@ function initAutocomplete() {
     const place = autocomplete.getPlace();
     if (!place.geometry) return;
 
-    const destLat = place.geometry.location.lat();
-    const destLng = place.geometry.location.lng();
+    const address = place.formatted_address;
+    const lat = place.geometry.location.lat();
+    const lng = place.geometry.location.lng();
+    const mapsLink = `https://www.google.com/maps/search/?api=1&query=${lat},${lng}`;
 
-    const origen = new google.maps.LatLng(32.28955, -106.73897); // 100 Vista Del Monte
-    const destino = new google.maps.LatLng(destLat, destLng);
-
-    const distancia = google.maps.geometry.spherical.computeDistanceBetween(origen, destino) / 1609.344;
-    distanciaEnMillas = distancia;
-
-    calcularTotal();
+    document.getElementById("address").setAttribute("data-maps-link", mapsLink);
+    document.getElementById("address").setAttribute("data-formatted-address", address);
   });
+}
+
+function registrarEnSheet(data) {
+  const direccionTexto = document.getElementById("address").getAttribute("data-formatted-address") 
+                      || document.getElementById("address").value;
+
+  const datosFinales = {
+    ...data,
+    direccion: direccionTexto
+  };
+
+  fetch('https://script.google.com/macros/s/AKfycbxtNszQtCUlSoLtUQmbX59VrDJ11EhC0rYftkUaUspjWi_exrKK87OkVr9y99Z6hF-F/exec', {
+    method: 'POST',
+    body: JSON.stringify(datosFinales),
+    headers: { 'Content-Type': 'application/json' }
+  })
+  .then(response => response.text())
+  .then(result => console.log("✅ Pedido registrado en Sheets:", result))
+  .catch(error => console.error("❌ Error al registrar:", error));
 }
 
 window.initAutocomplete = initAutocomplete;
 
+// Partículas (decorativo)
 tsParticles.load("tsparticles", {
   background: { color: "#0b001a" },
   fpsLimit: 60,
@@ -156,7 +185,7 @@ tsParticles.load("tsparticles", {
     color: { value: ["#ffffff", "#bb86fc", "#80d8ff", "#ff4081"] },
     links: { color: "#ffffff", distance: 120, enable: true, opacity: 0.2, width: 1 },
     collisions: { enable: false },
-    move: { direction: "none", enable: true, outModes: { default: "bounce" }, speed: 1 },
+    move: { enable: true, speed: 1, direction: "none", random: false, straight: false, outModes: { default: "bounce" } },
     number: { density: { enable: true, area: 900 }, value: 60 },
     opacity: { value: 0.3 },
     shape: { type: "circle" },
