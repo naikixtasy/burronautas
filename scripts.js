@@ -102,6 +102,7 @@ function generarResumenPedido() {
 function enviarPedido() {
   const telefono = document.getElementById("telefono").value;
   const address = document.getElementById("address").value;
+  const mapsLink = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(address)}`;
   const fecha = document.getElementById("fecha").value;
   const metodo = document.getElementById("metodo").value;
   const extras = document.getElementById("extras").value;
@@ -109,7 +110,8 @@ function enviarPedido() {
   const pedido = generarResumenPedido();
   const total = document.getElementById("total").innerText;
 
-  const mensaje = `🚀 *Burronautas Order* 🚀\n\n📦 *Order Summary / Resumen del Pedido:*\n${pedido}\n🏡 *Delivery Address:* ${address}\n📅 *Date:* ${fecha}\n💵 *Payment:* ${metodo}\n📞 *Phone:* ${telefono}\n📝 *Notes:* ${extras}\n\n${total}`;
+  const mensaje = `🚀 BURRONAUTAS Order\n\n📦 Order Summary:\n${pedido}\n🏡 Address: ${address}\n📍 Map: ${mapsLink}\n📅 Date: ${fecha}\n💵 Payment: ${metodo}\n📞 Phone: ${telefono}\n📝 Notes: ${extras}\n\n${total}`;
+
 
   const whatsappURL = `https://wa.me/15756370077?text=${encodeURIComponent(mensaje)}`;
   window.open(whatsappURL, "_blank");
