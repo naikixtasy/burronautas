@@ -1,3 +1,4 @@
+// Precios
 const precios = {
   f_q: 4, r_q: 6, pic: 7, por: 7, chi: 7, mol: 6, rel: 7, win: 6,
   coke: 2, zero: 2, sprite: 2, pepper: 2,
@@ -16,12 +17,8 @@ function estaEnPromocion() {
 function calcularEnvio() {
   const lat = parseFloat(document.getElementById("address").getAttribute("data-lat"));
   const lng = parseFloat(document.getElementById("address").getAttribute("data-lng"));
-  const mensajeEnvioExtra = document.getElementById("mensajeEnvioExtra");
 
-  if (isNaN(lat) || isNaN(lng)) {
-    mensajeEnvioExtra.innerText = "";
-    return 3.00;
-  }
+  if (isNaN(lat) || isNaN(lng)) return 3.00;
 
   const baseLat = 32.2967;
   const baseLng = -106.7470;
@@ -34,21 +31,11 @@ function calcularEnvio() {
             Math.cos(toRad(baseLat)) * Math.cos(toRad(lat)) * Math.sin(dLng / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distancia = R * c;
-
   document.getElementById("distanciaValor").innerText = distancia.toFixed(2);
 
-  if (distancia <= 5) {
-    mensajeEnvioExtra.innerText = "";
-    return 3.00;
-  }
-
+  if (distancia <= 5) return 3.00;
   const extraMillas = distancia - 5;
-  const cargosExtra = Math.ceil(extraMillas / 2);
-  const totalEnvio = 3.00 + cargosExtra * 1.00;
-
-  mensajeEnvioExtra.innerText = `🛑 Esta dirección está a ${distancia.toFixed(2)} millas de distancia. Se agregará un cargo adicional de $${cargosExtra}.00 por distancia.`;
-
-  return totalEnvio;
+  return 3.00 + Math.ceil(extraMillas / 2) * 1.00;
 }
 
 function calcularTotal() {
@@ -78,10 +65,10 @@ function calcularTotal() {
   const envio = calcularEnvio();
   const totalFinal = totalSinDescuento - descuento + envio;
 
-  document.getElementById("subtotal").innerText = `🧾 Subtotal sin descuento: $${totalSinDescuento.toFixed(2)}`;
-  document.getElementById("descuento").innerText = `🎁 Descuento 2x1 aplicado: -$${descuento.toFixed(2)}`;
-  document.getElementById("envio").innerText = `🚚 Envío: +$${envio.toFixed(2)}`;
-  document.getElementById("totalFinal").innerText = `💰 Total con descuento y envío: $${totalFinal.toFixed(2)}`;
+  document.getElementById("subtotal").innerText = `🧾 Subtotal (no discount): $${totalSinDescuento.toFixed(2)}`;
+  document.getElementById("descuento").innerText = `🎁 2x1 Discount applied: -$${descuento.toFixed(2)}`;
+  document.getElementById("envio").innerText = `🚚 Delivery: +$${envio.toFixed(2)}`;
+  document.getElementById("totalFinal").innerText = `💰 Total (with discount and delivery): $${totalFinal.toFixed(2)}`;
   document.getElementById("total").innerText = `Total: $${totalFinal.toFixed(2)} USD`;
 
   return totalFinal.toFixed(2);
@@ -124,19 +111,17 @@ function generarTextoPedido() {
 
   if (!hayProductos) return null;
 
-  pedido += `\n📞 *Teléfono / Phone:* ${telefono}`;
-  pedido += `\n📍 *Dirección / Address:* ${direccion}`;
-  pedido += `\n📅 *Fecha de entrega / Delivery Date:* ${fechaEntrega}`;
-
-  const hoy = new Date().toISOString().split('T')[0];
-  if (fechaEntrega !== hoy) {
-    pedido += `\n⚠️ *¡ORDEN ANTICIPADA!*`;
+  pedido += `\n📞 *Phone:* ${telefono}`;
+  pedido += `\n📍 *Address:* ${direccion}`;
+  pedido += `\n📅 *Delivery Date:* ${fechaEntrega}`;
+  if (fechaEntrega !== new Date().toISOString().split('T')[0]) {
+    pedido += `\n⚠️ *ADVANCE ORDER!* / *¡ORDEN ANTICIPADA!*`;
   }
 
-  pedido += `\n🗺️ *Mapa:* ${mapsLink}`;
-  pedido += `\n💳 *Pago / Payment:* ${metodo}`;
-  pedido += `\n📝 *Notas / Notes:* ${extras}`;
-  pedido += `\n💰 *Total (incluye envío): $${total}*`;
+  pedido += `\n🗺️ *Map:* ${mapsLink}`;
+  pedido += `\n💳 *Payment Method:* ${metodo}`;
+  pedido += `\n📝 *Notes:* ${extras}`;
+  pedido += `\n💰 *Total (with delivery): $${total}*`;
   pedido += `\n🔢 *Order ID:* ${numeroOrden}`;
 
   return { texto: pedido, hayProductos, numeroOrden };
@@ -148,13 +133,13 @@ function enviarPedido() {
   const fechaEntrega = document.getElementById('fecha').value;
 
   if (!telefono || !direccion || !fechaEntrega) {
-    alert("Por favor llena el número de teléfono, la dirección y la fecha antes de enviar el pedido.");
+    alert("⚠️ Please fill in your phone number, address, and delivery date. / Por favor llena el número de teléfono, la dirección y la fecha.");
     return;
   }
 
   const { texto, hayProductos, numeroOrden } = generarTextoPedido();
   if (!hayProductos) {
-    alert("Debes seleccionar al menos un producto antes de enviar el pedido.");
+    alert("⚠️ Please select at least one product before sending. / Debes seleccionar al menos un producto.");
     return;
   }
 
@@ -183,22 +168,22 @@ function prepararMensajeInstagram() {
   const fechaEntrega = document.getElementById('fecha').value;
 
   if (!telefono || !direccion || !fechaEntrega) {
-    alert("Por favor llena el número de teléfono, la dirección y la fecha antes de enviar el pedido.");
+    alert("⚠️ Please fill in your phone number, address, and delivery date. / Por favor llena el número de teléfono, la dirección y la fecha.");
     return;
   }
 
   const { texto, hayProductos } = generarTextoPedido();
 
   if (!hayProductos) {
-    alert("Debes seleccionar al menos un producto antes de generar el mensaje.");
+    alert("⚠️ Please select at least one product. / Debes seleccionar al menos un producto.");
     return;
   }
 
   navigator.clipboard.writeText(texto).then(() => {
-    alert("✅ Tu pedido ha sido copiado. Ahora te llevamos a Instagram para que lo pegues en el chat.");
+    alert("✅ Your order has been copied. We'll now redirect you to Instagram to paste it. / Tu pedido ha sido copiado. Ahora te llevamos a Instagram para que lo pegues.");
     window.open("https://www.instagram.com/burronautas_las_cruces/", "_blank");
   }).catch(err => {
-    alert("❌ Hubo un problema al copiar el mensaje. Intenta de nuevo.");
+    alert("❌ Could not copy the order. Try again. / No se pudo copiar el pedido. Intenta de nuevo.");
     console.error(err);
   });
 }
@@ -224,7 +209,7 @@ function initAutocomplete() {
     document.getElementById("address").setAttribute("data-lat", lat);
     document.getElementById("address").setAttribute("data-lng", lng);
 
-    calcularTotal(); // Recalcula cuando hay nueva dirección
+    calcularTotal();
   });
 }
 
@@ -243,12 +228,13 @@ function registrarEnSheet(data) {
     headers: { 'Content-Type': 'application/json' }
   })
   .then(response => response.text())
-  .then(result => console.log("✅ Pedido registrado en Sheets:", result))
-  .catch(error => console.error("❌ Error al registrar:", error));
+  .then(result => console.log("✅ Registered in Google Sheets:", result))
+  .catch(error => console.error("❌ Registration failed:", error));
 }
 
 window.initAutocomplete = initAutocomplete;
 
+// tsParticles config (no change)
 tsParticles.load("tsparticles", {
   background: { color: "#0b001a" },
   fpsLimit: 60,
