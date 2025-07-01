@@ -117,5 +117,47 @@
 </footer>
 
 <script src="scripts.js"></script>
+<script>
+tsParticles.load("tsparticles", {
+  fullScreen: { enable: false },
+  background: { color: { value: "transparent" } },
+  particles: {
+    number: {
+      value: 60,
+      density: { enable: true, area: 800 }
+    },
+    color: { value: ["#ffffff", "#b967ff", "#7ec8e3", "#f0a3ff", "#ffde59"] },
+    shape: { type: "circle" },
+    opacity: {
+      value: 0.8,
+      random: true,
+      anim: { enable: true, speed: 1, opacity_min: 0.3, sync: false }
+    },
+    size: {
+      value: { min: 1, max: 4 },
+      anim: { enable: true, speed: 2, size_min: 0.3, sync: false }
+    },
+    move: {
+      enable: true,
+      speed: 0.6,
+      direction: "none",
+      outModes: "out"
+    }
+  },
+  interactivity: {
+    events: {
+      onHover: { enable: true, mode: "repulse" },
+      onClick: { enable: true, mode: "push" },
+      resize: true
+    },
+    modes: {
+      repulse: { distance: 70, duration: 0.4 },
+      push: { quantity: 2 }
+    }
+  },
+  detectRetina: true
+});
+</script>
+
 </body>
 </html>
