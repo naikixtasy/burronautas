@@ -30,6 +30,7 @@ function calcularEnvio() {
             Math.cos(toRad(baseLat)) * Math.cos(toRad(lat)) * Math.sin(dLng / 2) ** 2;
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
   const distancia = R * c;
+  document.getElementById("distanciaValor").innerText = distancia.toFixed(2);
 
   if (distancia <= 5) return 3.00;
   const extraMillas = distancia - 5;
@@ -64,7 +65,7 @@ function calcularTotal() {
   const totalFinal = totalSinDescuento - descuento + envio;
 
   document.getElementById("subtotal").innerText = `🧾 Subtotal sin descuento: $${totalSinDescuento.toFixed(2)}`;
-  document.getElementById("descuento").innerText = `🎁 Descuento 2x1 aplicado: -$${descuento.toFixed(2)}`;
+  document.getElementById("descuento").innerText = `🏱 Descuento 2x1 aplicado: -$${descuento.toFixed(2)}`;
   document.getElementById("envio").innerText = `🚚 Envío: +$${envio.toFixed(2)}`;
   document.getElementById("totalFinal").innerText = `💰 Total con descuento y envío: $${totalFinal.toFixed(2)}`;
   document.getElementById("total").innerText = `Total: $${totalFinal.toFixed(2)} USD`;
@@ -95,7 +96,7 @@ function generarTextoPedido() {
   const mapsLink = generarLinkMaps(direccion);
 
   const items = document.querySelectorAll('.menu-grid .item');
-  let pedido = `🛰️ *Burronautas Order #${numeroOrden}*\n\n`;
+  let pedido = `🚀 *Burronautas Order #${numeroOrden}*\n\n`;
   let hayProductos = false;
 
   items.forEach(item => {
@@ -111,7 +112,7 @@ function generarTextoPedido() {
 
   pedido += `\n📞 *Teléfono / Phone:* ${telefono}`;
   pedido += `\n📍 *Dirección / Address:* ${direccion}`;
-  pedido += `\n📅 *Fecha de entrega / Delivery Date:* ${fechaEntrega}`;
+  pedido += `\n🗕️ *Fecha de entrega / Delivery Date:* ${fechaEntrega}`;
 
   const hoy = new Date().toISOString().split('T')[0];
   if (fechaEntrega !== hoy) {
@@ -122,7 +123,7 @@ function generarTextoPedido() {
   pedido += `\n💳 *Pago / Payment:* ${metodo}`;
   pedido += `\n📝 *Notas / Notes:* ${extras}`;
   pedido += `\n💰 *Total (incluye envío): $${total}*`;
-  pedido += `\n🔢 *Order ID:* ${numeroOrden}`;
+  pedido += `\n🔹 *Order ID:* ${numeroOrden}`;
 
   return { texto: pedido, hayProductos, numeroOrden };
 }
@@ -209,7 +210,7 @@ function initAutocomplete() {
     document.getElementById("address").setAttribute("data-lat", lat);
     document.getElementById("address").setAttribute("data-lng", lng);
 
-    calcularTotal(); // Recalcula cuando hay nueva dirección
+    calcularTotal();
   });
 }
 
