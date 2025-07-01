@@ -13,6 +13,29 @@ function estaEnPromocion() {
   return hoy >= inicio && hoy <= fin;
 }
 
+function calcularEnvio() {
+  const lat = parseFloat(document.getElementById("address").getAttribute("data-lat"));
+  const lng = parseFloat(document.getElementById("address").getAttribute("data-lng"));
+
+  if (isNaN(lat) || isNaN(lng)) return 3.00;
+
+  const baseLat = 32.2967;
+  const baseLng = -106.7470;
+  const R = 3958.8;
+  const toRad = deg => deg * (Math.PI / 180);
+
+  const dLat = toRad(lat - baseLat);
+  const dLng = toRad(lng - baseLng);
+  const a = Math.sin(dLat / 2) ** 2 +
+            Math.cos(toRad(baseLat)) * Math.cos(toRad(lat)) * Math.sin(dLng / 2) ** 2;
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  const distancia = R * c;
+
+  if (distancia <= 5) return 3.00;
+  const extraMillas = distancia - 5;
+  return 3.00 + Math.ceil(extraMillas / 2) * 1.00;
+}
+
 function calcularTotal() {
   let totalSinDescuento = 0;
   let burritos = [];
@@ -37,7 +60,7 @@ function calcularTotal() {
     }
   }
 
-  const envio = 3;
+  const envio = calcularEnvio();
   const totalFinal = totalSinDescuento - descuento + envio;
 
   document.getElementById("subtotal").innerText = `🧾 Subtotal sin descuento: $${totalSinDescuento.toFixed(2)}`;
@@ -120,7 +143,6 @@ function enviarPedido() {
     return;
   }
 
-  // Enviar a Google Sheets
   registrarEnSheet({
     orderId: numeroOrden,
     items: Array.from(document.querySelectorAll('.menu-grid .item')).filter(item => parseInt(item.querySelector('input').value) > 0).map(item => {
@@ -184,6 +206,10 @@ function initAutocomplete() {
 
     document.getElementById("address").setAttribute("data-maps-link", mapsLink);
     document.getElementById("address").setAttribute("data-formatted-address", address);
+    document.getElementById("address").setAttribute("data-lat", lat);
+    document.getElementById("address").setAttribute("data-lng", lng);
+
+    calcularTotal(); // Recalcula cuando hay nueva dirección
   });
 }
 
