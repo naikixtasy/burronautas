@@ -26,11 +26,12 @@ function initAutocomplete() {
 
 function actualizarTotales() {
   const precios = {
-    f_q: 4, r_q: 6, pic: 7, por: 7, chi: 7, bacon: 6, rel: 7, win: 6,
-    coke: 2, zero: 2, sprite: 2, pepper: 2, mex: 3
-  };
+  f_q: 4, r_q: 6, pic: 7, por: 7, bacon: 6, rel: 7, win: 6, chipotle: 7,
+  coke: 2, zero: 2, sprite: 2, pepper: 2, mex: 3
+};
 
-  const burritos = ["f_q", "r_q", "pic", "por", "chi", "rel", "win", "bacon"];
+const burritos = ["f_q", "r_q", "pic", "por", "rel", "win", "bacon", "chipotle"];
+
 
 
   let subtotal = 0;
